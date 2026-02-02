@@ -5,7 +5,7 @@ import Image from 'next/image';
 import VideoStage from '@/components/sections/VideoStage';
 
 const VIDEO_1 = "/videos/video1.mp4";
-const TEXT_1 = "Live surrounded by nature's beauty, where every space is infused with green serenity.";
+const TEXT_1 = "Live amidst nature, wrapped in calming green serenity.";
 
 interface IntroSectionProps {
     refs: {
@@ -87,7 +87,7 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
             {/* LOGO FLASH */}
             <div
                 ref={refs.logo}
-                className="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none"
+                className="absolute inset-0 z-[20] flex items-center justify-center pointer-events-none"
             >
                 <Image
                     src="/centerlogo.png"

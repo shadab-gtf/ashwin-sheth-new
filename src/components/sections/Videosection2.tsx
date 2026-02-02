@@ -5,7 +5,7 @@ import VideoStage from '@/components/sections/VideoStage';
 import { createCircleReveal } from '@/app/utils/Circlereveal';
 
 const VIDEO_2 = "/videos/video2.mp4";
-const TEXT_2 = "A palette of warmth that welcomes you in, creating a space full of light and love.";
+const TEXT_2 = "Warm tones that welcome light and a sense of home.";
 
 interface VideoSection2Props {
     refs: {

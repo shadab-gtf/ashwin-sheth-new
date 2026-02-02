@@ -19,7 +19,7 @@ export default function ProjectSection2({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/timeline/project-bg.png"
+          src="/assets/images/project-1/project-2.webp"
           alt="Project Background"
           fill
           priority
@@ -32,14 +32,14 @@ export default function ProjectSection2({
           className="
             absolute right-6 top-1/2 -translate-y-1/2
             w-[340px] sm:w-[360px]
-            bg-white rounded-xl shadow-xl
+            bg-white  shadow-xl
             overflow-hidden
           "
         >
           {/* Card Image */}
-          <div className="relative w-full h-[200px]">
+          <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/timeline/card.png"
+              src="/assets/images/project-1/project-2.webp"
               alt="One Marina"
               fill
               className="object-cover"
@@ -59,15 +59,15 @@ export default function ProjectSection2({
 
           {/* Text */}
           <div className="px-6 pb-6 text-center">
-            <h3 className="text-xl font-light tracking-widest">
-              One Marina2
+            <h3 className="text-xl font-light text-black tracking-widest">
+              EDMONT
             </h3>
             <p className="text-xs tracking-[0.3em] mt-1 text-gray-500">
-              MARINE DRIVE2
+              KANDIVALI WEST
             </p>
 
             <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
-              VIEW PROJECT2
+              VIEW PROJECT
             </button>
           </div>
         </div>

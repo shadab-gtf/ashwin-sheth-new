@@ -5,7 +5,7 @@ import VideoStage from '@/components/sections/VideoStage';
 import { createCircleReveal } from '@/app/utils/Circlereveal';
 
 const VIDEO_3 = "/videos/video3.mp4";
-const TEXT_3 = "Serenity in every shade of blue, where water and design harmonize effortlessly.";
+const TEXT_3 = "Shades of blue where water and design align.";
 
 interface VideoSection3Props {
     refs: {

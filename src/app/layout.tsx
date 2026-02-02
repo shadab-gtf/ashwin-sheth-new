@@ -1,10 +1,17 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import { Montserrat } from "next/font/google";
+
 
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
 /* -------------------------------------
    SEO METADATA
 ------------------------------------- */
@@ -94,7 +101,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased bg-black text-white">
+      <body
+        className={`${montserrat.className} antialiased bg-black text-white`}>
         <SmoothScroll>
           <Loader />
           <Header />

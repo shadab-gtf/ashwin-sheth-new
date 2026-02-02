@@ -249,9 +249,9 @@ interface TimelineSlide {
 const TIMELINE_DATA: TimelineSlide[] = [
     {
         year: '1986-1995',
-        title: 'The Foundation Years',
+        title: 'Foundation Years',
         description:
-            "Founded in 1986 by Mr. Ashwin Sheth, the Sheth Group began its journey to redefine Mumbai's skyline with vision, quality, and innovation.",
+            "Founded in 1986 by Mr. Ashwin Sheth. The Sheth Group began its journey to redefine Mumbai’s skyline with vision, quality, and innovation.",
         bottomTitleText:
             "Founded in 1986 by Mr. Ashwin Sheth. The Sheth Group began its journey to redefine Mumbai’s skyline with vision, quality, and innovation.",
         activeImage: '/assets/images/timeline/new-2.png',
@@ -259,41 +259,51 @@ const TIMELINE_DATA: TimelineSlide[] = [
     },
     {
         year: '1996-2005',
-        title: 'Expansion & Growth',
+        title: 'Residential Market',
         description:
-            "A decade of remarkable growth, establishing the Sheth Group as a trusted name in Mumbai's real estate landscape.",
+            "Between 1996 and 2005, the Sheth Group entered Mumbai’s residential market with iconic Vasant Series projects, setting new benchmarks in quality living.",
         bottomTitleText:
-            "A decade of remarkable growth, establishing the Sheth Group as a trusted name in Mumbai's real estate landscape.",
+            "Between 1996 and 2005, the Sheth Group entered Mumbai’s residential market with iconic Vasant Series projects, setting new benchmarks in quality living.",
         activeImage: '/assets/images/timeline/new-4.png',
         sketchImage: '/assets/svg/new-4.svg',
     },
     {
-        year: '2006-2015',
-        title: 'Innovation & Excellence',
+        year: '2006-2012',
+        title: 'Luxury & Commercial Living',
         description:
-            'Introducing groundbreaking projects that set new benchmarks in luxury living and architectural brilliance.',
+            'From 2006 to 2012, landmarks like BeauMonde, Vasant Lawns, and Sheth Cnergy redefined luxury and commercial living, marking the evolution into the Ashwin Sheth Group. Ashwin Sheth expanded its presence beyond Mumbai, with projects in Dubai.',
         bottomTitleText:
-            'Introducing groundbreaking projects that set new benchmarks in luxury living and architectural brilliance.',
+            'From 2006 to 2012, landmarks like BeauMonde, Vasant Lawns, and Sheth Cnergy redefined luxury and commercial living, marking the evolution into the Ashwin Sheth Group. Ashwin Sheth expanded its presence beyond Mumbai, with projects in Dubai.',
         activeImage: '/assets/images/timeline/new-4.png',
         sketchImage: '/assets/svg/new-4.svg',
     },
     {
-        year: '2016-2025',
-        title: 'Global Recognition',
+        year: '2013-2018',
+        title: 'Multi-Dimensional Legacy',
         description:
-            'Achieving international acclaim and expanding horizons with projects that redefine modern urban living.',
+            'With Viviana Mall (2013) and Sheth Avalon (2018), the group strengthened its multi-dimensional legacy, uniting design, commerce, and community in Thane’s Platinum Belt.',
         bottomTitleText:
-            'Achieving international acclaim and expanding horizons with projects that redefine modern urban living.',
+            'With Viviana Mall (2013) and Sheth Avalon (2018), the group strengthened its multi-dimensional legacy, uniting design, commerce, and community in Thane’s Platinum Belt.',
         activeImage: '/assets/images/timeline/new-4.png',
         sketchImage: '/assets/svg/new-4.svg',
     },
     {
-        year: '2026-Future',
-        title: 'Beyond Horizons',
+        year: '2019–2024',
+        title: 'Modern Business Spaces',
         description:
-            'Pioneering the future of sustainable urban development with visionary projects.',
+            'In 2020, Sheth Cnergy in Thane’s Platinum Belt marked a new era of modern business spaces, as Ashwin Sheth Group continues shaping how cities live, work, and connect.',
         bottomTitleText:
-            'Pioneering the future of sustainable urban development with visionary projects.',
+            'In 2020, Sheth Cnergy in Thane’s Platinum Belt marked a new era of modern business spaces, as Ashwin Sheth Group continues shaping how cities live, work, and connect.',
+        activeImage: '/assets/images/timeline/new-5.png',
+        sketchImage: '/assets/svg/new-5.svg',
+    },
+    {
+        year: '2025 Onwards',
+        title: 'Premium & Luxury Segment',
+        description:
+            'With launch of Edmont in Kandivali West & last 3 towers in Avalon, AGS continued its growth in premium & luxury segment the latest being One Marina at marine lines.',
+        bottomTitleText:
+            'With launch of Edmont in Kandivali West & last 3 towers in Avalon, AGS continued its growth in premium & luxury segment the latest being One Marina at marine lines.',
         activeImage: '/assets/images/timeline/new-5.png',
         sketchImage: '/assets/svg/new-5.svg',
     },

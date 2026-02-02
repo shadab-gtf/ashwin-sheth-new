@@ -69,10 +69,10 @@ export function createCircleReveal(
         circleEl,
         {
           opacity: 0,
-          duration: 0.4,
+          duration: 3,
           ease: 'power2.out',
         },
-        '-=0.25'
+        '-=1'
       );
   }, label);
 }
@@ -131,7 +131,7 @@ export function createCircleRevealNoFade(
 
     gsap.timeline().to(circleEl, {
       clipPath: 'circle(150% at 50% 100%)',
-      duration: 1.2,
+      duration: 5,
       ease: 'power3.inOut',
     });
   }, label);

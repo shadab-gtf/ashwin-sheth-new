@@ -122,7 +122,7 @@ export default function ProjectSection4({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/timeline/project-bg.png"
+          src="/assets/images/timeline/project-5.webp"
           alt="Project Background"
           fill
           priority
@@ -135,14 +135,14 @@ export default function ProjectSection4({
           className="
             absolute right-6 top-1/2 -translate-y-1/2
             w-[340px] sm:w-[360px]
-            bg-white rounded-xl shadow-xl
+            bg-white text-black shadow-xl
             overflow-hidden
           "
         >
           {/* Card Image */}
-          <div className="relative w-full h-[200px]">
+          <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/timeline/card.png"
+              src="/assets/images/timeline/project-5.webp"
               alt="One Marina"
               fill
               className="object-cover"
@@ -162,8 +162,8 @@ export default function ProjectSection4({
 
           {/* Text */}
           <div className="px-6 pb-6 text-center">
-            <h3 className="text-xl font-light tracking-widest">
-              One Marina
+            <h3 className="text-xl font-light text-black tracking-widest">
+              ONE MARINA
             </h3>
             <p className="text-xs tracking-[0.3em] mt-1 text-gray-500">
               MARINE DRIVE
