@@ -1,0 +1,46 @@
+{
+  "name": "Ashwin Sheth Group",
+  "short_name": "AshwinSheth",
+  "description": "Luxury real estate experiences by Ashwin Sheth Group",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF6EF",
+  "theme_color": "#F28C28",
+  "orientation": "portrait-primary",
+
+  "icons": [
+    {
+      "src": "/icons/windows11/SmallTile.scale-100.png",
+      "sizes": "71x71"
+    },
+    {
+      "src": "/icons/windows11/SmallTile.scale-200.png",
+      "sizes": "142x142"
+    },
+    {
+      "src": "/icons/windows11/LargeTile.scale-200.png",
+      "sizes": "620x620"
+    },
+    {
+      "src": "/icons/android/android-launchericon-192-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android/android-launchericon-512-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/ios/180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/ios/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
