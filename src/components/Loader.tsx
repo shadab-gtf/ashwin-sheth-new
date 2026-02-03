@@ -31,9 +31,9 @@ export default function Loader({ onComplete }: { onComplete?: () => void }) {
 
             /* ---------------- ENTRY ---------------- */
             tl.from(logoRef.current, {
-                y: 20,
+                y: 10,
                 opacity: 0,
-                duration: 0.8,
+                duration: 1,
                 ease: 'power3.out',
             });
 
@@ -72,9 +72,10 @@ export default function Loader({ onComplete }: { onComplete?: () => void }) {
             tl.to(
                 [logoRef.current, barRef.current, textRef.current],
                 {
-                    y: -40,
+                    y: -10,
                     opacity: 0,
-                    duration: 0.6,
+                    duration: 1,
+                    delay: 0.2,
                     ease: 'power3.in',
                     stagger: 0.08,
                 }

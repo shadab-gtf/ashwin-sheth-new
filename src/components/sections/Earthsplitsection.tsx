@@ -311,7 +311,7 @@ export default function EarthSplitSection({
 
         <button
           className="relative w-fit text-sm font-bold uppercase  
-                     text-[#0E4194] pb-2 hover:opacity-70 transition-opacity pointer-events-auto"
+                     text-[#0E4194] pb-2 hover:opacity-70 transition-opacity cursor-pointer pointer-events-auto"
         >
           Read More
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#0E4194]" />

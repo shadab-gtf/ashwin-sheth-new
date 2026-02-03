@@ -383,7 +383,7 @@ export default function HorizontalTimeline({
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
                 className="w-12 h-12 flex items-center justify-center rounded-full
-                            text-black cursor-pointer"
+                            text-black cursor-pointer pointer-events-auto"
               >
                 <Image
                   src="/icons/right.png"
@@ -401,7 +401,7 @@ export default function HorizontalTimeline({
               <button
                 onClick={() => swiperRef.current?.slideNext()}
                 className="w-12 h-12 flex items-center justify-center rounded-full 
-                            text-black cursor-pointer"
+                            text-black cursor-pointer pointer-events-auto"
               >
                 <Image
                   src="/icons/right.png"
@@ -443,11 +443,10 @@ export default function HorizontalTimeline({
                       }
                       alt={slide.title}
                       fill
-                      className={`object-contain transition-all duration-1000 ${
-                        index === activeIndex
+                      className={`object-contain transition-all duration-1000 ${index === activeIndex
                           ? "scale-100 opacity-100"
                           : "scale-95 opacity-60"
-                      }`}
+                        }`}
                       priority={index === activeIndex}
                     />
                   </div>

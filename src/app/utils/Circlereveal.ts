@@ -131,7 +131,7 @@ export function createCircleRevealNoFade(
 
     gsap.timeline().to(circleEl, {
       clipPath: 'circle(150% at 50% 100%)',
-      duration: 5,
+      duration: 2,
       ease: 'power3.inOut',
     });
   }, label);

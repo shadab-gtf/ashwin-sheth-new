@@ -163,14 +163,14 @@ function Earth() {
 // scene
 function Scene() {
   const rotation = useMemo(
-  () =>
-    [
-      THREE.MathUtils.degToRad(20),   
-      THREE.MathUtils.degToRad(-165), 
-      0,
-    ] as [number, number, number],
-  [],
-);
+    () =>
+      [
+        THREE.MathUtils.degToRad(20),
+        THREE.MathUtils.degToRad(-165),
+        0,
+      ] as [number, number, number],
+    [],
+  );
   return (
     <>
       <ambientLight intensity={0.6} />
@@ -183,9 +183,9 @@ function Scene() {
       </group>
 
       {/* <OrbitControls enableZoom enablePan={true} enableRotate={true} /> */}
-       <OrbitControls
+      <OrbitControls
         enableZoom={false}
-         enableRotate={false}
+        enableRotate={false}
         enablePan={false}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 1.8}
@@ -198,12 +198,12 @@ function Scene() {
 export default function GlobeWithMarkers() {
   return (
     <Canvas
-     style={{ width: '100%', height: '100%', pointerEvents: 'none', }}
+      style={{ width: '100%', height: '100%', pointerEvents: 'none', }}
       camera={{ position: [0, 0, 10], fov: 75 }}
-    //   dpr={[1, 1.25]}
-     dpr={1} 
-    //   gl={{ antialias: true, powerPreference: "high-performance" }}
-     gl={{
+      //   dpr={[1, 1.25]}
+      dpr={1}
+      //   gl={{ antialias: true, powerPreference: "high-performance" }}
+      gl={{
         antialias: true,
         powerPreference: 'high-performance',
         preserveDrawingBuffer: true,

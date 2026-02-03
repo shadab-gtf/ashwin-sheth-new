@@ -120,5 +120,8 @@ img,
   display: none !important;
 }
 
-
-
+.canvas-container>div>div {
+  overflow: visible !important;
+  pointer-events: none !important;
+  touch-action: auto !important;
+}
