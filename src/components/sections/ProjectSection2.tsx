@@ -19,7 +19,7 @@ export default function ProjectSection2({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/project-1/project-2.webp"
+          src="/assets/images/project-1/project-3.webp"
           alt="Project Background"
           fill
           priority
@@ -39,7 +39,7 @@ export default function ProjectSection2({
           {/* Card Image */}
           <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/project-1/project-2.webp"
+              src="/assets/images/cards/edmont.webp"
               alt="One Marina"
               fill
               className="object-cover"

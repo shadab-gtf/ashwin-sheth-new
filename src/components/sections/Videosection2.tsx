@@ -5,7 +5,7 @@ import VideoStage from '@/components/sections/VideoStage';
 import { createCircleReveal } from '@/app/utils/Circlereveal';
 
 const VIDEO_2 = "/videos/Video2.mp4";
-const TEXT_2 = "Warm tones that welcome light and a sense of home.";
+const TEXT_2 = "Warm tones filled with light and comfort.";
 
 interface VideoSection2Props {
     refs: {
@@ -67,14 +67,14 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
                 className="absolute inset-0 z-20 opacity-0"
             >
                 <VideoStage src={VIDEO_2} isActive={activeVideo === 1} />
-                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 bg-black/50" />
             </div>
 
             {/* TEXT 2 */}
             <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none">
                 <h2
                     ref={refs.text2}
-                    className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-4xl leading-[1.2] opacity-0 drop-shadow-lg"
+                    className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg"
                 >
                     {TEXT_2}
                 </h2>

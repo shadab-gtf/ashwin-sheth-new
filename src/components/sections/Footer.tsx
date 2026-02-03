@@ -147,7 +147,7 @@ export default function Footer({ footerRef }: FooterProps) {
           <div className="flex flex-col items-center pt-6 md:pt-22">
             <div className="mb-4">
               <Image
-                src="/footerblack.png"
+                src="/blacklogo.png"
                 alt="Ashwin Sheth Group"
                 width={193}
                 height={100}
@@ -165,7 +165,7 @@ export default function Footer({ footerRef }: FooterProps) {
                     <Link
                       key={item}
                       href="#"
-                      className="text-xs md:text-sm text-black font-light tracking-[0.15em] hover:text-black/60 transition-colors duration-300"
+                      className="text-xs md:text-sm text-black font-light   hover:text-black/60 transition-colors duration-300"
                     >
                       {item}
                     </Link>
@@ -189,7 +189,7 @@ export default function Footer({ footerRef }: FooterProps) {
                 aria-expanded={accordionOpen}
                 aria-controls="footer-accordion"
               >
-                <span className="text-sm flex gap-2 items-center font-light tracking-[0.1em] group-hover:tracking-[0.15em] transition-all duration-300">
+                <span className="text-sm flex gap-2 items-center font-light tracking-[0.1em] group-hover:  transition-all duration-300">
                   EXPLORE ALL LINKS
                   <div ref={accordionIconRef} className="inline-flex">
                     <ChevronDown className="w-5 h-5" />
@@ -208,7 +208,7 @@ export default function Footer({ footerRef }: FooterProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pb-12 md:pb-16 pt-8">
                 {/* Quick Links */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
                     Quick Links
                   </h3>
                   <ul className="space-y-3">
@@ -233,7 +233,7 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Categories */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
                     Categories
                   </h3>
                   <ul className="space-y-3">
@@ -258,7 +258,7 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Services */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
                     Services
                   </h3>
                   <ul className="space-y-3">
@@ -283,7 +283,7 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Contact */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
                     Contact Us
                   </h3>
                   <ul className="space-y-3 text-black/60 text-xs md:text-sm font-light">

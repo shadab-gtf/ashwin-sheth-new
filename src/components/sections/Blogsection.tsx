@@ -319,6 +319,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import Link from 'next/link';
 
 interface BlogPost {
   id: number;
@@ -328,18 +329,20 @@ interface BlogPost {
   date: string;
   image: string;
   source: string;
+  link: string;
 }
 
 const BLOG_POSTS: BlogPost[] = [
   {
     id: 1,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
+    title: `Ashwin Sheth Group's Bold Move in Mumbai's Luxurious Housing Market`,
     // excerpt:
     //   "A landmark partnership bringing world-class luxury living to Mumbai's most prestigious locations.",
     category: 'News',
     date: '11th Jun, 2025',
     image: '/assets/images/blog/blog-1.jpg',
-    source: 'propnewstime.com',
+    source: 'devdiscourse.com',
+    link:'https://www.devdiscourse.com/article/science-environment/3455638-ashwin-sheth-groups-bold-move-in-mumbais-luxurious-housing-market',
   },
   {
     id: 2,
@@ -350,16 +353,18 @@ const BLOG_POSTS: BlogPost[] = [
     date: '8th Jun, 2025',
     image: '/assets/images/blog/blog-2.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
   {
     id: 3,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
+    title: 'Ashwin Sheth Group, PAG to co-develop luxury residential project in Marine Lines..',
     // excerpt:
     //   'Industry insights on emerging trends shaping the luxury property market.',
     category: 'News',
-    date: '5th Jun, 2025',
+    date: '16th Jun, 2025',
     image: '/assets/images/blog/blog-3.jpg',
     source: 'propnewstime.com',
+    link:'https://propnewstime.com/getdetailsStories/MTg5Njg=/ashwin-sheth-group-pag-to-co-develop-luxury-residential-project-in-marine-lines',
   },
   {
     id: 4,
@@ -370,16 +375,18 @@ const BLOG_POSTS: BlogPost[] = [
     date: '2nd Jun, 2025',
     image: '/assets/images/blog/blog-4.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
   {
     id: 5,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
+    title: `PAG invests Rs 540 cr in Ashwin Sheth Group's joint housing project in Mumbai'`,
     // excerpt:
     //   "A landmark partnership bringing world-class luxury living to Mumbai's most prestigious locations.",
     category: 'News',
     date: '11th Jun, 2025',
     image: '/assets/images/blog/blog-1.jpg',
-    source: 'propnewstime.com',
+    source: 'ptinews.com',
+    link:'https://www.ptinews.com/story/business/pag-invests-rs-540-cr-in-ashwin-sheth-group-s-joint-housing-project-in-mumbai/2637018',
   },
   {
     id: 6,
@@ -390,16 +397,18 @@ const BLOG_POSTS: BlogPost[] = [
     date: '8th Jun, 2025',
     image: '/assets/images/blog/blog-2.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
   {
     id: 7,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
+    title: 'Ashwin Sheth unveils an extensive multi-channel campaign across India and New York to launch the new logo',
     // excerpt:
     //   'Industry insights on emerging trends shaping the luxury property market.',
     category: 'News',
-    date: '5th Jun, 2025',
+    date: 'July 16, 2024',
     image: '/assets/images/blog/blog-3.jpg',
     source: 'propnewstime.com',
+    link:'https://audiencereports.in/ashwin-sheth-unveils-an-extensive/',
   },
   {
     id: 8,
@@ -410,16 +419,18 @@ const BLOG_POSTS: BlogPost[] = [
     date: '2nd Jun, 2025',
     image: '/assets/images/blog/blog-4.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
   {
     id: 9,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
+    title: `PAG invests $65 million in Ashwin Seth group’s luxury project in Mumbai`,
     // excerpt:
     //   "A landmark partnership bringing world-class luxury living to Mumbai's most prestigious locations.",
     category: 'News',
     date: '11th Jun, 2025',
     image: '/assets/images/blog/blog-1.jpg',
-    source: 'propnewstime.com',
+    source: 'thehindubusinessline.com',
+    link:'https://www.thehindubusinessline.com/companies/pag-invests-65-million-in-ashwin-seth-groups-luxury-project-in-mumbai/article69683889.ece',
   },
   {
     id: 10,
@@ -430,17 +441,9 @@ const BLOG_POSTS: BlogPost[] = [
     date: '8th Jun, 2025',
     image: '/assets/images/blog/blog-2.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
-  {
-    id: 11,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
-    // excerpt:
-    //   'Industry insights on emerging trends shaping the luxury property market.',
-    category: 'News',
-    date: '5th Jun, 2025',
-    image: '/assets/images/blog/blog-3.jpg',
-    source: 'propnewstime.com',
-  },
+  
   {
     id: 12,
     title: 'Ashwin Sheth Group, PAG to co-develop luxury resid',
@@ -450,6 +453,7 @@ const BLOG_POSTS: BlogPost[] = [
     date: '2nd Jun, 2025',
     image: '/assets/images/blog/blog-4.jpg',
     source: 'propnewstime.com',
+    link:'',
   },
 ];
 
@@ -670,7 +674,7 @@ export default function BlogSection({
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-[20px] font-[400] tracking-[2px]  mb-3 leading-snug text-black">
+                      <h3 className="text-[20px] font-normal tracking-[2px]  mb-3 leading-snug text-black line-clamp-4">
                         {post.title}
                       </h3>
 
@@ -682,7 +686,9 @@ export default function BlogSection({
                       {/* Footer */}
                       <div className="flex justify-between items-center mt-24 text-[10px] md:text-xs uppercase tracking-[2px] text-black/40 pt-4 ">
                         <span>{post.date}</span>
-                        <span className="text-[#1E40AF] font-medium">{post.category}</span>
+                       <Link href="">
+                       <span className="text-[#1E40AF] font-medium">{post.category}</span>
+                       </Link> 
                       </div>
                     </div>
                   </div>

@@ -50,7 +50,7 @@ export default function Header() {
 
         {/* NAV */}
         <div className="flex items-center justify-center gap-20">
-          <nav className="hidden md:flex items-center gap-10 text-xs font-bold uppercase tracking-[0.15em]">
+          <nav className="hidden md:flex items-center gap-10 text-xs font-bold uppercase ">
             <a href="#">Residential</a>
             <a href="#">Commercial</a>
             <a href="#">Land</a>

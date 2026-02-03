@@ -5,7 +5,7 @@ import VideoStage from '@/components/sections/VideoStage';
 import { createCircleReveal } from '@/app/utils/Circlereveal';
 
 const VIDEO_3 = "/videos/Video3.mp4";
-const TEXT_3 = "Shades of blue where water and design align.";
+const TEXT_3 = "Blue hues where water meets design.";
 
 interface VideoSection3Props {
     refs: {
@@ -121,14 +121,14 @@ export default function VideoSection3({ refs, activeVideo }: VideoSection3Props)
                 className="absolute inset-0 z-30 opacity-0"
             >
                 <VideoStage src={VIDEO_3} isActive={activeVideo === 2} />
-                <div className="absolute inset-0 bg-black/40" />
+                <div className="absolute inset-0 bg-black/50" />
             </div>
 
             {/* TEXT 3 */}
             <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none">
                 <h2
                     ref={refs.text3}
-                    className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-4xl leading-[1.2] opacity-0 drop-shadow-lg"
+                    className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg"
                 >
                     {TEXT_3}
                 </h2>

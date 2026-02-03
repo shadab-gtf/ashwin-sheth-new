@@ -37,7 +37,6 @@ export function createProjectTimeline(
     willChange: "transform, opacity",
   });
 
-  // ⬇️ START FROM BOTTOM
   gsap.set(projectRefs.circleProject.current, {
     opacity: 0,
     clipPath: "circle(0% at 50% 100%)",
@@ -122,7 +121,7 @@ export default function ProjectSection({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/project-1/project-1.webp"
+          src="/assets/images/project-1/project-2.webp"
           alt="Project Background"
           fill
           priority
@@ -142,7 +141,7 @@ export default function ProjectSection({
           {/* Card Image */}
           <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/project-1/project-1.webp"
+              src="/assets/images/cards/avalon.webp"
               alt="One Marina"
               fill
               className="object-cover"

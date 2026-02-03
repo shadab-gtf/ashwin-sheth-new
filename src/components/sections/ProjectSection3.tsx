@@ -122,11 +122,11 @@ export default function ProjectSection3({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/project-1/project-3.webp"
+          src="/assets/images/project-1/project-4.webp"
           alt="Project Background"
           fill
           priority
-          className="object-cover"
+          className="object-fill"
         />
 
         {/* RIGHT FLOATING CARD */}
@@ -142,7 +142,7 @@ export default function ProjectSection3({
           {/* Card Image */}
           <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/project-1/project-3.webp"
+              src="/assets/images/project-1/project-4.webp"
               alt="One Marina"
               fill
               className="object-cover"

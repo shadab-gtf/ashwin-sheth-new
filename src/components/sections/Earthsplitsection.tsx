@@ -243,7 +243,7 @@ export function createEarthSplitTimeline(
     {
       x: '22vw',
       y: '22vh',
-      scale: 1.25,
+      scale: 1,
       duration: 1.1,
       ease: 'power3.inOut',
     },
@@ -310,7 +310,7 @@ export default function EarthSplitSection({
         </p>
 
         <button
-          className="relative w-fit text-sm font-bold uppercase tracking-[0.15em]
+          className="relative w-fit text-sm font-bold uppercase  
                      text-[#0E4194] pb-2 hover:opacity-70 transition-opacity"
         >
           Read More

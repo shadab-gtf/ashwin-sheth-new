@@ -176,7 +176,7 @@ export default function EarthIntroSection({
           }}
         >
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png"
+            src="/assets/earth.png"
             alt="Earth"
             className="w-full h-full object-contain drop-shadow-2xl"
           />

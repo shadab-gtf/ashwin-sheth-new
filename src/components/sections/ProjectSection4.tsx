@@ -122,7 +122,7 @@ export default function ProjectSection4({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/timeline/project-5.webp"
+          src="/assets/images/project-1/night.jpg"
           alt="Project Background"
           fill
           priority
@@ -142,10 +142,10 @@ export default function ProjectSection4({
           {/* Card Image */}
           <div className="relative w-full h-[300px]">
             <Image
-              src="/assets/images/timeline/project-5.webp"
+              src="/assets/images/cards/Marina.jpg"
               alt="One Marina"
               fill
-              className="object-cover"
+              className="object-fill"
             />
           </div>
 
