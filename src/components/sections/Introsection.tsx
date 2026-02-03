@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import Image from 'next/image';
 import VideoStage from '@/components/sections/VideoStage';
 
-const VIDEO_1 = "/videos/video1.mp4";
+const VIDEO_1 = "/videos/Video1.mp4";
 const TEXT_1 = "Live amidst nature, wrapped in calming green serenity.";
 
 interface IntroSectionProps {

@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
 import { createCircleReveal } from '@/app/utils/Circlereveal';
 
-const VIDEO_2 = "/videos/video2.mp4";
+const VIDEO_2 = "/videos/Video2.mp4";
 const TEXT_2 = "Warm tones that welcome light and a sense of home.";
 
 interface VideoSection2Props {
