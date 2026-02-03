@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import gsap from "gsap";
+import Link from "next/link";
 
 /* ======================================================
    TIMELINE (NAMED EXPORT)
@@ -168,9 +169,10 @@ export default function ProjectSection({
               THANE
             </p>
 
-            <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
+         <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
               VIEW PROJECT
             </button>
+            </Link>
           </div>
         </div>
       </section>

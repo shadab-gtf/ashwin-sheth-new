@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import gsap from "gsap";
+import Link from "next/link";
 
 /* ======================================================
    TIMELINE (NAMED EXPORT)
@@ -145,7 +146,7 @@ export default function ProjectSection4({
               src="/assets/images/cards/Marina.jpg"
               alt="One Marina"
               fill
-              className="object-fill"
+              className="object-cover"
             />
           </div>
 
@@ -169,9 +170,10 @@ export default function ProjectSection4({
               MARINE DRIVE
             </p>
 
-            <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
+           <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
               VIEW PROJECT
             </button>
+            </Link>
           </div>
         </div>
       </section>

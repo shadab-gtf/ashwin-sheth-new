@@ -314,7 +314,7 @@ const TIMELINE_DATA: TimelineSlide[] = [
     bottomTitleText:
       "With launch of Edmont in Kandivali West & last 3 towers in Avalon, AGS continued its growth in premium & luxury segment the latest being One Marina at marine lines.",
     activeImage: "/timeline/new-6.webp",
-     sketchImage: "/timeline/timeline/1.svg",
+    sketchImage: "/timeline/timeline/1.svg",
   },
 ];
 
@@ -345,7 +345,6 @@ export default function HorizontalTimeline({
       ease: "power3.out",
     });
   }, [activeIndex, totalSlides]);
-
 
   useEffect(() => {
     if (activeIndex === totalSlides - 1 && !hasCompletedRef.current) {
@@ -384,7 +383,7 @@ export default function HorizontalTimeline({
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
                 className="w-12 h-12 flex items-center justify-center rounded-full
-                           bg-white text-black cursor-pointer"
+                            text-black cursor-pointer"
               >
                 <Image
                   src="/icons/right.png"
@@ -396,13 +395,13 @@ export default function HorizontalTimeline({
               </button>
 
               <div className="w-10 h-10 rounded-full border border-black text-black text-xs flex items-center justify-center">
-                {activeIndex + 2} / {totalSlides}
+                {/* {activeIndex + 2} / {totalSlides} */}
               </div>
 
               <button
                 onClick={() => swiperRef.current?.slideNext()}
                 className="w-12 h-12 flex items-center justify-center rounded-full 
-                           bg-white text-black cursor-pointer"
+                            text-black cursor-pointer"
               >
                 <Image
                   src="/icons/right.png"
@@ -467,7 +466,7 @@ export default function HorizontalTimeline({
         <button
           onClick={() => swiperRef.current?.slidePrev()}
           className="w-11 h-11 rounded-full  flex items-center justify-center
-                     bg-white text-black cursor-pointer"
+                      text-black cursor-pointer"
         >
           <ChevronRight className="rotate-180" />
         </button>
@@ -479,7 +478,7 @@ export default function HorizontalTimeline({
         <button
           onClick={() => swiperRef.current?.slideNext()}
           className="w-11 h-11 rounded-full  flex items-center justify-center
-                     bg-white text-black cursor-pointer"
+                      text-black cursor-pointer"
         >
           <ChevronRight />
         </button>

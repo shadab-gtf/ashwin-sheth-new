@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProjectSectionProps {
   projectRef: React.RefObject<HTMLDivElement | null>;
@@ -66,9 +67,10 @@ export default function ProjectSection2({
               KANDIVALI WEST
             </p>
 
-            <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
+         <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
               VIEW PROJECT
             </button>
+            </Link>
           </div>
         </div>
       </section>

@@ -243,7 +243,7 @@ export function createEarthSplitTimeline(
     {
       x: '22vw',
       y: '22vh',
-      scale: 1,
+      scale: 1.25,
       duration: 1.1,
       ease: 'power3.inOut',
     },
@@ -311,7 +311,7 @@ export default function EarthSplitSection({
 
         <button
           className="relative w-fit text-sm font-bold uppercase  
-                     text-[#0E4194] pb-2 hover:opacity-70 transition-opacity"
+                     text-[#0E4194] pb-2 hover:opacity-70 transition-opacity pointer-events-auto"
         >
           Read More
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#0E4194]" />
@@ -324,7 +324,7 @@ export default function EarthSplitSection({
         className="absolute bottom-8 left-0 w-full z-40 
                    opacity-0 pointer-events-none"
       >
-        <div className="max-w-7xl mx-auto px-12">
+        <div className="w-full mx-auto px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {[
               ['85+', 'LANDMARK PROJECTS'],
