@@ -45,8 +45,8 @@ const VideoStage = forwardRef<HTMLVideoElement, VideoStageProps>(
                     video.addEventListener('loadeddata', onLoaded, { once: true });
                 }
             } else {
-                video.pause();
-                video.currentTime = 0;
+                // video.pause();
+                // video.currentTime = 0;
             }
 
             return () => {
