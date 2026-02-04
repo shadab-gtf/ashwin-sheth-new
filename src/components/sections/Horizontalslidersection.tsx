@@ -259,7 +259,7 @@ export default function HorizontalSliderSection({
         <HorizontalTimelineSection />
       </div>
 
-      {/* Circle reveal overlay */}
+      {/* Circle reveal overlay */}    
       <div
         ref={circleFinalRef}
         className="fixed inset-0 z-70 pointer-events-none opacity-0"
