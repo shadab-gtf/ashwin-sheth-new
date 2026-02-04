@@ -2,7 +2,7 @@
 
 import gsap from 'gsap';
 import React from 'react';
-import { createCircleReveal } from '@/app/utils/Circlereveal';
+import { createCircleReveal } from '@/utils/Circlereveal';
 
 interface EarthIntroSectionProps {
   refs: {
@@ -33,8 +33,8 @@ export function createEarthIntroTimeline(
   });
 
   scrollTL.set(refs.earth.current, {
-    y: '75vh',     // bottom
-    scale: 0.65,
+    y: '80vh',     // bottom
+    scale: 0.75,
     opacity: 1,
   });
 
@@ -64,12 +64,12 @@ export function createEarthIntroTimeline(
   scrollTL.to(
     refs.earth.current,
     {
-      y: '30vh',
+      y: '34vh',
       scale: 1,
-      duration: 1.2,
+      duration: 1,
       ease: 'power3.inOut',
     },
-    'earth_intro+=1.35' // reveal (1.2s) + buffer
+    'earth_intro+=0.35' // reveal (1.2s) + buffer
   );
 
   /* ---------- SCROLL DOWN INDICATOR ---------- */

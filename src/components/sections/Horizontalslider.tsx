@@ -566,14 +566,14 @@ export default function HorizontalTimelineSection() {
   return (
     <div className="w-full h-screen bg-[#FFF8F0] overflow-hidden relative">
       {/* TITLE */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10 text-center">
+      <div className="absolute top-30 left-1/2 -translate-x-1/2 z-10 text-center">
         <h2 className="text-[#F07D00] text-xl md:text-2xl tracking-[2px] font-light">
           A (Journey) Through Time
         </h2>
       </div>
 
       {/* SLIDER */}
-      <div className="absolute inset-0 flex items-center pt-24">
+      <div className="absolute inset-0 flex items-center pt-10">
         <div
           data-timeline-container
           className="flex items-center gap-[150px] px-[5%] pl-[400px]"
@@ -589,9 +589,9 @@ export default function HorizontalTimelineSection() {
                 {/* LEFT TEXT */}
                 <div
                   data-timeline-text-left
-                  className="w-[400] absolute left-[-30%] top-[50%]"
+                  className="w-[400] absolute left-[-35%] top-[40%]"
                 >
-                  <h3 className="text-[#1a5490] text-3xl md:text-4xl italic font-light">
+                  <h3 className="text-black text-3xl md:text-4xl italic font-light">
                     {slide.year}:<br />
                     {slide.title}
                   </h3>
@@ -603,7 +603,7 @@ export default function HorizontalTimelineSection() {
                   className="w-[100%] flex justify-center"
                   style={{ transform: "scale(0.95)" }}
                 >
-                  <div className="relative w-full aspect-[3/4] max-w-[450px]">
+                  <div className="relative w-full aspect-[3/4] max-w-[450px] h-[409px]">
                     {/* ACTIVE IMAGE – hidden by default */}
                     <Image
                       data-image-active
@@ -629,12 +629,12 @@ export default function HorizontalTimelineSection() {
               {/* BOTTOM TEXT */}
               <div
                 data-timeline-text-bottom
-                className="absolute bottom-5 left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center"
+                className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center"
               >
-                <h4 className="text-[#1a5490] text-2xl md:text-3xl font-light mb-4">
+                <h4 className="text-black text-xl  font-medium mb-2">
                   {slide.year}
                 </h4>
-                <p className="text-black text-base md:text-lg max-w-[700px] mx-auto">
+                <p className="text-black text-base  max-w-[700px] mx-auto">
                   {slide.description}
                 </p>
               </div>
@@ -644,7 +644,7 @@ export default function HorizontalTimelineSection() {
       </div>
 
       {/* PROGRESS BAR */}
-      <div className="absolute bottom-3 left-0 right-0 h-[3px] bg-[#F07D00]/20">
+      <div className="absolute bottom-10 left-0 right-0 h-[3px] bg-[#F07D00]/20">
         <div
           data-scroll-progress
           className="h-full bg-[#F07D00] origin-left"

@@ -175,7 +175,7 @@
 
 import gsap from 'gsap';
 import React from 'react';
-import { createCircleReveal } from '@/app/utils/Circlereveal';
+import { createCircleReveal } from '@/utils/Circlereveal';
 
 interface EarthSplitSectionProps {
   refs: {

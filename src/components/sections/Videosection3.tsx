@@ -2,7 +2,7 @@
 
 import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
-import { createCircleReveal } from '@/app/utils/Circlereveal';
+import { createCircleReveal } from '@/utils/Circlereveal';
 
 const VIDEO_3 = "/videos/Video3.mp4";
 const TEXT_3 = "Blue hues where water meets design.";

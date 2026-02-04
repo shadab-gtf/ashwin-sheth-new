@@ -8,6 +8,7 @@ interface HorizontalSliderSectionProps {
   circleFinalRef: React.RefObject<HTMLDivElement | null>;
 }
 
+
 export function createHorizontalSliderTimeline(
   scrollTL: gsap.core.Timeline,
   earthSplitRefs: {
@@ -21,14 +22,13 @@ export function createHorizontalSliderTimeline(
   }
 ) {
   /* =========================================================
-     TIMING & EASING
+     CONFIG (LUXURY TUNED)
   ========================================================= */
-  const TIMING = {
-    SCROLL_DURATION: 10,
-  };
+  const SCROLL_DURATION = 10;
+  const CENTER_THRESHOLD = 0.28; 
 
   /* =========================================================
-     INITIAL STATE – SLIDER HIDDEN
+     INITIAL STATE
   ========================================================= */
   scrollTL.set(sliderRefs.slider.current, {
     opacity: 0,
@@ -37,17 +37,10 @@ export function createHorizontalSliderTimeline(
     zIndex: 60,
   });
 
-  scrollTL.set(sliderRefs.circleFinal.current, {
-    opacity: 0,
-    clipPath: 'circle(0% at 50% 100%)',
-    backgroundColor: '#FFF8F0',
-    willChange: 'clip-path',
-  });
-
-  scrollTL.addLabel('timeline_reveal');
+ 
 
   /* =========================================================
-     FADE OUT EARTH CONTENT
+     FADE EARTH
   ========================================================= */
   scrollTL.to(
     [
@@ -55,7 +48,7 @@ export function createHorizontalSliderTimeline(
       earthSplitRefs.gridContent.current,
       earthSplitRefs.stats.current,
     ],
-    { opacity: 0, stagger: 0.08 },
+    { opacity: 0, stagger: 1 },
     'timeline_reveal'
   );
 
@@ -63,21 +56,17 @@ export function createHorizontalSliderTimeline(
      CIRCLE REVEAL
   ========================================================= */
   scrollTL.add(() => {
-    gsap.set(sliderRefs.circleFinal.current, {
-      opacity: 1,
-      clipPath: 'circle(0% at 50% 100%)',
-    });
-
     gsap.timeline()
+      .set(sliderRefs.circleFinal.current, { opacity: 1 })
       .to(sliderRefs.circleFinal.current, {
         clipPath: 'circle(150% at 50% 100%)',
-        duration: 1.1,
+        duration: 1.2,
         ease: 'power4.inOut',
       })
       .to(sliderRefs.circleFinal.current, {
         opacity: 0,
-        duration: 0.35,
-      }, '-=0.25');
+        duration: 0.4,
+      }, '-=0.3');
   }, 'timeline_reveal+=0.05');
 
   /* =========================================================
@@ -94,7 +83,7 @@ export function createHorizontalSliderTimeline(
   );
 
   /* =========================================================
-     HORIZONTAL SCROLL SETUP
+     SETUP SLIDES
   ========================================================= */
   const sliderEl = sliderRefs.slider.current;
   if (!sliderEl) return;
@@ -106,111 +95,76 @@ export function createHorizontalSliderTimeline(
     container.querySelectorAll('[data-timeline-slide]')
   ) as HTMLElement[];
 
-  const totalSlides = slides.length;
-  const scrollDistance = 750 * (totalSlides);
+  const scrollDistance = 750 * slides.length;
 
   /* =========================================================
-     INITIAL IMAGE STATE (SKETCH ONLY)
+     PREP ELEMENTS + QUICK SETTERS
   ========================================================= */
-  slides.forEach((slide) => {
-    const centerActive = slide.querySelector('[data-image-active]');
-    const centerSketch = slide.querySelector('[data-image-sketch]');
-    const rightActive = slide.querySelector('[data-right-active]');
-    const rightSketch = slide.querySelector('[data-right-sketch]');
+  const slideState = slides.map((slide) => {
+    const centerActive = slide.querySelector('[data-image-active]') as HTMLElement;
+    const centerSketch = slide.querySelector('[data-image-sketch]') as HTMLElement;
+    const rightActive = slide.querySelector('[data-right-active]') as HTMLElement;
+    const rightSketch = slide.querySelector('[data-right-sketch]') as HTMLElement;
+    const leftText = slide.querySelector('[data-timeline-text-left]') as HTMLElement;
+    const bottomText = slide.querySelector('[data-timeline-text-bottom]') as HTMLElement;
 
-    if (centerActive && centerSketch) {
-      gsap.set(centerActive, { opacity: 0 });
-      gsap.set(centerSketch, { opacity: 1 });
-    }
+    gsap.set([centerActive, rightActive], { opacity: 0, scale: 0.96 });
+    gsap.set([centerSketch, rightSketch], { opacity: 1 });
+    gsap.set([leftText, bottomText], { opacity: 0, y: 16 });
 
-    if (rightActive && rightSketch) {
-      gsap.set(rightActive, { opacity: 0 });
-      gsap.set(rightSketch, { opacity: 1 });
-    }
+    return {
+      centerActive,
+      centerSketch,
+      rightActive,
+      rightSketch,
+      leftText,
+      bottomText,
+      setActive: {
+        ca: gsap.quickTo(centerActive, 'opacity', { duration: 0.5, ease: 'expo.out' }),
+        cs: gsap.quickTo(centerSketch, 'opacity', { duration: 0.4, ease: 'expo.out' }),
+        ra: gsap.quickTo(rightActive, 'opacity', { duration: 0.5, ease: 'expo.out' }),
+        rs: gsap.quickTo(rightSketch, 'opacity', { duration: 0.4, ease: 'expo.out' }),
+        lt: gsap.quickTo(leftText, 'opacity', { duration: 0.6, ease: 'power3.out' }),
+        bt: gsap.quickTo(bottomText, 'opacity', { duration: 0.6, ease: 'power3.out' }),
+      },
+    };
   });
 
   /* =========================================================
-     PAUSE BEFORE SCROLL
+     SCROLL START
   ========================================================= */
   scrollTL.addLabel('timeline_scroll_start', '+=1');
 
-  /* =========================================================
-     HORIZONTAL MOVE + REAL CENTER DETECTION
-  ========================================================= */
   scrollTL.to(
     container,
     {
       x: -scrollDistance,
-      duration: TIMING.SCROLL_DURATION,
+      duration: SCROLL_DURATION,
       ease: 'none',
 
       onUpdate: () => {
         const viewportCenter = window.innerWidth / 2;
 
-        let activeIndex = -1;
-        let closestDistance = Infinity;
-
-        slides.forEach((slide, index) => {
-          const rect = slide.getBoundingClientRect();
+        slideState.forEach((state, index) => {
+          const rect = slides[index].getBoundingClientRect();
           const slideCenter = rect.left + rect.width / 2;
-          const distance = Math.abs(slideCenter - viewportCenter);
+          const distanceRatio =
+            Math.abs(slideCenter - viewportCenter) / rect.width;
 
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            activeIndex = index;
-          }
-        });
+          const isActive = distanceRatio < CENTER_THRESHOLD;
 
-        slides.forEach((slide, index) => {
-          const isActive = index === activeIndex;
+          state.setActive.ca(isActive ? 1 : 0);
+          state.setActive.cs(isActive ? 0 : 1);
+          state.setActive.ra(isActive ? 1 : 0);
+          state.setActive.rs(isActive ? 0 : 1);
+          state.setActive.lt(isActive ? 1 : 0);
+          state.setActive.bt(isActive ? 1 : 0);
 
-          const centerActive = slide.querySelector('[data-image-active]');
-          const centerSketch = slide.querySelector('[data-image-sketch]');
-          const rightActive = slide.querySelector('[data-right-active]');
-          const rightSketch = slide.querySelector('[data-right-sketch]');
-          const leftText = slide.querySelector('[data-timeline-text-left]');
-          const bottomText = slide.querySelector('[data-timeline-text-bottom]');
-
-          /* CENTER IMAGE */
-          if (centerActive && centerSketch) {
-            gsap.to(centerActive, {
-              opacity: isActive ? 1 : 0,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-
-            gsap.to(centerSketch, {
-              opacity: isActive ? 0 : 1,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-            gsap.to(leftText, {
-              opacity: isActive ? 1 : 0,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-            gsap.to(bottomText, {
-              opacity: isActive ? 1 : 0,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-
-          }
-
-          /* RIGHT IMAGE – SAME CENTER RULE */
-          if (rightActive && rightSketch) {
-            gsap.to(rightActive, {
-              opacity: isActive ? 1 : 0,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-
-            gsap.to(rightSketch, {
-              opacity: isActive ? 0 : 1,
-              duration: 0.3,
-              ease: 'power2.out',
-            });
-          }
+          gsap.to(state.centerActive, {
+            scale: isActive ? 1 : 0.96,
+            duration: 0.6,
+            ease: 'power3.out',
+          });
         });
       },
     },
@@ -224,11 +178,7 @@ export function createHorizontalSliderTimeline(
   if (progressBar) {
     scrollTL.to(
       progressBar,
-      {
-        scaleX: 1,
-        duration: TIMING.SCROLL_DURATION,
-        ease: 'none',
-      },
+      { scaleX: 1, duration: SCROLL_DURATION, ease: 'none' },
       'timeline_scroll_start'
     );
   }

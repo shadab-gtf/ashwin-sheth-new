@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Pera from "@/components/common/typography/Pera";
 import Heading from "@/components/common/typography/Heading";
-import useIsMobile from "@/app/hooks/useIsMobile";
+import useIsMobile from "@/hooks/useIsMobile";
 import ScrollTo from "@/components/common/Buttons/ScrollTo";
 import ViewMore from "@/components/common/Buttons/ViewMore";
 

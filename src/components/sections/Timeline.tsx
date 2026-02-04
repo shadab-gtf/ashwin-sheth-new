@@ -6,9 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Heading from "@/components/common/typography/Heading";
 import Pera from "@/components/common/typography/Pera";
-import useIsMobile from "@/app/hooks/useIsMobile";
+import useIsMobile from "@/hooks/useIsMobile";
 import ScrollTo from "@/components/common/Buttons/ScrollTo";
-import { setArrayRef } from "@/app/utils/setArrayRef";
+import { setArrayRef } from "@/utils/setArrayRef";
 
 gsap.registerPlugin(ScrollTrigger);
 

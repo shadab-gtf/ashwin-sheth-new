@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { usePWAStore } from "@/app/store/usePWAStore";
+import { usePWAStore } from "@/store/usePWAStore";
 
 export default function PWAInstallPopup() {
   const { isVisible, deferredPrompt, hide } = usePWAStore();

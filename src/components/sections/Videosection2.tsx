@@ -2,7 +2,7 @@
 
 import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
-import { createCircleReveal } from '@/app/utils/Circlereveal';
+import { createCircleReveal } from '@/utils/Circlereveal';
 
 const VIDEO_2 = "/videos/Video2.mp4";
 const TEXT_2 = "Warm tones filled with light and comfort.";

@@ -21,8 +21,8 @@ import BrandUnfoldedSection from '@/components/sections/BrandUnfoldedSection';
 import Footer from '@/components/sections/Footer';
 
 /* UTILS */
-import { lockScroll, unlockScroll } from '@/app/utils/scrollLock';
-import { createExactCircleReveal } from '@/app/utils/createExactCircleReveal';
+import { lockScroll, unlockScroll } from '@/utils/scrollLock';
+import { createExactCircleReveal } from '@/utils/createExactCircleReveal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,11 +31,11 @@ gsap.registerPlugin(ScrollTrigger);
 // ============================================================================
 const TIMING = {
   REVEAL_DURATION: 1.4,        // Consistent reveal duration for all sections
-  FADE_DURATION: 0.8,          // Standard fade in/out
+  FADE_DURATION: 0.2,          // Standard fade in/out
   CONTENT_DELAY: 0.6,          // Delay before content fades in
   TEXT_DELAY: 0.8,             // Delay for text reveals
-  HOLD_DURATION: 2.2,          // Standard hold time for viewing
-  TRANSITION_GAP: 0.8,         // Gap between major transitions
+  HOLD_DURATION: 1.2,          // Standard hold time for viewing
+  TRANSITION_GAP: 1,         // Gap between major transitions
 } as const;
 
 const EASING = {
@@ -234,14 +234,14 @@ export default function MasterSequence() {
             start: 'top top',
             end: '+=3000%',
             pin: true,
-            scrub: 1, // Perfectly synced with Lenis smooth scroll
+            scrub: 1, 
             anticipatePin: 1,
             invalidateOnRefresh: true,
           },
         });
 
         // ============================================================
-        // VIDEO TRANSITIONS (Refactored)
+        // VIDEO TRANSITIONS
         // ============================================================
         VIDEO_TRANSITIONS.forEach((transition) => {
           scrollTL.addLabel(transition.label);
@@ -316,7 +316,7 @@ export default function MasterSequence() {
               opacity: 1,
               duration: TIMING.CONTENT_DELAY,
               ease: EASING.CONTENT_IN,
-            }, transition.label + '+=0.5');
+            }, transition.label + '+=1');
           }
 
           scrollTL.to({}, { duration: TIMING.TRANSITION_GAP });
@@ -345,7 +345,7 @@ export default function MasterSequence() {
           scrollTL.set(refs.earthIntro.earth.current, { zIndex: 27, scale: 0.65, y: '75vh' }, 'earth_intro');
           scrollTL.to(refs.earthIntro.earth.current, {
             y: '30vh',
-            scale: 1, // Stable center scale
+            scale: 1, 
             opacity: 1,
             duration: TIMING.REVEAL_DURATION,
             ease: EASING.PRIMARY,
@@ -403,7 +403,7 @@ export default function MasterSequence() {
         if (refs.earthIntro.earth.current) {
           scrollTL.to(refs.earthIntro.earth.current, {
             scale: 1.15,
-            duration: 1.2,
+            duration: 1,
             ease: EASING.PRIMARY,
           }, 'earth_center');
         }
@@ -460,7 +460,7 @@ export default function MasterSequence() {
             {
               y: 0,
               opacity: 1,
-              duration: TIMING.REVEAL_DURATION * 1.2,
+              duration: TIMING.REVEAL_DURATION * 1,
               ease: EASING.CONTENT_IN,
               onComplete: () => { gsap.set(refs.earthSplit.stats.current, { pointerEvents: 'all' }); },
             },
@@ -468,7 +468,7 @@ export default function MasterSequence() {
           );
         }
 
-        scrollTL.to({}, { duration: 1.2 });
+        scrollTL.to({}, { duration: 2 });
 
         // ============================================================
         // HORIZONTAL TIMELINE SECTION

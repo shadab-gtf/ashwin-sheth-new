@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { usePWAStore } from "@/app/store/usePWAStore";
+import { usePWAStore } from "@/store/usePWAStore";
 
 export default function PWARegister() {
   const pathname = usePathname();
