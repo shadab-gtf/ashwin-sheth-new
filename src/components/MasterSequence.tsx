@@ -11,7 +11,7 @@ import VideoSection3 from '@/components/sections/Videosection3';
 import EarthIntroSection from '@/components/sections/Earthintrosection';
 import EarthCenterSection from '@/components/sections/Earthcentersection';
 import EarthSplitSection from '@/components/sections/Earthsplitsection';
-import HorizontalSliderSection from '@/components/sections/Horizontalslidersection';
+import HorizontalSliderSection, { createHorizontalSliderTimeline } from '@/components/sections/Horizontalslidersection';
 import ProjectSection from '@/components/sections/ProjectSection';
 import ProjectSection2 from '@/components/sections/ProjectSection2';
 import ProjectSection3 from '@/components/sections/ProjectSection3';
@@ -209,22 +209,6 @@ export default function MasterSequence() {
   useLayoutEffect(() => {
 
     lockScroll();
-    const handler = (e: MouseEvent) => {
-      const el = document.elementFromPoint(e.clientX, e.clientY);
-      console.log('🧱 CLICK INTERCEPTED BY:', el);
-      if (el) {
-        console.log('tag:', el.tagName);
-        console.log('class:', el.className);
-        console.log(
-          'pointer-events:',
-          window.getComputedStyle(el).pointerEvents
-        );
-      }
-    };
-
-    window.addEventListener('click', handler, true);
-
-
     const ctx = gsap.context(() => {
       // ================================================================
       // INTRO TIMELINE
@@ -487,50 +471,20 @@ export default function MasterSequence() {
         scrollTL.to({}, { duration: 1.2 });
 
         // ============================================================
-        // HORIZONTAL SLIDER SECTION
+        // HORIZONTAL TIMELINE SECTION
         // ============================================================
-        scrollTL.addLabel('slider_reveal');
-        scrollTL.call(() => dispatchHeaderEvent('black'), undefined, 'slider_reveal');
-
-        const earthParts = [
-          refs.earthIntro.earth.current,
-          refs.earthSplit.gridContent.current,
-          refs.earthSplit.stats.current,
-        ].filter(Boolean);
-
-        scrollTL.to(earthParts, {
-          opacity: 0,
-          pointerEvents: 'none',
-          duration: TIMING.FADE_DURATION,
-          stagger: 0.08,
-          ease: EASING.FADE,
-        }, 'slider_reveal');
-
-        createExactCircleReveal(scrollTL, refs.slider.circleFinal.current, 'slider_reveal', {
-          color: '#FFF8F0',
-          zIndex: 60,
-        });
-
-        if (refs.slider.slider.current) {
-          scrollTL.set(refs.slider.slider.current, {
-            zIndex: 61,
-            pointerEvents: 'none',
-          }, 'slider_reveal');
-          scrollTL.fromTo(
-            refs.slider.slider.current,
-            { opacity: 0 },
-            {
-              opacity: 1,
-              pointerEvents: 'all',
-              duration: TIMING.FADE_DURATION,
-              ease: EASING.CONTENT_IN,
-            },
-            'slider_reveal+=0.6'
-          );
-        }
-
-        // HOLD SLIDER for interaction
-        scrollTL.to({}, { duration: 1 });
+        createHorizontalSliderTimeline(
+          scrollTL,
+          {
+            earth: refs.earthIntro.earth,
+            gridContent: refs.earthSplit.gridContent,
+            stats: refs.earthSplit.stats,
+          },
+          {
+            slider: refs.slider.slider,
+            circleFinal: refs.slider.circleFinal,
+          }
+        );
 
         // ============================================================
         // PROJECT SECTIONS (Refactored)
@@ -656,7 +610,7 @@ export default function MasterSequence() {
         }
 
         createExactCircleReveal(scrollTL, refs.blog.circleBlog.current, 'blog_reveal', {
-          color: '#000000',
+          color: '#fff',
           zIndex: 70,
         });
 

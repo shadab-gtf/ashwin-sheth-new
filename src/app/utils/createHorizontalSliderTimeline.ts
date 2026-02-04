@@ -1,39 +1,203 @@
+'use client';
+
 import gsap from 'gsap';
 
 export function createHorizontalSliderTimeline(
   scrollTL: gsap.core.Timeline,
-  sliderRef: React.RefObject<HTMLDivElement>,
-  circleFinalRef: React.RefObject<HTMLDivElement>
+  earthSplitRefs: {
+    earth: React.RefObject<HTMLDivElement | null>;
+    gridContent: React.RefObject<HTMLDivElement | null>;
+    stats: React.RefObject<HTMLDivElement | null>;
+  },
+  sliderRefs: {
+    slider: React.RefObject<HTMLDivElement | null>;
+    circleFinal: React.RefObject<HTMLDivElement | null>;
+  }
 ) {
-  const slides = gsap.utils.toArray<HTMLElement>('.slide');
-  const track = sliderRef.current!.querySelector('.slider-track')!;
-  const progressBar =
-    sliderRef.current!.querySelector('.progress-bar')!;
+  /* =========================================================
+     TIMING & EASING
+  ========================================================= */
+  const TIMING = {
+    REVEAL_DURATION: 1.2,
+    SCROLL_DURATION: 10,
+  };
 
-  scrollTL.to(track, {
-    xPercent: -100 * (slides.length - 1),
-    ease: 'none',
-    duration: slides.length,
+  const EASING = {
+    REVEAL: 'power4.inOut',
+    SMOOTH: 'power2.out',
+  };
+
+  /* =========================================================
+     INITIAL STATE
+     Slider hidden until reveal is complete
+  ========================================================= */
+  scrollTL.set(sliderRefs.slider.current, {
+    opacity: 0,
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    zIndex: 60,
   });
 
+  scrollTL.set(sliderRefs.circleFinal.current, {
+    opacity: 0,
+    clipPath: 'circle(0% at 50% 100%)',
+    backgroundColor: '#FFF8F0',
+    willChange: 'clip-path',
+  });
+
+  scrollTL.addLabel('timeline_reveal');
+
+  /* =========================================================
+     FADE OUT EARTH CONTENT (NO FANCY EFFECTS)
+  ========================================================= */
   scrollTL.to(
-    progressBar,
+    [
+      earthSplitRefs.earth.current,
+      earthSplitRefs.gridContent.current,
+      earthSplitRefs.stats.current,
+    ],
     {
-      scaleX: 1,
-      ease: 'none',
-      duration: slides.length,
+      opacity: 0,
+      stagger: 0.08,
     },
-    0
+    'timeline_reveal'
   );
 
-  scrollTL.fromTo(
-    circleFinalRef.current,
-    { scale: 0, opacity: 0 },
-    {
-      scale: 30,
+  /* =========================================================
+     CIRCLE REVEAL (ENTRY TRANSITION)
+  ========================================================= */
+  scrollTL.add(() => {
+    gsap.set(sliderRefs.circleFinal.current, {
       opacity: 1,
-      duration: 1,
-      ease: 'power4.inOut',
-    }
+      clipPath: 'circle(0% at 50% 100%)',
+    });
+
+    gsap.timeline()
+      .to(sliderRefs.circleFinal.current, {
+        clipPath: 'circle(150% at 50% 100%)',
+        duration: 1.1,
+        ease: EASING.REVEAL,
+      })
+      .to(
+        sliderRefs.circleFinal.current,
+        {
+          opacity: 0,
+          duration: 0.35,
+        },
+        '-=0.25'
+      );
+  }, 'timeline_reveal+=0.05');
+
+  /* =========================================================
+     SHOW SLIDER CONTAINER
+  ========================================================= */
+  scrollTL.to(
+    sliderRefs.slider.current,
+    {
+      opacity: 1,
+      visibility: 'visible',
+      pointerEvents: 'all',
+    },
+    'timeline_reveal+=0.7'
   );
+
+  /* =========================================================
+     HORIZONTAL SCROLL LOGIC
+  ========================================================= */
+  const sliderEl = sliderRefs.slider.current;
+  if (!sliderEl) return;
+
+  const container = sliderEl.querySelector('[data-timeline-container]') as HTMLElement;
+  if (!container) return;
+
+  const slides = container.querySelectorAll('[data-timeline-slide]');
+  const totalSlides = slides.length;
+
+  const scrollDistance = (window.innerWidth * 1.1) * (totalSlides - 1);
+
+  /* =========================================================
+     1s CINEMATIC PAUSE BEFORE SCROLL
+  ========================================================= */
+  scrollTL.addLabel('timeline_scroll_start', '+=1');
+
+  scrollTL.to(
+    container,
+    {
+      x: -scrollDistance,
+      duration: TIMING.SCROLL_DURATION,
+      ease: 'none',
+    },
+    'timeline_scroll_start'
+  );
+
+  /* =========================================================
+     SLIDE ACTIVATION (NO FADE – TRANSFORM ONLY)
+  ========================================================= */
+  slides.forEach((slide, index) => {
+    const textLeft = slide.querySelector('[data-timeline-text-left]');
+    const imageCenter = slide.querySelector('[data-timeline-image-center]');
+    const imageSketch = slide.querySelector('[data-timeline-image-sketch]');
+    const textBottom = slide.querySelector('[data-timeline-text-bottom]');
+
+    if (!textLeft || !imageCenter || !imageSketch || !textBottom) return;
+
+    const slideProgress = index / (totalSlides - 1);
+    const revealAt = `timeline_scroll_start+=${slideProgress * TIMING.SCROLL_DURATION}`;
+
+    /* LEFT TEXT */
+    scrollTL.to(
+      textLeft,
+      { x: 0, duration: TIMING.REVEAL_DURATION, ease: EASING.SMOOTH },
+      revealAt
+    );
+
+    /* CENTER IMAGE (ACTIVE MOMENT) */
+    scrollTL.to(
+      imageCenter,
+      {
+        scale: 1,
+        duration: TIMING.REVEAL_DURATION,
+        ease: 'power3.out',
+      },
+      revealAt
+    );
+
+    /* RIGHT SKETCH */
+    scrollTL.to(
+      imageSketch,
+      { x: 0, duration: TIMING.REVEAL_DURATION, ease: EASING.SMOOTH },
+      revealAt
+    );
+
+    /* BOTTOM TEXT */
+    scrollTL.to(
+      textBottom,
+      { y: 0, duration: TIMING.REVEAL_DURATION, ease: EASING.SMOOTH },
+      revealAt
+    );
+  });
+
+  /* =========================================================
+     PROGRESS BAR
+  ========================================================= */
+  const progressBar = sliderEl.querySelector('[data-scroll-progress]');
+  if (progressBar) {
+    scrollTL.to(
+      progressBar,
+      {
+        scaleX: 1,
+        duration: TIMING.SCROLL_DURATION,
+        ease: 'none',
+      },
+      'timeline_scroll_start'
+    );
+  }
+
+  /* =========================================================
+     CLEANUP
+  ========================================================= */
+  scrollTL.set(sliderRefs.circleFinal.current, {
+    opacity: 0,
+    pointerEvents: 'none',
+  });
 }
