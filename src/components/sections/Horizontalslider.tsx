@@ -576,21 +576,20 @@ export default function HorizontalTimelineSection() {
       <div className="absolute inset-0 flex items-center pt-24">
         <div
           data-timeline-container
-          className="flex items-center gap-[8vw] px-[5%]"
+          className="flex items-center gap-[150px] px-[5%] pl-[400px]"
           style={{ height: "100%", willChange: "transform" }}
         >
           {TIMELINE_DATA.map((slide, index) => (
             <div
               key={index}
               data-timeline-slide
-              className="flex-shrink-0 w-screen h-full flex items-center justify-center relative"
+              className="flex-shrink-0 w-full max-w-[750px] h-full flex items-center justify-center relative"
             >
-              <div className="w-full max-w-[1400px] flex items-center justify-between gap-10 px-16">
+              <div className="w-full flex items-center justify-center gap-1 px-16">
                 {/* LEFT TEXT */}
                 <div
                   data-timeline-text-left
-                  className="w-[30%]"
-                  style={{ transform: "translateX(-40px)" }}
+                  className="w-[400] absolute left-[-30%] top-[50%]"
                 >
                   <h3 className="text-[#1a5490] text-3xl md:text-4xl italic font-light">
                     {slide.year}:<br />
@@ -601,7 +600,7 @@ export default function HorizontalTimelineSection() {
                 {/* CENTER IMAGE */}
                 <div
                   data-timeline-image-center
-                  className="w-[35%] flex justify-center"
+                  className="w-[100%] flex justify-center"
                   style={{ transform: "scale(0.95)" }}
                 >
                   <div className="relative w-full aspect-[3/4] max-w-[450px]">
@@ -625,44 +624,12 @@ export default function HorizontalTimelineSection() {
                     />
                   </div>
                 </div>
-
-                {/* RIGHT SKETCH */}
-                <div
-                  data-timeline-image-sketch
-                  className="w-[30%]"
-                  style={{ transform: "translateX(40px)" }}
-                >
-                  <div className="relative w-full aspect-[3/4] max-w-[400px]">
-                    <Image
-                      data-right-active
-                      src={
-                        TIMELINE_DATA[index + 1]?.activeImage ||
-                        slide.activeImage
-                      }
-                      alt={slide.title}
-                      fill
-                      className="object-contain opacity-0"
-                    />
-
-                    <Image
-                      data-right-sketch
-                      src={
-                        TIMELINE_DATA[index + 1]?.sketchImage ||
-                        slide.sketchImage
-                      }
-                      alt={slide.title}
-                      fill
-                      className="object-contain opacity-100"
-                    />
-                  </div>
-                </div>
               </div>
 
               {/* BOTTOM TEXT */}
               <div
                 data-timeline-text-bottom
-                className="absolute bottom-20 left-1/2 -translate-x-1/2 max-w-[900px] text-center"
-                style={{ transform: "translateY(30px)" }}
+                className="absolute bottom-5 left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center"
               >
                 <h4 className="text-[#1a5490] text-2xl md:text-3xl font-light mb-4">
                   {slide.year}
@@ -677,7 +644,7 @@ export default function HorizontalTimelineSection() {
       </div>
 
       {/* PROGRESS BAR */}
-      <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#F07D00]/20">
+      <div className="absolute bottom-3 left-0 right-0 h-[3px] bg-[#F07D00]/20">
         <div
           data-scroll-progress
           className="h-full bg-[#F07D00] origin-left"

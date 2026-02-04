@@ -107,7 +107,7 @@ export function createHorizontalSliderTimeline(
   ) as HTMLElement[];
 
   const totalSlides = slides.length;
-  const scrollDistance = window.innerWidth * 1.1 * (totalSlides - 1);
+  const scrollDistance = 750 * (totalSlides);
 
   /* =========================================================
      INITIAL IMAGE STATE (SKETCH ONLY)
@@ -168,6 +168,8 @@ export function createHorizontalSliderTimeline(
           const centerSketch = slide.querySelector('[data-image-sketch]');
           const rightActive = slide.querySelector('[data-right-active]');
           const rightSketch = slide.querySelector('[data-right-sketch]');
+          const leftText = slide.querySelector('[data-timeline-text-left]');
+          const bottomText = slide.querySelector('[data-timeline-text-bottom]');
 
           /* CENTER IMAGE */
           if (centerActive && centerSketch) {
@@ -182,6 +184,17 @@ export function createHorizontalSliderTimeline(
               duration: 0.3,
               ease: 'power2.out',
             });
+            gsap.to(leftText, {
+              opacity: isActive ? 1 : 0,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
+            gsap.to(bottomText, {
+              opacity: isActive ? 1 : 0,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
+
           }
 
           /* RIGHT IMAGE – SAME CENTER RULE */
