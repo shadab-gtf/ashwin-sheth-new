@@ -61,7 +61,7 @@ export function createBrandTimeline(
     }, 'brand_reveal+=1.0');
 
     scrollTL.add(() => {
-        if (brand) brand.style.pointerEvents = 'all';
+        if (brand) brand.style.pointerEvents = 'none';
     }, 'brand_reveal+=1.4');
 
     const reveals = brand?.querySelectorAll('[data-reveal]');

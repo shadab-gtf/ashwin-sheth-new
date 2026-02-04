@@ -129,7 +129,7 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
       <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none">
         <h2
           ref={refs.text1}
-          className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg"
+          className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg pointer-events-auto select-text"
         >
           {TEXT_1}
         </h2>
@@ -140,8 +140,8 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
         ref={refs.scrollDown}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col-reverse items-center gap-3 opacity-0 pointer-events-none"
       >
-        <div className="w-1.5 h-1.5 rounded-full bg-white animate-bounce"></div>
-        <span className="text-white text-[10px] font-bold tracking-[0.2em] uppercase">
+        <div className="w-1.5 h-1.5 rounded-full bg-white animate-bounce pointer-events-auto"></div>
+        <span className="text-white text-[10px] font-bold tracking-[0.2em] uppercase pointer-events-auto select-none">
           Scroll Down
         </span>
       </div>

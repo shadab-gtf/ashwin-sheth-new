@@ -228,7 +228,7 @@ export default function BlogSection({
     // Calculate progress based on real index in loop mode
     const totalSlides = posts.length;
     const currentIndex = swiper.realIndex;
-    
+
     // Progress calculation: (current + 1) / total * 100
     const currentProgress = ((currentIndex + 1) / totalSlides) * 100;
     setProgress(currentProgress);
@@ -260,14 +260,13 @@ export default function BlogSection({
                 className={`
                   text-sm md:text-base uppercase tracking-[3px]
                   pb-0.5 transition-all duration-300 font-normal
-                  ${
-                    activeTab === tab
-                      ? 'text-[#1E40AF] border-b-2 border-[#1E40AF]'
-                      : 'text-black/40 hover:text-black/70'
+                  ${activeTab === tab
+                    ? 'text-[#1E40AF] border-b-2 border-[#1E40AF]'
+                    : 'text-black/40 hover:text-black/70'
                   }
                 `}
-              > 
-            
+              >
+
                 {tab}
               </button>
             ))}
@@ -341,9 +340,9 @@ export default function BlogSection({
                 <SwiperSlide key={post.id}>
                   {activeTab === 'News' ? (
                     // NEWS CARD - Original Design
-                    <Link 
-                      href={post.link || '#'} 
-                      className={`block ${!post.link && 'pointer-events-none'}`}
+                    <Link
+                      href={post.link || '#'}
+                      className={`block ${!post.link && 'pointer-events-auto'}`}
                     >
                       <div className="bg-white  transition-all duration-500 flex flex-col h-[375px]">
                         {/* Content */}
@@ -368,8 +367,8 @@ export default function BlogSection({
                     </Link>
                   ) : (
                     // BLOGS CARD - New Design with Image Overlay
-                    <Link 
-                      href={post.link || '#'} 
+                    <Link
+                      href={post.link || '#'}
                       className={`block group ${!post.link && 'pointer-events-none'}`}
                     >
                       <div className="relative w-full aspect-[4/5] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
@@ -400,17 +399,17 @@ export default function BlogSection({
                           {/* Link Arrow (visible on hover) */}
                           {post.link && (
                             <div className="absolute top-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <svg 
-                                className="w-6 h-6 text-black" 
-                                fill="none" 
-                                stroke="currentColor" 
+                              <svg
+                                className="w-6 h-6 text-black"
+                                fill="none"
+                                stroke="currentColor"
                                 viewBox="0 0 24 24"
                               >
-                                <path 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round" 
-                                  strokeWidth={2} 
-                                  d="M7 17L17 7M17 7H7M17 7V17" 
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M7 17L17 7M17 7H7M17 7V17"
                                 />
                               </svg>
                             </div>

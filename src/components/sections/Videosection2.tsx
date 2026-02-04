@@ -64,14 +64,14 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
             {/* VIDEO 2 */}
             <div
                 ref={refs.video2}
-                className="absolute inset-0 z-20 opacity-0"
+                className="absolute inset-0 z-20 opacity-0 pointer-events-none!"
             >
                 <VideoStage src={VIDEO_2} isActive={activeVideo === 1} />
                 <div className="absolute inset-0 bg-black/50" />
             </div>
 
             {/* TEXT 2 */}
-            <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none">
+            <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none!">
                 <h2
                     ref={refs.text2}
                     className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg"
@@ -83,7 +83,7 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
             {/* CIRCLE REVEAL GREEN */}
             <div
                 ref={refs.circleGreen}
-                className="absolute inset-0 z-50 pointer-events-none"
+                className="absolute inset-0 z-50 pointer-events-none!"
                 style={{
                     opacity: 0,
                     clipPath: 'circle(0% at 50% 100%)',

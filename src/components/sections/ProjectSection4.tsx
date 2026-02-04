@@ -68,7 +68,7 @@ export function createProjectTimeline4(
       opacity: 1,
       duration: 0.5,
       ease: "power3.out",
-      pointerEvents: "all",
+      pointerEvents: "none",
     },
     "project_reveal+=0.3"
   );
@@ -120,7 +120,7 @@ export default function ProjectSection4({
       {/* BACKGROUND */}
       <section
         ref={projectRef}
-        className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
+        className="fixed inset-0 z-[80] opacity-0 pointer-events-none!"
       >
         <Image
           src="/assets/images/project-1/night.jpg"
@@ -170,7 +170,7 @@ export default function ProjectSection4({
               MARINE DRIVE
             </p>
 
-           <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
+            <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline cursor-pointer">
               VIEW PROJECT
             </button>
             </Link>

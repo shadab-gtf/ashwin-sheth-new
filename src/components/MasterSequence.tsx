@@ -228,18 +228,44 @@ export default function MasterSequence() {
       const initScroll = () => {
         ScrollTrigger.refresh();
 
+        // const scrollTL = gsap.timeline({
+        //   scrollTrigger: {
+        //     trigger: containerRef.current,
+        //     start: 'top top',
+        //     end: '+=3000%',
+        //     pin: true,
+        //     scrub: 1, 
+        //     anticipatePin: 1,
+        //     invalidateOnRefresh: true,
+        //   },
+        // });
+
         const scrollTL = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
             end: '+=3000%',
             pin: true,
-            scrub: 1, 
+            scrub: 1,
             anticipatePin: 1,
             invalidateOnRefresh: true,
-          },
-        });
 
+            onRefresh: () => {
+              const pinnedEl = containerRef.current
+              if (!pinnedEl) return
+
+              const pinSpacer = pinnedEl.parentElement
+
+              if (pinSpacer) {
+                // 🚫 pin-spacer should NEVER capture clicks
+                pinSpacer.style.pointerEvents = 'none'
+              }
+
+              // ✅ actual content SHOULD capture clicks
+              pinnedEl.style.pointerEvents = 'auto'
+            },
+          },
+        })
         // ============================================================
         // VIDEO TRANSITIONS
         // ============================================================
@@ -345,7 +371,7 @@ export default function MasterSequence() {
           scrollTL.set(refs.earthIntro.earth.current, { zIndex: 27, scale: 0.65, y: '75vh' }, 'earth_intro');
           scrollTL.to(refs.earthIntro.earth.current, {
             y: '30vh',
-            scale: 1, 
+            scale: 1,
             opacity: 1,
             duration: TIMING.REVEAL_DURATION,
             ease: EASING.PRIMARY,
@@ -504,7 +530,7 @@ export default function MasterSequence() {
               pointerEvents: 'none',
               duration: 1,
               onComplete: () => {
-                document.body.style.pointerEvents = 'auto';
+                document.body.style.pointerEvents = 'none';
               },
               ease: EASING.CONTENT_OUT,
             }, section.label);
@@ -721,7 +747,7 @@ export default function MasterSequence() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-auto overflow-hidden bg-[#FFF8F0]"
+      className="relative w-full h-auto overflow-hidden bg-[#FFF8F0] pointer-events-none!"
       style={{
         perspective: '2000px',
         transformStyle: 'preserve-3d',

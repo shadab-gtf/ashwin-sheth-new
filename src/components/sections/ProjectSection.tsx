@@ -29,6 +29,7 @@ export function createProjectTimeline(
   /* ---------- INITIAL STATES ---------- */
   gsap.set(projectRefs.project.current, {
     opacity: 0,
+    visibility: "hidden", // Prevent ghost blocking
     pointerEvents: "none",
   });
 
@@ -65,9 +66,10 @@ export function createProjectTimeline(
     projectRefs.project.current,
     {
       opacity: 1,
+      visibility: "visible",
       duration: 0.5,
       ease: "power3.out",
-      pointerEvents: "all",
+      pointerEvents: "none",
     },
     "project_reveal+=0.3"
   );
@@ -119,7 +121,7 @@ export default function ProjectSection({
       {/* BACKGROUND */}
       <section
         ref={projectRef}
-        className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
+        className="fixed inset-0 z-[80] opacity-0 pointer-events-none!"
       >
         <Image
           src="/assets/images/project-1/project-2.webp"
@@ -169,9 +171,8 @@ export default function ProjectSection({
               THANE
             </p>
 
-         <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline">
+            <Link href="/projects" className="mt-6 inline-block text-sm tracking-widest text-blue-700 hover:underline pointer-events-auto">
               VIEW PROJECT
-            </button>
             </Link>
           </div>
         </div>

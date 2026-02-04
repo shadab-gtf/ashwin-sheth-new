@@ -80,23 +80,49 @@ body {
   -webkit-user-select: text;
 }
 
-/* Specific elements that should NOT be selectable */
-button,
-a,
-img,
-[role="button"] {
+/* Specific elements that should NOT be selectable (Images only) */
+img {
   user-select: none;
   -webkit-user-select: none;
 }
 
-/* Utility to force pointer events */
-.pointer-events-all {
-  pointer-events: all !important;
+/* MANDATORY INTERACTION RULES */
+
+/* GSAP Pin Spacer Fix */
+.pin-spacer {
+  pointer-events: none !important;
 }
 
+/* Enforce pointer-events on interactive elements (Safety Net) */
+a,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+  pointer-events: auto;
+  user-select: text;
+  /* As requested in safety net */
+  cursor: pointer;
+  /* UX Enhancement */
+}
+
+/* Helper to ensure containers allow clicks to pass through */
 .pointer-events-none {
   pointer-events: none !important;
 }
+
+.pointer-events-auto {
+  pointer-events: auto !important;
+}
+
+
+/* Utility to force pointer events */
+/* .pointer-events-all {
+  pointer-events: all !important;
+} */
+
+
 
 /* Utility for Z-Index */
 .z-base {

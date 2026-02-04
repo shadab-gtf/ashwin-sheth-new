@@ -29,10 +29,10 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 w-full z-[9999] transition-all duration-500',
+        'fixed top-0 w-full z-[9999] transition-all duration-500 pointer-events-none', // ALWAYS none on container
         visible
-          ? 'opacity-100 translate-y-0 pointer-events-auto'
-          : 'opacity-0 -translate-y-6 pointer-events-none'
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 -translate-y-6'
       )}
     >
       <div
@@ -45,12 +45,18 @@ export default function Header() {
         <img
           src={theme === 'black' ? '/blacklogo.png' : '/headerlogo.png'}
           alt="Logo"
-          className="h-10 w-auto transition-opacity duration-300"
+          className={clsx(
+            "h-10 w-auto transition-opacity duration-300 cursor-pointer",
+            visible ? "pointer-events-auto" : "pointer-events-none"
+          )}
         />
 
         {/* NAV */}
         <div className="flex items-center justify-center gap-20">
-          <nav className="hidden md:flex items-center gap-10 text-xs font-bold uppercase ">
+          <nav className={clsx(
+            "hidden md:flex items-center gap-10 text-xs font-bold uppercase",
+            visible ? "pointer-events-auto" : "pointer-events-none"
+          )}>
             <a href="#">Residential</a>
             <a href="#">Commercial</a>
             <a href="#">Land</a>
@@ -58,7 +64,10 @@ export default function Header() {
           </nav>
 
           {/* HAMBURGER */}
-          <button className="flex flex-col gap-1.5">
+          <button className={clsx(
+            "flex flex-col gap-1.5 cursor-pointer",
+            visible ? "pointer-events-auto" : "pointer-events-none"
+          )}>
             <span
               className={clsx(
                 'block w-6 h-[1.5px] transition-colors duration-300',

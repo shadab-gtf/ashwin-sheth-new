@@ -77,7 +77,7 @@ export function createProjectTimeline(
       opacity: 1,
       duration: 0.9,
       ease: "power3.out",
-      pointerEvents: "all",
+      pointerEvents: "none",
     },
     "project_reveal+=0.45"
   );

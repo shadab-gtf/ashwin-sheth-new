@@ -102,7 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${montserrat.className} antialiased bg-black text-white`}>
+        className={`${montserrat.className} antialiased bg-black text-white pointer-events-auto`}>
         <SmoothScroll>
           <Loader />
           <Header />

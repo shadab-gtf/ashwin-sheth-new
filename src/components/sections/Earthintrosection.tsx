@@ -131,7 +131,7 @@ export default function EarthIntroSection({
       {/* WHITE CIRCLE REVEAL */}
       <div
         ref={refs.circleWhite1}
-        className="absolute inset-0 z-50 pointer-events-none"
+        className="absolute inset-0 z-50 "
         style={{
           opacity: 0,
           clipPath: 'circle(0% at 50% 100%)',
