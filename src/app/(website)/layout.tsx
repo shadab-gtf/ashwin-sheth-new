@@ -9,6 +9,7 @@ import { TransitionProvider } from "@/context/TransitionContext";
 import SpotlightOverlay from "@/components/common/transition/SpotlightOverlay";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { usePathname } from "next/navigation";
 
 export default function WebsiteLayout({
   children,
@@ -16,12 +17,16 @@ export default function WebsiteLayout({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const ishome = pathname === "/"
 
   return (
     <SmoothScroll>
       <TransitionProvider>
-      <Loader />
-    <SpotlightOverlay/>
+        {ishome ? 
+      <Loader /> : 
+    <SpotlightOverlay/>}
     <Header/>
       {/* <Header /> */}
 
