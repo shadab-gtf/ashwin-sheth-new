@@ -12,6 +12,11 @@ interface Marker {
   label: string;
 }
 
+interface GlobeWithMarkersProps {
+  enableControls?: boolean;
+  autoRotate?: boolean;
+}
+
 // markers data
 const markers: Marker[] = [
   { lat: 28.6139, lon: 77.209, label: "New Delhi-NCR (Upcoming)" },
@@ -27,7 +32,9 @@ const markers: Marker[] = [
   { lat: 25.185, lon: 55.265, label: "Iris Bay" },
   { lat: 25.7845, lon: 55.4648, label: "Iris Blue" },
 ];
+
 const DUBAI_MARKERS = ["Iris Bay", "Iris Blue"];
+
 function latLongToVector3(lat: number, lon: number, radius = 5, height = 0.05) {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
@@ -38,38 +45,41 @@ function latLongToVector3(lat: number, lon: number, radius = 5, height = 0.05) {
 
   return new THREE.Vector3(x, y, z);
 }
-const normalMarkers = markers.filter((m) => !DUBAI_MARKERS.includes(m.label));
 
+const normalMarkers = markers.filter((m) => !DUBAI_MARKERS.includes(m.label));
 const dubaiMarkers = markers.filter((m) => DUBAI_MARKERS.includes(m.label));
+
 // markers
-function GlobeMarkers({ radius = 1 }: { radius?: number }) {
+function GlobeMarkers({
+  radius = 5,
+  enableInteraction = true,
+}: {
+  radius?: number;
+  enableInteraction?: boolean;
+}) {
   const [hovered, setHovered] = useState<number | null>(null);
 
-  //   const positions = useMemo(
-  //     () => markers.map((m) => latLongToVector3(m.lat, m.lon, radius, -0.01)),
-  //     [radius],
-  //   );
   const normalPositions = useMemo(
     () =>
-      normalMarkers.map((m) => latLongToVector3(m.lat, m.lon, radius, -0.01)),
-    [radius],
+      normalMarkers.map((m) => latLongToVector3(m.lat, m.lon, radius, 0.01)),
+    [radius]
   );
 
   const dubaiPositions = useMemo(
-    () =>
-      dubaiMarkers.map((m) => latLongToVector3(m.lat, m.lon, radius, -0.01)),
-    [radius],
+    () => dubaiMarkers.map((m) => latLongToVector3(m.lat, m.lon, radius, 0.01)),
+    [radius]
   );
+
   return (
     <>
       <Instances limit={normalMarkers.length}>
-        <sphereGeometry args={[0.035, 16, 16]} />
+        <sphereGeometry args={[0.05, 16, 16]} />
         <meshStandardMaterial
           color="#FF863F"
           roughness={0.3}
           metalness={0.6}
           emissive="#FF863F"
-          emissiveIntensity={0.25}
+          emissiveIntensity={0.5}
         />
 
         {normalMarkers.map((marker, i) => (
@@ -77,28 +87,36 @@ function GlobeMarkers({ radius = 1 }: { radius?: number }) {
             key={marker.label}
             position={normalPositions[i]}
             scale={[1, 1, 1.4]}
-            onPointerOver={(e) => {
-              e.stopPropagation();
-              document.body.style.cursor = "pointer";
-              setHovered(i);
-            }}
-            onPointerOut={() => {
-              document.body.style.cursor = "grab";
-              setHovered(null);
-            }}
+            onPointerOver={
+              enableInteraction
+                ? (e) => {
+                    e.stopPropagation();
+                    document.body.style.cursor = "pointer";
+                    setHovered(i);
+                  }
+                : undefined
+            }
+            onPointerOut={
+              enableInteraction
+                ? () => {
+                    document.body.style.cursor = "grab";
+                    setHovered(null);
+                  }
+                : undefined
+            }
           />
         ))}
       </Instances>
 
-      {/* dubai markers  */}
+      {/* dubai markers */}
       <Instances limit={dubaiMarkers.length}>
-        <sphereGeometry args={[0.035, 8, 8]} />
+        <sphereGeometry args={[0.05, 8, 8]} />
         <meshStandardMaterial
           color="#FF863F"
           roughness={0.2}
           metalness={0.9}
           emissive="#FF863F"
-          emissiveIntensity={0.15}
+          emissiveIntensity={0.4}
         />
 
         {dubaiMarkers.map((marker, i) => (
@@ -106,20 +124,28 @@ function GlobeMarkers({ radius = 1 }: { radius?: number }) {
             key={marker.label}
             position={dubaiPositions[i]}
             scale={[1, 1, 1.4]}
-            onPointerOver={(e) => {
-              e.stopPropagation();
-              document.body.style.cursor = "pointer";
-              setHovered(i + normalMarkers.length);
-            }}
-            onPointerOut={() => {
-              document.body.style.cursor = "grab";
-              setHovered(null);
-            }}
+            onPointerOver={
+              enableInteraction
+                ? (e) => {
+                    e.stopPropagation();
+                    document.body.style.cursor = "pointer";
+                    setHovered(i + normalMarkers.length);
+                  }
+                : undefined
+            }
+            onPointerOut={
+              enableInteraction
+                ? () => {
+                    document.body.style.cursor = "grab";
+                    setHovered(null);
+                  }
+                : undefined
+            }
           />
         ))}
       </Instances>
 
-      {hovered !== null && (
+      {enableInteraction && hovered !== null && (
         <Html
           position={
             hovered < normalMarkers.length
@@ -127,16 +153,17 @@ function GlobeMarkers({ radius = 1 }: { radius?: number }) {
               : dubaiPositions[hovered - normalMarkers.length]
           }
           center
-          distanceFactor={10}
+          distanceFactor={8}
           style={{
             background: "rgba(0,0,0,0.85)",
             color: "#fff",
-            padding: "2px 6px",
-            borderRadius: "2px",
-            fontSize: "4px",
+            padding: "4px 8px",
+            borderRadius: "4px",
+            fontSize: "11px",
             pointerEvents: "none",
             whiteSpace: "nowrap",
-            transform: "translateY(-24px)",
+            transform: "translateY(-30px)",
+            fontWeight: "500",
           }}
         >
           {hovered < normalMarkers.length
@@ -154,14 +181,24 @@ function Earth() {
 
   return (
     <mesh>
-      <sphereGeometry args={[5, 32, 32]} />
-      <meshStandardMaterial map={texture} />
+      <sphereGeometry args={[5, 64, 64]} />
+      <meshStandardMaterial 
+        map={texture}
+        metalness={0.1}
+        roughness={0.7}
+      />
     </mesh>
   );
 }
 
 // scene
-function Scene() {
+function Scene({
+  enableControls = true,
+  autoRotate = false,
+}: {
+  enableControls?: boolean;
+  autoRotate?: boolean;
+}) {
   const rotation = useMemo(
     () =>
       [
@@ -169,24 +206,27 @@ function Scene() {
         THREE.MathUtils.degToRad(-165),
         0,
       ] as [number, number, number],
-    [],
+    []
   );
+
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <pointLight position={[0, 0, 10]} intensity={0.6} distance={25} />
+      {/* Lighting setup */}
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[10, 10, 5]} intensity={1.2} />
+      <pointLight position={[-10, 0, -10]} intensity={0.5} distance={30} />
 
       <group rotation={rotation}>
         <Earth />
-        <GlobeMarkers radius={5} />
+        <GlobeMarkers radius={5} enableInteraction={enableControls} />
       </group>
 
-      {/* <OrbitControls enableZoom enablePan={true} enableRotate={true} /> */}
       <OrbitControls
-        enableZoom={false}
-        enableRotate={false}
-        enablePan={false}
+        enableZoom={enableControls}
+        enableRotate={enableControls}
+        enablePan={enableControls}
+        autoRotate={autoRotate}
+        autoRotateSpeed={0.5}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 1.8}
       />
@@ -195,22 +235,29 @@ function Scene() {
 }
 
 // canvas
-export default function GlobeWithMarkers() {
+export default function GlobeWithMarkers({
+  enableControls = false,
+  autoRotate = false,
+}: GlobeWithMarkersProps) {
   return (
     <Canvas
-      style={{ width: '100%', height: '100%', pointerEvents: 'none', }}
-      camera={{ position: [0, 0, 10], fov: 75 }}
-      //   dpr={[1, 1.25]}
-      dpr={1}
-      //   gl={{ antialias: true, powerPreference: "high-performance" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        background: "transparent",
+        pointerEvents: enableControls ? "auto" : "none",
+      }}
+     camera={{ position: [0, 0, 14], fov: 45 }}
+      dpr={[1, 2]}
       gl={{
+        alpha: true,
         antialias: true,
-        powerPreference: 'high-performance',
+        powerPreference: "high-performance",
         preserveDrawingBuffer: true,
       }}
-      className="cursor-grab"
+      className={enableControls ? "cursor-grab active:cursor-grabbing" : ""}
     >
-      <Scene />
+      <Scene enableControls={enableControls} autoRotate={autoRotate} />
     </Canvas>
   );
 }

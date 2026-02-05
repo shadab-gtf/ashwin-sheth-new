@@ -24,7 +24,7 @@ export function createIntroTimeline(refs: IntroSectionProps["refs"]) {
   gsap.set(refs.scrollDown.current, { opacity: 0 });
 
   // 1. Initial Video State: Small circular mask (not 0%, centered)
-  gsap.set(refs.video1.current, { clipPath: "circle(12% at 50% 50%)" });
+  // gsap.set(refs.video1.current, { clipPath: "circle(12% at 50% 50%)" });
 
   const timeline = gsap.timeline({ paused: true });
 
@@ -101,7 +101,7 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
       >
         <VideoStage src={VIDEO_1} isActive={activeVideo === 0} />
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out pointer-events-none"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out "
           style={{
             background:
               "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.7) 100%)",
@@ -120,7 +120,7 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
           alt="Ashwin Sheth Group Logo"
           width={500}
           height={200}
-          className="w-64 md:w-96 h-auto drop-shadow-2xl"
+          className="w-64 md:w-96 h-auto "
           priority
         />
       </div>
