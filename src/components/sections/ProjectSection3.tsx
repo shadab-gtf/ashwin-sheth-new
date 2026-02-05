@@ -126,11 +126,11 @@ export default function ProjectSection3({
         className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
-          src="/assets/images/project-1/project-4.webp"
+          src="/assets/images/project-1/fernbg.jpg"
           alt="Project Background"
           fill
           priority
-          className="object-cover"
+          className="object-fill"
         />
 
         {/* RIGHT FLOATING CARD */}
