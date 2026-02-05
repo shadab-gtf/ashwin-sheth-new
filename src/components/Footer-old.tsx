@@ -4,7 +4,6 @@ import gsap from 'gsap';
 import { ChevronDown, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 
 interface FooterProps {
@@ -87,8 +86,6 @@ export default function Footer() {
   const accordionContentRef = useRef<HTMLDivElement>(null);
   const accordionIconRef = useRef<HTMLDivElement>(null);
   const footerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
-  const isHome = pathname === "/"
 
   // GSAP accordion animation - FIXED VERSION
   useEffect(() => {
@@ -162,11 +159,8 @@ export default function Footer() {
           
       <div className='border p-[20px] gap-[110px] flex items-center justify-center md:w-[60%] mx-auto mt-[80px] mb-[100px]'>
         <img src="/assets/images/micro/logo-1.png" alt="logo" className='w-[150px] h-[100px] object-contain' />
-        {!isHome &&
-        <>
         <div className='w-[1px] h-[80px] bg-black/40'></div>
         <img src="/assets/images/micro/logo.png" alt="logo" className='w-[150px] h-[100px] object-contain' />
-        </>}
       </div>
 
           {/* Navigation */}
