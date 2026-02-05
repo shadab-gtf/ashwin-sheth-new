@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import SmoothScroll from "@/components/SmoothScroll";
-import Header from "@/components/Header";
+// import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 import EnquiryForm from "@/components/common/form/EnquiryForm";
 import { TransitionProvider } from "@/context/TransitionContext";
 import SpotlightOverlay from "@/components/common/transition/SpotlightOverlay";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function WebsiteLayout({
   children,
@@ -19,9 +20,10 @@ export default function WebsiteLayout({
   return (
     <SmoothScroll>
       <TransitionProvider>
-      {/* <Loader /> */}
+      <Loader />
     <SpotlightOverlay/>
-      <Header />
+    <Header/>
+      {/* <Header /> */}
 
       {/* Floating Enquiry Button */}
       <button

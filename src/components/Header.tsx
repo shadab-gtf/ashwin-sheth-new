@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import TransitionLink from './common/transition/TransitionLink';
 
 export default function Header() {
   const [visible, setVisible] = useState(false);
   const [theme, setTheme] = useState<'black' | 'white'>('black');
+     const NAV_CLASSES = "text-[16px]  font-normal tracking-[0.15em] hover:text-white/80 transition-colors cursor-pointer hidden md:block";
+
 
   useEffect(() => {
     const show = () => setVisible(true);
@@ -57,8 +60,10 @@ export default function Header() {
             "hidden md:flex items-center gap-10 text-xs font-bold uppercase",
             visible ? "pointer-events-auto" : "pointer-events-none"
           )}>
-            <a href="#">Residential</a>
-            <a href="#">Commercial</a>
+                <TransitionLink href='/microsite' className={NAV_CLASSES}>Residential</TransitionLink>
+                <TransitionLink href='/commercial' className={NAV_CLASSES}>Commercial</TransitionLink>
+            {/* <a href="#">Residential</a>
+            <a href="#">Commercial</a> */}
             <a href="#">Land</a>
             <a href="#">The Orange Circle</a>
           </nav>
