@@ -44,7 +44,7 @@ export default function WebsiteLayout({
       <EnquiryForm open={open} onClose={() => setOpen(false)} />
 
       <main>{children}</main>
-      <Footer/>
+      {/* <Footer/> */}
       </TransitionProvider>
     </SmoothScroll>
   );

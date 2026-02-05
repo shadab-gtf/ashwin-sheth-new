@@ -564,7 +564,7 @@ const TIMELINE_DATA: TimelineSlide[] = [
 
 export default function HorizontalTimelineSection() {
   return (
-    <div className="w-full h-screen bg-[#FFF8F0] overflow-hidden relative">
+    <div className="w-full h-screen bg-[#FFF8F0] overflow-hidden relative pointer-events-none">
       {/* TITLE */}
       <div className="absolute top-30 left-1/2 -translate-x-1/2 z-10 text-center">
         <h2 className="text-[#F07D00] text-xl md:text-2xl tracking-[2px] font-light">

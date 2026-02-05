@@ -96,12 +96,12 @@ export default function IntroSection({ refs, activeVideo }: IntroSectionProps) {
       {/* VIDEO 1 */}
       <div
         ref={refs.video1}
-        className="absolute inset-0 z-10"
+        className="absolute inset-0 z-10 pointer-events-none"
         style={{ clipPath: "circle(12% at 50% 50%)", willChange: "clip-path" }}
       >
         <VideoStage src={VIDEO_1} isActive={activeVideo === 0} />
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out pointer-events-none"
           style={{
             background:
               "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.7) 100%)",

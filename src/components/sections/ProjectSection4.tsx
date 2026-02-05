@@ -138,6 +138,7 @@ export default function ProjectSection4({
             w-[340px] sm:w-[360px]
             bg-white text-black shadow-xl
             overflow-hidden
+            pointer-events-none
           "
         >
           {/* Card Image */}
@@ -170,7 +171,7 @@ export default function ProjectSection4({
               MARINE DRIVE
             </p>
 
-            <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline cursor-pointer">
+            <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline pointer-events-auto">
               VIEW PROJECT
             </button>
             </Link>

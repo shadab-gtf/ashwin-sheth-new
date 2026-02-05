@@ -17,7 +17,7 @@ export default function ProjectSection2({
       {/* BACKGROUND */}
       <section
         ref={projectRef}
-        className="fixed inset-0 z-[80] opacity-0 pointer-events-none!"
+        className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
           src="/assets/images/project-1/project-3.webp"
@@ -34,6 +34,7 @@ export default function ProjectSection2({
             absolute right-6 top-1/2 -translate-y-1/2
             w-[340px] sm:w-[360px]
             bg-white  shadow-xl
+            ponter-events-none
             overflow-hidden
           "
         >
@@ -67,7 +68,7 @@ export default function ProjectSection2({
               KANDIVALI WEST
             </p>
 
-            <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline cursor-pointer">
+            <Link href="/projects"> <button className="mt-6 text-sm tracking-widest text-blue-700 hover:underline  pointer-events-auto">
               VIEW PROJECT
             </button>
             </Link>

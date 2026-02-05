@@ -69,7 +69,7 @@ export function createEarthIntroTimeline(
       duration: 1,
       ease: 'power3.inOut',
     },
-    'earth_intro+=0.35' // reveal (1.2s) + buffer
+    'earth_intro+=1.2' // reveal (1.2s) + buffer
   );
 
   /* ---------- SCROLL DOWN INDICATOR ---------- */

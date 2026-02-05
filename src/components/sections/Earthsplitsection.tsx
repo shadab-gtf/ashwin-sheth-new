@@ -297,13 +297,13 @@ export default function EarthSplitSection({
                    flex flex-col justify-center items-start text-left 
                    opacity-0 pointer-events-none"
       >
-        <h2 className="text-2xl leading-[1.3] font-light text-[#F07D00] mb-5">
+        <h2 className="text-2xl leading-[1.3] font-light text-[#F07D00] mb-5 pointer-events-auto">
           Designing The Present With A Vision
           <br />
           Of Tomorrow.
         </h2>
 
-        <p className="text-[18px] leading-[1.7] font-light text-black mb-8">
+        <p className="text-[18px] leading-[1.7] font-light text-black mb-8 pointer-events-auto">
           Our impact is driven by our belief: Great designs solve real problems.
           For nearly 4 decades, Ashwin Sheth has built a legacy with 80+ exceptional
           real estate projects in Mumbai and abroad.

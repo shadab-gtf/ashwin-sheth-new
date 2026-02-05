@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useRef, useState, useEffect } from 'react';
-import Image from 'next/image';
-import gsap from 'gsap';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRef, useState, useEffect } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper/modules";
+import { ArrowBigRight, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import Link from 'next/link';
+import "swiper/css";
+import "swiper/css/navigation";
+import Link from "next/link";
 
 interface BlogPost {
   id: number;
   title: string;
-  category: 'News' | 'Blogs';
+  category: "News" | "Blogs";
   date: string;
   image: string;
   source: string;
@@ -25,101 +25,103 @@ const BLOG_POSTS: BlogPost[] = [
   {
     id: 1,
     title: `Ashwin Sheth Group's Bold Move in Mumbai's Luxurious Housing Market`,
-    category: 'News',
-    date: '11th Jun, 2025',
-    image: '/assets/images/blog/blog-1.jpg',
-    source: 'devdiscourse.com',
-    link: 'https://www.devdiscourse.com/article/science-environment/3455638-ashwin-sheth-groups-bold-move-in-mumbais-luxurious-housing-market',
+    category: "News",
+    date: "11th Jun, 2025",
+    image: "/assets/images/blog/blog-1.jpg",
+    source: "devdiscourse.com",
+    link: "https://www.devdiscourse.com/article/science-environment/3455638-ashwin-sheth-groups-bold-move-in-mumbais-luxurious-housing-market",
   },
   {
     id: 2,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail.webp',
-    source: '',
-    link: '/blogs',
+    title: "Unlocking Potential: How Kandivali Is Redefin...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail.webp",
+    source: "",
+    link: "/blogs",
   },
   {
     id: 3,
-    title: 'Ashwin Sheth Group, PAG to co-develop luxury residential project in Marine Lines..',
-    category: 'News',
-    date: '16th Jun, 2025',
-    image: '/assets/images/blog/blog-3.jpg',
-    source: 'propnewstime.com',
-    link: 'https://propnewstime.com/getdetailsStories/MTg5Njg=/ashwin-sheth-group-pag-to-co-develop-luxury-residential-project-in-marine-lines',
+    title:
+      "Ashwin Sheth Group, PAG to co-develop luxury residential project in Marine Lines..",
+    category: "News",
+    date: "16th Jun, 2025",
+    image: "/assets/images/blog/blog-3.jpg",
+    source: "propnewstime.com",
+    link: "https://propnewstime.com/getdetailsStories/MTg5Njg=/ashwin-sheth-group-pag-to-co-develop-luxury-residential-project-in-marine-lines",
   },
   {
     id: 4,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail2.webp',
-    source: 'propnewstime.com',
-    link: '/blogs',
+    title: "The ethics of architecture: Balancing creativ...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail2.webp",
+    source: "propnewstime.com",
+    link: "/blogs",
   },
   {
     id: 5,
     title: `PAG invests Rs 540 cr in Ashwin Sheth Group's joint housing project in Mumbai'`,
-    category: 'News',
-    date: '11th Jun, 2025',
-    image: '/assets/images/blog/blog-1.jpg',
-    source: 'ptinews.com',
-    link: 'https://www.ptinews.com/story/business/pag-invests-rs-540-cr-in-ashwin-sheth-group-s-joint-housing-project-in-mumbai/2637018',
+    category: "News",
+    date: "11th Jun, 2025",
+    image: "/assets/images/blog/blog-1.jpg",
+    source: "ptinews.com",
+    link: "https://www.ptinews.com/story/business/pag-invests-rs-540-cr-in-ashwin-sheth-group-s-joint-housing-project-in-mumbai/2637018",
   },
   {
     id: 6,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail3.webp',
-    source: 'propnewstime.com',
-    link: '/blogs',
+    title: "Balancing work and life: Strategies from a pr...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail3.webp",
+    source: "propnewstime.com",
+    link: "/blogs",
   },
   {
     id: 7,
-    title: 'Ashwin Sheth unveils an extensive multi-channel campaign across India and New York to launch the new logo',
-    category: 'News',
-    date: 'July 16, 2024',
-    image: '/assets/images/blog/blog-3.jpg',
-    source: 'propnewstime.com',
-    link: 'https://audiencereports.in/ashwin-sheth-unveils-an-extensive/',
+    title:
+      "Ashwin Sheth unveils an extensive multi-channel campaign across India and New York to launch the new logo",
+    category: "News",
+    date: "July 16, 2024",
+    image: "/assets/images/blog/blog-3.jpg",
+    source: "propnewstime.com",
+    link: "https://audiencereports.in/ashwin-sheth-unveils-an-extensive/",
   },
   {
     id: 8,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail4.webp',
-    source: 'propnewstime.com',
-    link: '/blogs',
+    title: "Policy reforms driving growth in India’s comm...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail4.webp",
+    source: "propnewstime.com",
+    link: "/blogs",
   },
   {
     id: 9,
     title: `PAG invests $65 million in Ashwin Seth group's luxury project in Mumbai`,
-    category: 'News',
-    date: '11th Jun, 2025',
-    image: '/assets/images/blog/blog-1.jpg',
-    source: 'thehindubusinessline.com',
-    link: 'https://www.thehindubusinessline.com/companies/pag-invests-65-million-in-ashwin-seth-groups-luxury-project-in-mumbai/article69683889.ece',
+    category: "News",
+    date: "11th Jun, 2025",
+    image: "/assets/images/blog/blog-1.jpg",
+    source: "thehindubusinessline.com",
+    link: "https://www.thehindubusinessline.com/companies/pag-invests-65-million-in-ashwin-seth-groups-luxury-project-in-mumbai/article69683889.ece",
   },
   {
     id: 10,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail5.webp',
-    source: 'propnewstime.com',
-    link: '/blogs',
+    title: "Pioneering Infrastructure: Trans Harbour Link...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail5.webp",
+    source: "propnewstime.com",
+    link: "/blogs",
   },
   {
     id: 11,
-    title: 'Unlocking Potential: How Kandivali Is Redefin...',
-    category: 'Blogs',
-    date: '22 July 2024',
-    image: '/assets/images/blog-and-news/thumbnail6.webp',
-    source: 'propnewstime.com',
-    link: '/blogs',
+    title: "Revolutionizing Mumbai’s Real Estate: The Imp...",
+    category: "Blogs",
+    date: "22 July 2024",
+    image: "/assets/images/blog-and-news/thumbnail6.webp",
+    source: "propnewstime.com",
+    link: "/blogs",
   },
 ];
 
@@ -139,23 +141,23 @@ export function createBlogTimeline(
   blogRefs: {
     blog: React.RefObject<HTMLDivElement | null>;
     circleBlog: React.RefObject<HTMLDivElement | null>;
-  }
+  },
 ) {
   if (!blogRefs.blog.current || !blogRefs.circleBlog.current) return;
 
   /* INITIAL STATES */
   gsap.set(blogRefs.blog.current, {
     opacity: 0,
-    pointerEvents: 'none',
+    pointerEvents: "none",
   });
 
   gsap.set(blogRefs.circleBlog.current, {
     opacity: 0,
-    clipPath: 'circle(0% at 50% 100%)',
-    backgroundColor: '#FFF8F0',
+    clipPath: "circle(0% at 50% 100%)",
+    backgroundColor: "#FFF8F0",
   });
 
-  scrollTL.addLabel('blog_reveal');
+  scrollTL.addLabel("blog_reveal");
 
   /* FADE OUT PROJECT */
   scrollTL.to(
@@ -163,32 +165,33 @@ export function createBlogTimeline(
     {
       opacity: 0,
       duration: 0.6,
-      ease: 'power3.in',
-      pointerEvents: 'none',
+      ease: "power3.in",
+      pointerEvents: "none",
     },
-    'blog_reveal'
+    "blog_reveal",
   );
 
   /* BLOG CIRCLE REVEAL — TIME BASED (IMPORTANT) */
   scrollTL.add(() => {
     gsap.set(blogRefs.circleBlog.current, { opacity: 1 });
 
-    gsap.timeline()
+    gsap
+      .timeline()
       .to(blogRefs.circleBlog.current, {
-        clipPath: 'circle(150% at 50% 100%)',
+        clipPath: "circle(150% at 50% 100%)",
         duration: 1.2,
-        ease: 'power3.inOut',
+        ease: "power3.inOut",
       })
       .to(
         blogRefs.circleBlog.current,
         {
           opacity: 0,
           duration: 0.35,
-          ease: 'power2.out',
+          ease: "power2.out",
         },
-        '-=0.25'
+        "-=0.25",
       );
-  }, 'blog_reveal+=0.1');
+  }, "blog_reveal+=0.1");
 
   /* SHOW BLOG */
   scrollTL.to(
@@ -196,10 +199,10 @@ export function createBlogTimeline(
     {
       opacity: 1,
       duration: 0.8,
-      ease: 'power3.out',
-      pointerEvents: 'all',
+      ease: "power3.out",
+      pointerEvents: "all",
     },
-    'blog_reveal+=0.45'
+    "blog_reveal+=0.45",
   );
 
   /* HOLD */
@@ -214,7 +217,7 @@ export default function BlogSection({
   circleBlogRef,
 }: BlogSectionProps) {
   const swiperRef = useRef<any>(null);
-  const [activeTab, setActiveTab] = useState<'News' | 'Blogs'>('News');
+  const [activeTab, setActiveTab] = useState<"News" | "Blogs">("News");
   const [progress, setProgress] = useState(0);
 
   const posts = BLOG_POSTS.filter((p) => p.category === activeTab);
@@ -253,20 +256,20 @@ export default function BlogSection({
 
           {/* Tabs */}
           <div className="flex justify-center items-center gap-8 md:gap-12 mb-8 px-6">
-            {(['News', 'Blogs'] as const).map((tab) => (
+            {(["News", "Blogs"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`
                   text-sm md:text-base uppercase tracking-[3px]
                   pb-0.5 transition-all duration-300 font-normal
-                  ${activeTab === tab
-                    ? 'text-[#1E40AF] border-b-2 border-[#1E40AF]'
-                    : 'text-black/40 hover:text-black/70'
+                  ${
+                    activeTab === tab
+                      ? "text-[#1E40AF] border-b-2 border-[#1E40AF]"
+                      : "text-black/40 hover:text-black/70"
                   }
                 `}
               >
-
                 {tab}
               </button>
             ))}
@@ -338,65 +341,70 @@ export default function BlogSection({
             >
               {posts.map((post) => (
                 <SwiperSlide key={post.id}>
-                  {activeTab === 'News' ? (
+                  {activeTab === "News" ? (
                     // NEWS CARD - Original Design
-                    <Link
-                      href={post.link || '#'}
-                      className={`block ${!post.link && 'pointer-events-auto'}`}
-                    >
-                      <div className="bg-white  transition-all duration-500 flex flex-col h-[375px]">
-                        {/* Content */}
-                        <div className="flex-1 flex flex-col p-8">
-                          {/* Source */}
-                          <div className="text-sm tracking-[1px] uppercase text-[#1E40AF] mb-4 font-[500]">
-                            {post.source}
-                          </div>
 
-                          {/* Title */}
-                          <h3 className="text-[20px] font-normal tracking-[2px] mb-3 leading-snug text-black line-clamp-3">
-                            {post.title}
-                          </h3>
+                    <div className="bg-white  transition-all duration-500 flex flex-col h-[375px]">
+                      {/* Content */}
+                      <div className="flex-1 flex flex-col p-8">
+                        {/* Source */}
+                        <div className="text-sm tracking-[1px] uppercase text-[#1E40AF] mb-4 font-[500]">
+                          {post.source}
+                        </div>
 
-                          {/* Footer */}
-                          <div className="flex justify-between items-center mt-auto text-[10px] md:text-xs uppercase tracking-[2px] text-black/40 pt-4">
-                            <span>{post.date}</span>
-                            <span className="text-[#1E40AF] font-medium">{post.category}</span>
-                          </div>
+                        {/* Title */}
+                        <h3 className="text-[20px] font-normal tracking-[2px] mb-3 leading-snug text-black line-clamp-3">
+                          {post.title}
+                        </h3>
+
+                        {/* Footer */}
+                        <div className="flex justify-between items-center mt-auto text-[10px] md:text-xs uppercase tracking-[2px] text-black/40 pt-4">
+                          <span>{post.date}</span>
+                          <Link
+                            href={post.link || "#"}
+                            className={`block ${!post.link && "pointer-events-auto"}`}
+                          >
+                            {" "}
+                            <span className="text-[#1E40AF] font-medium">
+                              {post.category} <ArrowUpRight className="w-4 h-4  inline-block ml-1" />
+                            </span>
+                          </Link>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   ) : (
                     // BLOGS CARD - New Design with Image Overlay
-                    <Link
-                      href={post.link || '#'}
-                      className={`block group ${!post.link && 'pointer-events-none'}`}
-                    >
-                      <div className="relative w-full aspect-[4/5] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
-                        {/* Background Image with Overlay */}
-                        <div className="absolute inset-0">
-                          <Image
-                            src={post.image}
-                            alt={post.title}
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                          {/* Gradient Overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                        </div>
 
-                        {/* Content Overlay */}
-                        <div className="relative h-full flex flex-col justify-end p-6 md:p-8 text-white">
-                          {/* Title */}
-                          <h3 className="text-2xl  font-light leading-tight mb-4">
-                            {post.title}
-                          </h3>
+                    <div className="relative w-full aspect-[4/5] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-[375px]">
+                      {/* Background Image with Overlay */}
+                      <div className="absolute inset-0">
+                        <Image
+                          src={post.image}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                      </div>
 
-                          {/* Date */}
-                          <p className="text-sm md:text-base opacity-90">
-                            {post.date}
-                          </p>
+                      {/* Content Overlay */}
+                      <div className="relative h-full flex flex-col justify-end p-6 md:p-8 text-white">
+                        {/* Title */}
+                        <h3 className="text-2xl  font-light leading-tight mb-4">
+                          {post.title}
+                        </h3>
 
-                          {/* Link Arrow (visible on hover) */}
+                        {/* Date */}
+                        <p className="text-sm md:text-base opacity-90">
+                          {post.date}
+                        </p>
+
+                        {/* Link Arrow (visible on hover) */}
+                        <Link
+                          href={post.link || "#"}
+                          className={`block group ${!post.link && "pointer-events-none"}`}
+                        >
                           {post.link && (
                             <div className="absolute top-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                               <svg
@@ -414,9 +422,9 @@ export default function BlogSection({
                               </svg>
                             </div>
                           )}
-                        </div>
+                        </Link>
                       </div>
-                    </Link>
+                    </div>
                   )}
                 </SwiperSlide>
               ))}
@@ -440,9 +448,9 @@ export default function BlogSection({
         ref={circleBlogRef}
         className="absolute inset-0 z-[95] pointer-events-none opacity-0"
         style={{
-          clipPath: 'circle(0% at 50% 100%)',
-          willChange: 'clip-path',
-          backgroundColor: '#FEF7F0',
+          clipPath: "circle(0% at 50% 100%)",
+          willChange: "clip-path",
+          backgroundColor: "#FEF7F0",
         }}
       />
     </>

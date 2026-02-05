@@ -28,33 +28,33 @@ export function createVideo2Timeline(
     // SECTION 1 → 2: VIDEO 1 → VIDEO 2
     scrollTL.to([prevRefs.text1.current, prevRefs.scrollDown.current], {
         opacity: 0,
-        duration: 0.8,
+        duration: 1,
         ease: 'power2.in'
     }, 'v1_to_v2');
 
     scrollTL.to(prevRefs.video1.current, {
         opacity: 0,
-        duration: 0.6,
+        duration: 1,
         ease: 'power2.in'
     }, 'v1_to_v2');
 
     scrollTL.to(refs.video2.current, {
         opacity: 1,
-        duration: 0.6,
-        ease: 'power2.out'
+        duration: 1,
+        ease: 'power4.out'
     }, 'v1_to_v2');
 
-    createCircleReveal(
-        scrollTL,
-        refs.circleGreen.current!,
-        '#86efad56',
-        'v1_to_v2'
-    );
+        createCircleReveal(
+            scrollTL,
+            refs.circleGreen.current!,
+            '#86efad56',
+            'v1_to_v2'
+        );
 
     scrollTL.to(refs.text2.current, {
         opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
+        duration: 1,
+        ease: 'power4.out'
     }, 'v1_to_v2+=0.4');
 }
 
@@ -67,11 +67,11 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
                 className="absolute inset-0 z-20 opacity-0 pointer-events-none!"
             >
                 <VideoStage src={VIDEO_2} isActive={activeVideo === 1} />
-                <div className="absolute inset-0 bg-black/50" />
+                <div className="absolute inset-0 bg-black/50 pointer-events-none" />
             </div>
 
             {/* TEXT 2 */}
-            <div className="absolute inset-0 z-40 flex items-center justify-center p-8 pointer-events-none!">
+            <div className="absolute inset-0 z-40 flex items-center justify-center p-8 ">
                 <h2
                     ref={refs.text2}
                     className="text-white text-3xl font-medium uppercase tracking-[5px] text-center max-w-5xl leading-[1.2] opacity-0 drop-shadow-lg"

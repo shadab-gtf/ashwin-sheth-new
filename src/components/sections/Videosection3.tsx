@@ -33,8 +33,8 @@ export function createVideo3Timeline(
         prevRefs.text2.current,
         {
             opacity: 0,
-            duration: 0.6,
-            ease: 'power2.in',
+            duration: 1,
+            ease: 'power4.in',
         },
         'v2_to_v3'
     );
@@ -43,8 +43,8 @@ export function createVideo3Timeline(
         prevRefs.video2.current,
         {
             opacity: 0,
-            duration: 0.6,
-            ease: 'power2.in',
+            duration: 1,
+            ease: 'power4.in',
         },
         'v2_to_v3'
     );
@@ -56,8 +56,8 @@ export function createVideo3Timeline(
         refs.video3.current,
         {
             opacity: 1,
-            duration: 0.6,
-            ease: 'power2.out',
+            duration: 1,
+            ease: 'power4.out',
         },
         'v2_to_v3'
     );

@@ -7,7 +7,7 @@ import TransitionLink from './common/transition/TransitionLink';
 export default function Header() {
   const [visible, setVisible] = useState(false);
   const [theme, setTheme] = useState<'black' | 'white'>('black');
-     const NAV_CLASSES = "text-[16px] pointer-event-auto font-normal tracking-[0.15em] hover:text-white/80 transition-colors cursor-pointer hidden md:block";
+     const NAV_CLASSES = "text-[16px] pointer-event-auto! font-normal tracking-[0.15em] hover:text-white/80 transition-colors cursor-pointer hidden md:block";
 
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 w-full z-[9999] transition-all duration-500 pointer-events-none', // ALWAYS none on container
+        'fixed top-0 w-full z-[9999999] transition-all duration-500 pointer-events-none', // ALWAYS none on container
         visible
           ? 'opacity-100 translate-y-0'
           : 'opacity-0 -translate-y-6'

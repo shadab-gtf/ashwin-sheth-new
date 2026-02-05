@@ -121,7 +121,7 @@ export default function ProjectSection({
       {/* BACKGROUND */}
       <section
         ref={projectRef}
-        className="fixed inset-0 z-[80] opacity-0 pointer-events-none!"
+        className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
           src="/assets/images/project-1/project-2.webp"
@@ -138,7 +138,7 @@ export default function ProjectSection({
             absolute right-6 top-1/2 -translate-y-1/2
             w-[340px] sm:w-[360px]
             bg-white  shadow-xl
-            overflow-hidden
+            overflow-hidden pointer-events-none
           "
         >
           {/* Card Image */}

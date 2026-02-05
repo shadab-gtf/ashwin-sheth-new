@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "@/context/TransitionContext";
+import Link from "next/link";
 
 
 const TransitionLink = ({
@@ -15,12 +16,13 @@ const TransitionLink = ({
   const { navigate } = useTransition();
 
   return (
-    <button
+    <Link
+      href={href}
       onClick={() => navigate(href)}
-      className={`cursor-pointer ${className}`}
+      className={`cursor-pointer pointer-events-auto ${className}`}
     >
       {children}
-    </button>
+    </Link>
   );
 };
 

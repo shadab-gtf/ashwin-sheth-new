@@ -82,11 +82,10 @@ export function createFooterTimeline(
 /* ======================================================
    COMPONENT — PIXEL PERFECT PRESENTATION
 ====================================================== */
-export default function Footer() {
+export default function Footer({ footerRef }: FooterProps) {
   const [accordionOpen, setAccordionOpen] = useState(false);
   const accordionContentRef = useRef<HTMLDivElement>(null);
   const accordionIconRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/"
 

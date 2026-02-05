@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import gsap from 'gsap';
-import { ChevronDown, Mail, Phone } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
-
+import gsap from "gsap";
+import { ChevronDown, Mail, Phone } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 interface FooterProps {
   footerRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -21,11 +21,11 @@ export function createFooterTimeline(
   },
   footerRefs: {
     footer: React.RefObject<HTMLDivElement | null>;
-  }
+  },
 ) {
   gsap.set(footerRefs.footer.current, {
     opacity: 0,
-    pointerEvents: 'none',
+    pointerEvents: "none",
   });
 
   /* Fade out brand */
@@ -34,26 +34,26 @@ export function createFooterTimeline(
     {
       opacity: 0,
       duration: 0.8,
-      ease: 'power2.in',
+      ease: "power2.in",
     },
-    'footer_reveal'
+    "footer_reveal",
   );
 
   /* Circle cinematic close */
   scrollTL.to(
     brandRefs.circleBrand.current,
     {
-      clipPath: 'circle(150% at 50% 100%)',
+      clipPath: "circle(150% at 50% 100%)",
       duration: 1.3,
-      ease: 'power2.inOut',
+      ease: "power2.inOut",
       onStart: () => {
         if (brandRefs.circleBrand.current) {
-          brandRefs.circleBrand.current.style.opacity = '1';
-          brandRefs.circleBrand.current.style.backgroundColor = '#fff';
+          brandRefs.circleBrand.current.style.opacity = "1";
+          brandRefs.circleBrand.current.style.backgroundColor = "#fff";
         }
       },
     },
-    'footer_reveal'
+    "footer_reveal",
   );
 
   /* Footer fade in */
@@ -62,19 +62,19 @@ export function createFooterTimeline(
     {
       opacity: 1,
       duration: 1,
-      ease: 'power2.out',
+      ease: "power2.out",
     },
-    'footer_reveal+=0.6'
+    "footer_reveal+=0.6",
   );
 
   /* Enable interactions */
   scrollTL.to(
     footerRefs.footer.current,
     {
-      pointerEvents: 'all',
-      duration: 0.1,
+      pointerEvents: "all",
+      duration: 0.5,
     },
-    'footer_reveal+=1'
+    "footer_reveal+=1",
   );
 }
 
@@ -85,7 +85,8 @@ export default function Footer({ footerRef }: FooterProps) {
   const [accordionOpen, setAccordionOpen] = useState(false);
   const accordionContentRef = useRef<HTMLDivElement>(null);
   const accordionIconRef = useRef<HTMLDivElement>(null);
-
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   // GSAP accordion animation - FIXED VERSION
   useEffect(() => {
     if (!accordionContentRef.current || !accordionIconRef.current) return;
@@ -102,16 +103,16 @@ export default function Footer({ footerRef }: FooterProps) {
         height: naturalHeight,
         opacity: 1,
         duration: 0.6,
-        ease: 'power3.out',
+        ease: "power3.out",
         onComplete: () => {
           // Set to auto after animation for responsiveness
-          gsap.set(content, { height: 'auto' });
-        }
+          gsap.set(content, { height: "auto" });
+        },
       });
       gsap.to(icon, {
         rotation: 180,
         duration: 0.4,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
       });
     } else {
       // Close animation - set explicit height before animating to 0
@@ -121,12 +122,12 @@ export default function Footer({ footerRef }: FooterProps) {
         height: 0,
         opacity: 0,
         duration: 0.4,
-        ease: 'power2.in',
+        ease: "power2.in",
       });
       gsap.to(icon, {
         rotation: 0,
         duration: 0.4,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
       });
     }
   }, [accordionOpen]);
@@ -140,11 +141,11 @@ export default function Footer({ footerRef }: FooterProps) {
       ref={footerRef}
       className="absolute inset-0 z-[100] opacity-0 pointer-events-none bg-[#FEF7F0] text-black"
     >
-      <div className="w-full h-full flex flex-col justify-between overflow-y-auto">
+      <div className="w-full h-full flex flex-col justify-between overflow-y-auto no-scrollbar">
         {/* ================= HEADER WITH LOGO & NAV ================= */}
         <div className="w-full ">
           {/* Logo Section */}
-          <div className="flex flex-col items-center pt-6 md:pt-22">
+          {/* <div className="flex flex-col items-center pt-6 md:pt-22">
             <div className="mb-4">
               <Image
                 src="/blacklogo.png"
@@ -154,13 +155,30 @@ export default function Footer({ footerRef }: FooterProps) {
                 className="w-full"
               />
             </div>
+          </div> */}
+          <div className="border p-[20px] gap-[110px] flex items-center justify-center md:w-[60%] mx-auto mt-[80px] mb-[100px]">
+            <img
+              src="/assets/images/micro/logo-1.png"
+              alt="logo"
+              className="w-[150px] h-[100px] object-contain"
+            />
+            {!isHome && (
+              <>
+                <div className="w-[1px] h-[80px] bg-black/40"></div>
+                <img
+                  src="/assets/images/micro/logo.png"
+                  alt="logo"
+                  className="w-[150px] h-[100px] object-contain"
+                />
+              </>
+            )}
           </div>
 
           {/* Navigation */}
           <div className="">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
               <nav className="flex flex-wrap justify-center gap-8 md:gap-16 ">
-                {['ABOUT', 'PROJECTS', 'THE ORANGE CIRCLE', 'CONTACT'].map(
+                {["ABOUT", "PROJECTS", "THE ORANGE CIRCLE", "CONTACT"].map(
                   (item) => (
                     <Link
                       key={item}
@@ -169,7 +187,7 @@ export default function Footer({ footerRef }: FooterProps) {
                     >
                       {item}
                     </Link>
-                  )
+                  ),
                 )}
               </nav>
             </div>
@@ -189,7 +207,7 @@ export default function Footer({ footerRef }: FooterProps) {
                 aria-expanded={accordionOpen}
                 aria-controls="footer-accordion"
               >
-                <span className="text-sm flex gap-2 items-center font-light tracking-[0.1em] group-hover:  transition-all duration-300">
+                <span className="text-sm flex gap-2 items-center font-medium tracking-[0.1em] group-hover:tracking-[0.15em] transition-all duration-300">
                   EXPLORE ALL LINKS
                   <div ref={accordionIconRef} className="inline-flex">
                     <ChevronDown className="w-5 h-5" />
@@ -208,21 +226,21 @@ export default function Footer({ footerRef }: FooterProps) {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pb-12 md:pb-16 pt-8">
                 {/* Quick Links */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-medium mb-4 md:mb-6 text-black/80">
                     Quick Links
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      'About Us',
-                      'Projects',
-                      'The Orange Circle',
-                      'News & Blogs',
-                      'Contact',
+                      "About Us",
+                      "Projects",
+                      "The Orange Circle",
+                      "News & Blogs",
+                      "Contact",
                     ].map((item) => (
                       <li key={item}>
                         <Link
                           href="#"
-                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-light"
+                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-medium"
                         >
                           {item}
                         </Link>
@@ -233,21 +251,21 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Categories */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-medium mb-4 md:mb-6 text-black/80">
                     Categories
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      'Residential',
-                      'Commercial',
-                      'Land',
-                      'Ongoing Projects',
-                      'Completed Projects',
+                      "Residential",
+                      "Commercial",
+                      "Land",
+                      "Ongoing Projects",
+                      "Completed Projects",
                     ].map((item) => (
                       <li key={item}>
                         <Link
                           href="#"
-                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-light"
+                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-medium"
                         >
                           {item}
                         </Link>
@@ -258,21 +276,21 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Services */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-medium mb-4 md:mb-6 text-black/80">
                     Services
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      'Property Management',
-                      'Investment Advisory',
-                      'Architecture',
-                      'Interior Design',
-                      'Legal Services',
+                      "Property Management",
+                      "Investment Advisory",
+                      "Architecture",
+                      "Interior Design",
+                      "Legal Services",
                     ].map((item) => (
                       <li key={item}>
                         <Link
                           href="#"
-                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-light"
+                          className="text-black/60 hover:text-black transition-colors text-xs md:text-sm font-medium"
                         >
                           {item}
                         </Link>
@@ -283,10 +301,10 @@ export default function Footer({ footerRef }: FooterProps) {
 
                 {/* Contact */}
                 <div>
-                  <h3 className="text-xs md:text-sm uppercase   font-light mb-4 md:mb-6 text-black/80">
+                  <h3 className="text-xs md:text-sm uppercase tracking-[0.15em] font-medium mb-4 md:mb-6 text-black/80">
                     Contact Us
                   </h3>
-                  <ul className="space-y-3 text-black/60 text-xs md:text-sm font-light">
+                  <ul className="space-y-3 text-black/60 text-xs md:text-sm font-medium">
                     <li>
                       Ashwin Sheth Group
                       <br />
@@ -318,44 +336,44 @@ export default function Footer({ footerRef }: FooterProps) {
         </div>
 
         {/* ================= MAIN CONTENT ================= */}
-        <div className="flex-1 flex items-center">
+        <div className="flex-1 flex items-center justify-center">
           <div className="w-full mx-auto px-6 md:px-12 py-8 md:py-12 w-full">
             <div className="w-full">
-              <div className="max-w-3xl">
-                <h3 className="text-xs md:text-sm text-black leading-[32px] tracking-[2px] mb-4">
+              <div className="max-w-3xl mx-auto">
+                <h3 className="text-xs md:text-sm font-medium text-center text-black leading-[32px] tracking-[2px] mb-4">
                   Welcome To Ashwinsheth Group!
                 </h3>
-                <p className="text-xs md:text-sm text-black leading-[24px]  tracking-[2px] mb-4">
-                  These Terms And Conditions Outline The Rules And Regulations For
-                  The Use Of Ashwinsheth Group Website, Located At
+                <p className="text-xs md:text-sm text-black  text-center font-medium leading-[24px]  tracking-[2px] mb-4">
+                  These Terms And Conditions Outline The Rules And Regulations
+                  For The Use Of Ashwinsheth Group Website, Located At
                   Https://Www.Ashwinshethgroup.Com/.
                 </p>
               </div>
 
-              <div className="flex justify-between w-full items-center">
+              <div className="relative flex justify-center gap-[10px] w-full items-center mx-auto">
                 <div className="flex flex-wrap gap-2 md:gap-3 text-xs md:text-sm">
                   <Link
                     href="#"
-                    className="text-xs md:text-sm text-black leading-[24px]  tracking-[2px] transition-colors"
+                    className="text-xs md:text-sm font-medium text-black leading-[24px]  tracking-[2px] transition-colors"
                   >
                     Privacy Policy
                   </Link>
                   <span className="text-black">|</span>
                   <Link
                     href="#"
-                    className="text-xs md:text-sm text-black leading-[24px]  tracking-[2px] transition-colors"
+                    className="text-xs md:text-sm font-medium text-black leading-[24px]  tracking-[2px] transition-colors"
                   >
                     Disclaimer
                   </Link>
                   <span className="text-black">|</span>
                   <Link
                     href="#"
-                    className="text-xs md:text-sm text-black leading-[24px]  tracking-[2px] transition-colors"
+                    className="text-xs md:text-sm font-medium text-black leading-[24px]  tracking-[2px] transition-colors"
                   >
                     Term & Conditions
                   </Link>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="absolute right-0 bottom-0 flex items-center gap-6">
                   {/* Phone Icon */}
                   <Link
                     href="tel:+911234567890"
@@ -380,16 +398,15 @@ export default function Footer({ footerRef }: FooterProps) {
             </div>
           </div>
         </div>
-
         {/* ================= BOTTOM BAR ================= */}
         <div className="border-t border-black/10">
           <div className="w-full mx-auto px-6 md:px-12 py-6 md:py-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6">
-              <p className="text-xs text-black font-light text-center md:text-left">
+              <p className="text-xs text-black font-semibold text-center md:text-left">
                 Copyright © 2025 - Ashwin Sheth Group | All Rights Reserved
               </p>
 
-              <p className="text-xs text-black font-light text-center md:text-right">
+              <p className="text-xs text-black font-semibold text-center md:text-right">
                 Created BY: GTF Technologies
               </p>
             </div>

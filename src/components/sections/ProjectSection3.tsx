@@ -123,7 +123,7 @@ export default function ProjectSection3({
       {/* BACKGROUND */}
       <section
         ref={projectRef}
-        className="fixed inset-0 z-[80] opacity-0 pointer-events-none!"
+        className="fixed inset-0 z-[80] opacity-0 pointer-events-none"
       >
         <Image
           src="/assets/images/project-1/project-4.webp"
@@ -141,6 +141,7 @@ export default function ProjectSection3({
             w-[340px] sm:w-[360px]
             bg-white  shadow-xl
             overflow-hidden
+            pointer-events-none
           "
         >
           {/* Card Image */}
@@ -173,7 +174,7 @@ export default function ProjectSection3({
               THANE WEST
             </p>
 
-            <Link href="/projects" className="mt-6 inline-block text-sm tracking-widest text-blue-700 hover:underline pointer-events-auto">
+            <Link href="/projects" className="mt-6 inline-block text-sm  tracking-widest text-blue-700 hover:underline pointer-events-auto">
               VIEW PROJECT
             </Link>
           </div>
