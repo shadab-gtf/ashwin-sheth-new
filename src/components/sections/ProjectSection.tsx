@@ -515,7 +515,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
 
 
         </div>
-        {/* Description */}
+        {/* Description  */}
         <div className="w-full relative h-[100px] overflow-hidden">
           {PROJECTS.map((project, i) => (
             <div
