@@ -184,3 +184,48 @@ select,
   opacity: 1;
   transition: all 0.3s ease;
 }
+
+
+
+
+
+.view-more-btn .icon-wrap {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #F07D00;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Base arrow styling */
+.icon-wrap .arrow {
+  position: absolute;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* Arrow 1 — default visible */
+.arrow-1 {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Arrow 2 — hidden on left */
+.arrow-2 {
+  transform: translateX(-15px);
+  opacity: 0;
+}
+
+/* Hover animations */
+.view-more-btn:hover .arrow-1 {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.view-more-btn:hover .arrow-2 {
+  transform: translateX(0);
+  opacity: 1;
+}

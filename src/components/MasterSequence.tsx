@@ -384,6 +384,7 @@ export default function MasterSequence() {
 
         {/* Circle reveal overlay for project transition */}
         <div
+        id="next-timeline"
           ref={refs.project.circleReveal}
           className="fixed inset-0 pointer-events-none opacity-0"
           style={{

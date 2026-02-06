@@ -316,6 +316,8 @@ import gsap from "gsap";
 import useIsMobile from "@/hooks/useIsMobile";
 import Heading from "../common/typography/Heading";
 import Pera from "../common/typography/Pera";
+import ViewMore from "../common/Buttons/ViewMore";
+import ScrollTo from "../common/Buttons/ScrollTo";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -329,7 +331,7 @@ interface Project {
   description: string;
 }
 
-const PROJECTS: Project[] = [  {
+const PROJECTS: Project[] = [   {
     title: "Avalon",
     slug:"/projects/sheth-avalon",
     location:"Thane",
@@ -414,6 +416,8 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
       style={{ zIndex: 62 }}
     >
       <div data-project-inner className="relative w-full h-full">
+        
+      <Pera className="absolute hidden md:block bottom-[50px] right-[50px] text-white md:text-[20px] z-11">( Keep Scrolling )</Pera>
 
         {/* ── Striped Background Layers ── */}
         {PROJECTS.map((project, i) => (
@@ -453,7 +457,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
           </div>
         ))}
 
-        <div className="absolute bg-white p-5 text-center w-[90%] md:w-[500px] min-h-[60vh] max-h-[70vh] md:max-h-[95vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden z-[10] will-change-transform">
+        <div className="absolute bg-white p-5 text-center w-[90%] md:w-[400px] 2xl:w-[500px] min-h-[60vh] max-h-[70vh] md:max-h-[95vh] md:mt-[20px] 2xl:mt-[0] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden z-[10] will-change-transform">
         <Heading className="!text-[14px] !leading-[20px]">Key Projects</Heading>
         <div className="flex justify-center gap-[5px] text-black">
           {/* <Pera>{String(activeIndex + 1).padStart(2, "0")}</Pera>-
@@ -474,10 +478,10 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
   className="absolute inset-0 flex items-center justify-center"
 >
   <div data-project-title>
-    <h2 className="text-[#0D4DA1] text-[20px] md:text-[28px] font-light leading-tight">
+    <h2 className="text-[#0D4DA1] text-[20px] md:text-[28px] font-normal leading-tight">
       {project.title}
     </h2>
-    <p className="text-black text-sm md:text-base tracking-[0.15em] uppercase">
+    <p className="text-black text-[14px] leading-[22px] tracking-[0.15em] uppercase">
       {project.location}
     </p>
   </div>
@@ -488,7 +492,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
         </div>
 
         
-        <div className="w-full project-forground h-[250px] md:w-[400px] md:h-[300px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
+        <div className="w-full project-forground h-[250px] md:w-[300px] 2xl:w-[400px] md:h-[250px] 2xl:h-[320px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
 {/* ── Small Preview Images ── */}
         {PROJECTS.map((project, i) => (
             <div key={i} className="absolute inset-0">
@@ -500,10 +504,10 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
             style={{ zIndex: 10 + i }}
           >
             <Image
-              src={getSrc(project)}
+              src={project?.mobile_image}
               alt={project.alt}
-              fill
-              className="object-cover"
+                  fill
+                  className="object-fit rounded-md"
             />
           </div>
           </div>
@@ -520,13 +524,14 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
   className="absolute inset-0 flex items-center justify-center"
 >
   <div data-project-desc>
-    <p className="text-black text-sm md:text-base max-w-[500px] leading-relaxed">
+    <p className="text-black text-[12px] md:text-[14px] 2xl:text-[16px] max-w-[500px] leading-relaxed">
       {project.description}
     </p>
   </div>
 </div>
           ))}
         </div>
+        <ViewMore link={PROJECTS[activeIndex].slug} text="Discover More" className="mx-auto 2xl:mt-[10px] text-[14px] md:!text-[16px]"/>
 
         </div>
       </div>
