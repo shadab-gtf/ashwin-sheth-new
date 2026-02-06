@@ -517,16 +517,16 @@ const TIMELINE_DATA: TimelineSlide[] = [
     title: "Foundation Years",
     description:
       "Founded in 1986 by Mr. Ashwin Sheth. the Sheth Group began its journey to redefine Mumbai's skyline with vision, quality, and innovation.",
-    activeImage: "/timeline/timeline-1.webp", // if this not active  same for all
-    sketchImage: "/timeline/timeline/1.svg", //  show this before active once this reached on center active activeImage intially this image should be showing before active activeImage same for all
+    activeImage: "/timeline/timeline-1.webp",
+    sketchImage: "/timeline/timeline/1.svg",
   },
   {
     year: "1996-2005",
     title: "Residential Market",
     description:
       "The Sheth Group entered Mumbai's residential market with iconic Vasant Series projects, setting new benchmarks in quality living.",
-    activeImage: "/timeline/new-2.png", // if this not active
-    sketchImage: "/timeline/timeline/new-2.svg", //  show this before active once this reached on center active activeImage intially this image should be showing before active activeImage
+    activeImage: "/timeline/new-2.png",
+    sketchImage: "/timeline/timeline/new-2.svg",
   },
   {
     year: "2006-2012",
@@ -562,34 +562,40 @@ const TIMELINE_DATA: TimelineSlide[] = [
   },
 ];
 
+export { TIMELINE_DATA };
+
 export default function HorizontalTimelineSection() {
   return (
     <div className="w-full h-screen bg-[#FFF8F0] overflow-hidden relative pointer-events-none">
       {/* TITLE */}
-      <div className="absolute top-30 left-1/2 -translate-x-1/2 z-10 text-center">
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 z-10 text-center">
         <h2 className="text-[#F07D00] text-xl md:text-2xl tracking-[2px] font-light">
           A (Journey) Through Time
         </h2>
       </div>
 
-      {/* SLIDER */}
-      <div className="absolute inset-0 flex items-center pt-10">
+      {/* SLIDER — uses data attributes for GSAP targeting */}
+      <div className="absolute inset-0 flex items-center ">
         <div
           data-timeline-container
-          className="flex items-center gap-[150px] px-[5%] pl-[400px]"
-          style={{ height: "100%", willChange: "transform" }}
+          className="flex items-center gap-[120px] will-change-transform"
+          style={{
+            /* First slide starts centered, last slide ends centered */
+            paddingLeft: "50vw",
+            paddingRight: "50vw",
+          }}
         >
           {TIMELINE_DATA.map((slide, index) => (
             <div
               key={index}
               data-timeline-slide
-              className="flex-shrink-0 w-full max-w-[750px] h-full flex items-center justify-center relative"
+              className="flex-shrink-0 w-[700px] h-full flex items-center justify-center relative"
             >
               <div className="w-full flex items-center justify-center gap-1 px-16">
                 {/* LEFT TEXT */}
                 <div
                   data-timeline-text-left
-                  className="w-[400] absolute left-[-35%] top-[40%]"
+                  className="w-[400px] absolute left-[-35%] top-[40%] opacity-0"
                 >
                   <h3 className="text-black text-3xl md:text-4xl italic font-light">
                     {slide.year}:<br />
@@ -600,20 +606,19 @@ export default function HorizontalTimelineSection() {
                 {/* CENTER IMAGE */}
                 <div
                   data-timeline-image-center
-                  className="w-[100%] flex justify-center"
-                  style={{ transform: "scale(0.95)" }}
+                  className="w-full flex justify-center"
                 >
-                  <div className="relative w-full aspect-[3/4] max-w-[450px] h-[409px]">
-                    {/* ACTIVE IMAGE – hidden by default */}
+                  <div className="relative w-full aspect-[3/4] max-w-[380px] h-[380px]">
+                    {/* ACTIVE IMAGE – fades in when centered */}
                     <Image
                       data-image-active
                       src={slide.activeImage}
                       alt={slide.title}
                       fill
                       className="object-contain drop-shadow-2xl opacity-0"
+                      style={{ transform: "scale(0.96)" }}
                       priority={index === 0}
                     />
-
                     {/* SKETCH IMAGE – visible by default */}
                     <Image
                       data-image-sketch
@@ -629,12 +634,12 @@ export default function HorizontalTimelineSection() {
               {/* BOTTOM TEXT */}
               <div
                 data-timeline-text-bottom
-                className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center"
+                className="absolute -bottom-30   left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center opacity-0"
               >
-                <h4 className="text-black text-xl  font-medium mb-2">
+                <h4 className="text-black text-xl font-medium mb-2">
                   {slide.year}
                 </h4>
-                <p className="text-black text-base  max-w-[700px] mx-auto">
+                <p className="text-black text-base max-w-[700px] mx-auto">
                   {slide.description}
                 </p>
               </div>
