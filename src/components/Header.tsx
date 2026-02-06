@@ -49,15 +49,16 @@ export default function Header() {
   }, [isHome]);
 
   return (
+
     <header
       className={clsx(
         'fixed top-0 w-full z-[9999999] transition-all duration-500 pointer-events-none',
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
       )}
-    >
+    > 
       <div
         className={clsx(
-          'flex items-center max-w-[1440px] w-full mx-auto justify-between px-8 py-4 transition-colors duration-500',
+          'flex items-center  w-full mx-auto justify-between px-8 py-4 transition-colors duration-500',
           theme === 'black' ? 'text-black' : 'text-white'
         )}
       >

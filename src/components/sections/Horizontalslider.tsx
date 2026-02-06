@@ -580,7 +580,6 @@ export default function HorizontalTimelineSection() {
           data-timeline-container
           className="flex items-center gap-[120px] will-change-transform"
           style={{
-            /* First slide starts centered, last slide ends centered */
             paddingLeft: "50vw",
             paddingRight: "50vw",
           }}
