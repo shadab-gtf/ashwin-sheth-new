@@ -30,6 +30,10 @@ export default function EarthIntroSection({ refs }: EarthIntroSectionProps) {
             className="w-full h-full object-contain drop-shadow-2xl"
             style={{ willChange: 'transform, opacity' }}
           />
+            {/* <GlobeWithMarkers 
+              enableControls={false} 
+              autoRotate={false} 
+            /> */}
         </div>
       </div>
 
