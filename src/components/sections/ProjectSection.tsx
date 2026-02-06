@@ -1,9 +1,321 @@
+// "use client";
+
+// import { useRef, useEffect, useState } from "react";
+// import Image from "next/image";
+// import gsap from "gsap";
+// import useIsMobile from "@/hooks/useIsMobile";
+
+// // ─── Data ────────────────────────────────────────────────────────────────────
+
+// interface Project {
+//   title: string;
+//   slug: string;
+//   location: string;
+//   image: string;
+//   mobile_image: string;
+//   alt: string;
+//   description: string;
+// }
+
+// const PROJECTS: Project[] = [
+//   {
+//     title: "Montana",
+//     slug: "/projects/sheth-montana",
+//     location: "Mulund West",
+//     image: "/assets/images/projects/project-1.webp",
+//     mobile_image: "/assets/images/projects/mobile/project-1.webp",
+//     alt: "Seth Zuri",
+//     description:
+//       "Sheth Montana is a tranquil 7-acre haven in Mulund West, where classic elegance and modern design meet amid lush greenery and world-class amenities.",
+//   },
+//   {
+//     title: "Avalon",
+//     slug: "/projects/sheth-avalon",
+//     location: "Thane",
+//     image: "/assets/images/projects/project-2.webp",
+//     mobile_image: "/assets/images/projects/mobile/project-2.webp",
+//     alt: "Project 2",
+//     description:
+//       "Sheth Avalon stands as a luxurious icon on Thane’s Platinum Belt, blending timeless design with modern comfort and elevated living.",
+//   },
+//   {
+//     title: "Edmont",
+//     slug: "/projects/sheth-edmont",
+//     location: "Kandivali West",
+//     image: "/assets/images/projects/project-3.webp",
+//     mobile_image: "/assets/images/projects/mobile/project-3.webp",
+//     alt: "Project 3",
+//     description:
+//       "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
+//   },
+//   {
+//     title: "Vasant Lawns",
+//     slug: "/projects/sheth-vasant",
+//     location: "Thane West",
+//     image: "/assets/images/projects/project-4.webp",
+//     mobile_image: "/assets/images/projects/mobile/project-4.webp",
+//     alt: "Project 4",
+//     description:
+//       "Vasant Lawns by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+//   },
+// ];
+
+// export { PROJECTS };
+
+// // ─── Props ───────────────────────────────────────────────────────────────────
+
+// interface ProjectSectionProps {
+//   projectRef: React.RefObject<HTMLElement | null>;
+// }
+
+// // ─── Component ───────────────────────────────────────────────────────────────
+
+// export default function ProjectSection({ projectRef }: ProjectSectionProps) {
+//   const [containerHeight, setContainerHeight] = useState(0);
+//   const [activeIndex, setActiveIndex] = useState(0);
+
+//   const isMobile = useIsMobile(768);
+//   const numStrips = isMobile ? 1 : 25;
+
+//   useEffect(() => {
+//     const update = () => setContainerHeight(window.innerHeight);
+//     update();
+//     window.addEventListener("resize", update);
+//     return () => window.removeEventListener("resize", update);
+//   }, []);
+
+//   // Listen for active index changes from master timeline
+//   useEffect(() => {
+//     const handler = (e: Event) => {
+//       const idx = (e as CustomEvent).detail;
+//       if (typeof idx === "number") setActiveIndex(idx);
+//     };
+//     window.addEventListener("project-active-change", handler);
+//     return () => window.removeEventListener("project-active-change", handler);
+//   }, []);
+
+//   if (!containerHeight) return null;
+
+//   const stripeHeight = Math.ceil(containerHeight / numStrips);
+//   const getSrc = (p: Project) => (isMobile ? p.mobile_image : p.image);
+
+//   return (
+//      <section
+//       ref={projectRef}
+//       data-project-section
+//       className="relative w-full h-screen overflow-hidden"
+//     >
+//       {/* Stripes */}
+//       {PROJECTS.map((project, i) => (
+//         <div
+//           key={`stripes-${i}`}
+//           data-stripe-group={i}
+//           className="absolute inset-0"
+//           style={{ zIndex: i + 1 }}
+//         >
+//           {Array.from({ length: numStrips }).map((_, j) => (
+//             <div
+//               key={j}
+//               data-stripe
+//               className="absolute w-full overflow-hidden"
+//               style={{ top: `${j * stripeHeight}px` }}
+//             >
+//               <Image
+//                 src={getSrc(project)}
+//                 alt={project.alt}
+//                 width={1920}
+//                 height={containerHeight}
+//                 className="object-cover hidden md:block w-full"
+//                 style={{ top: `-${j * stripeHeight}px`, position: "relative" }}
+//               />
+//               <Image
+//                 src={getSrc(project)}
+//                 alt={project.alt}
+//                 fill
+//                 className="object-cover block md:hidden"
+//               />
+//             </div>
+//           ))}
+//         </div>
+//       ))}
+
+//       {/* FOREGROUND BOX */}
+//       {/* FOREGROUND BOXES */}
+// {PROJECTS.map((project, i) => (
+//   <div
+//     key={`foreground-${i}`}
+//     data-small-image={i}
+//     data-project-text={i}
+//     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[500px] min-h-[60vh] max-h-[95vh] bg-white p-5 text-center z-[50] flex flex-col items-center justify-center overflow-hidden"
+//   >
+//     <h4 className="text-[14px] md:text-[16px] font-medium">Key Projects</h4>
+//     <div className="flex gap-2 mt-2 text-sm">
+//       <span className="data-counter-current">{String(i + 1).padStart(2, "0")}</span>
+//       <span className="opacity-60">/</span>
+//       <span className="opacity-60">{String(PROJECTS.length).padStart(2, "0")}</span>
+//     </div>
+
+//     {/* Small Image */}
+//     <div data-small-image={i} className="relative w-full h-[250px] md:w-[400px] md:h-[300px] my-4 rounded-md overflow-hidden">
+//       <Image
+//         src={getSrc(project)}
+//         alt={project.alt}
+//         fill
+//         className="object-cover rounded-md"
+//       />
+//     </div>
+
+//     {/* Text */}
+//     <h2 data-project-title className="uppercase text-xl md:text-2xl font-semibold">{project.title}</h2>
+//     <p data-project-desc className="text-sm md:text-base text-black/70">{project.location}</p>
+//     <p data-project-desc className="mt-2 text-sm md:text-base max-w-[400px]">{project.description}</p>
+
+//     <a
+//       href={project.slug}
+//       className="mt-4 inline-block border-b border-black/30 pb-1 uppercase text-sm md:text-base"
+//     >
+//       Discover More
+//     </a>
+//   </div>
+// ))}
+
+//     </section>
+//   );
+// }
+
+// // ─── Timeline Builder ────────────────────────────────────────────────────────
+// // Called from MasterSequence — appends project stack transitions to the master timeline
+
+// export function createProjectTimeline(
+//   scrollTL: gsap.core.Timeline,
+//   projectRef: React.RefObject<HTMLElement | null>
+// ) {
+//   const section = projectRef.current;
+//   if (!section) return;
+
+//   // ── Query all elements via data attributes ──
+//   const stripeGroups: HTMLElement[][] = [];
+//   const smallImages: HTMLElement[] = [];
+//   const titles: HTMLElement[] = [];
+//   const descs: HTMLElement[] = [];
+
+//   PROJECTS.forEach((_, i) => {
+//     const group = section.querySelector(`[data-stripe-group="${i}"]`);
+//     if (group) {
+//       stripeGroups.push(Array.from(group.querySelectorAll("[data-stripe]")) as HTMLElement[]);
+//     }
+
+//     const img = section.querySelector(`[data-small-image="${i}"]`) as HTMLElement;
+//     if (img) smallImages.push(img);
+
+//     const textBlock = section.querySelector(`[data-project-text="${i}"]`) as HTMLElement;
+//     if (textBlock) {
+//       const title = textBlock.querySelector("[data-project-title]") as HTMLElement;
+//       const desc = textBlock.querySelector("[data-project-desc]") as HTMLElement;
+//       if (title) titles.push(title);
+//       if (desc) descs.push(desc);
+//     }
+//   });
+
+//   // ── Compute dimensions ──
+//   const vh = window.innerHeight;
+//   const isMobile = window.innerWidth < 768;
+//   const numStrips = isMobile ? 1 : 25;
+//   const stripeHeight = Math.ceil(vh / numStrips);
+//   const stripDuration = isMobile ? 1.3 : 0.8;
+
+//   // ── Initial states ──
+//   // First project: fully visible
+//   stripeGroups[0]?.forEach((s) => gsap.set(s, { height: stripeHeight }));
+//   // Remaining projects: collapsed
+//   stripeGroups.slice(1).forEach((group) => {
+//     group.forEach((s) => gsap.set(s, { height: 0 }));
+//   });
+
+//   smallImages.forEach((el, i) => gsap.set(el, { yPercent: i === 0 ? 0 : 100 }));
+//   titles.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30 }));
+//   descs.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30 }));
+
+//   // ── Timing ──
+//   const HOLD = 1.5;
+
+//   // ── Build each project transition ──
+//   PROJECTS.forEach((_, i) => {
+//     const label = `proj_${i}`;
+//     scrollTL.addLabel(label);
+
+//     // Dispatch active index change
+//     scrollTL.call(() => {
+//       window.dispatchEvent(new CustomEvent("project-active-change", { detail: i }));
+//     }, undefined, label);
+
+//     if (i === 0) {
+//       // Just hold the first project
+//       scrollTL.to({}, { duration: HOLD });
+//       return;
+//     }
+
+//     // Stripe reveal — new project slides in via expanding stripes
+//     if (stripeGroups[i]) {
+//       scrollTL.to(
+//         stripeGroups[i],
+//         {
+//           height: stripeHeight,
+//           stagger: { each: 0.03, from: "end" },
+//           ease: "power2.out",
+//           duration: stripDuration,
+//         },
+//         label
+//       );
+//     }
+
+//     // Small image slides up
+//     if (smallImages[i]) {
+//       scrollTL.to(
+//         smallImages[i],
+//         { yPercent: 0, duration: 1.3, ease: "power2.inOut" },
+//         label
+//       );
+//     }
+
+//     // Previous text fades out
+//     if (titles[i - 1] && descs[i - 1]) {
+//       scrollTL.to(
+//         [titles[i - 1], descs[i - 1]],
+//         { autoAlpha: 0, y: -60, duration: 0.4, ease: "power2.in" },
+//         label
+//       );
+//     }
+
+//     // Current text fades in
+//     if (titles[i] && descs[i]) {
+//       scrollTL.to(
+//         [titles[i], descs[i]],
+//         { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
+//         `${label}+=0.3`
+//       );
+//     }
+
+//     // Hold so user can read
+//     scrollTL.to({}, { duration: HOLD });
+//   });
+
+//   // Brief hold on last project then signal completion
+//   scrollTL.to({}, { duration: 1.0 });
+//   scrollTL.addLabel("projects_complete");
+// }
+
+
+
+
 "use client";
 
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import useIsMobile from "@/hooks/useIsMobile";
+import Heading from "../common/typography/Heading";
+import Pera from "../common/typography/Pera";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -17,46 +329,41 @@ interface Project {
   description: string;
 }
 
-const PROJECTS: Project[] = [
-  {
-    title: "Montana",
-    slug: "/projects/sheth-montana",
-    location: "Mulund West",
-    image: "/assets/images/project-1/project-3.webp",
-    mobile_image: "/assets/images/project-1/project-3.webp",
-    alt: "Sheth Montana",
-    description:
-      "Sheth Montana is a tranquil 7-acre haven in Mulund West, where classic elegance and modern design meet amid lush greenery and world-class amenities.",
-  },
-  {
+const PROJECTS: Project[] = [  {
     title: "Avalon",
-    slug: "/projects/sheth-avalon",
-    location: "Thane",
-    image: "/assets/images/project-1/project-3.webp",
-    mobile_image: "/assets/images/project-1/project-3.webp",
-    alt: "Sheth Avalon",
-    description:
-      "Sheth Avalon stands as a luxurious icon on Thane's Platinum Belt, blending timeless design with modern comfort and elevated living.",
+    slug:"/projects/sheth-avalon",
+    location:"Thane",
+    image: "/assets/images/projects/project-2.webp",
+    mobile_image: "/assets/images/projects/mobile/project-2.webp",
+    alt: "Project 2",
+    description: "Sheth Avalon stands as a luxurious icon on Thane’s Platinum Belt, blending timeless design with modern comfort and elevated living.",
   },
   {
     title: "Edmont",
-    slug: "/projects/sheth-edmont",
-    location: "Kandivali West",
-    image: "/assets/images/project-1/project-3.webp",
-    mobile_image: "/assets/images/project-1/project-3.webp",
-    alt: "Sheth Edmont",
-    description:
-      "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
+    slug:"/projects/sheth-edmont",
+    location:"Kandivali West",
+    image: "/assets/images/projects/project-3.webp",
+    mobile_image: "/assets/images/projects/mobile/project-3.webp",
+    alt: "Project 3",
+    description: "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
   },
   {
-    title: "Vasant Lawns",
-    slug: "/projects/sheth-vasant",
-    location: "Thane West",
-    image: "/assets/images/project-1/project-4.webp",
-    mobile_image: "/assets/images/project-1/project-4.webp",
-    alt: "Sheth Vasant Lawns",
-    description:
-      "Vasant Lawns by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+    title: "Fern",
+    slug:"/projects/sheth-vasant",
+    location:"Thane West",
+    image: "/assets/images/projects/project-4.webp",
+    mobile_image: "/assets/images/projects/mobile/project-4.webp",
+    alt: "Project 4",
+    description: "Fern by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+  },
+  {
+    title: "One Marina",
+    slug:"/projects/sheth-vasant",
+    location:"Marine Drive",
+    image: "/assets/images/projects/project-5.webp",
+    mobile_image: "/assets/images/projects/mobile/project-5.webp",
+    alt: "Project 4",
+    description:"Set along Marine Drive, One Marina offers thoughtfully crafted residences with uninterrupted sea views.",
   },
 ];
 
@@ -146,13 +453,51 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
           </div>
         ))}
 
-        {/* ── Small Preview Images ── */}
+        <div className="absolute bg-white p-5 text-center w-[90%] md:w-[500px] min-h-[60vh] max-h-[70vh] md:max-h-[95vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden z-[10] will-change-transform">
+        <Heading className="!text-[14px] !leading-[20px]">Key Projects</Heading>
+        <div className="flex justify-center gap-[5px] text-black">
+          {/* <Pera>{String(activeIndex + 1).padStart(2, "0")}</Pera>-
+          <Pera className="opacity-60">{String(projects.length).padStart(2, "0")}</Pera> */}
+          
+          <span>{String(activeIndex + 1).padStart(2, "0")}</span>
+          <span className="text-black mx-1">-</span>
+          <span className="text-black">{String(PROJECTS.length).padStart(2, "0")}</span>
+        </div>
+        
+        {/* Titles */}
+        <div className="w-full relative h-[70px] overflow-hidden">
+           {/* ── Text Overlays ── */}
         {PROJECTS.map((project, i) => (
+          <div
+  key={`text-${i}`}
+  data-project-title-wrap={i}
+  className="absolute inset-0 flex items-center justify-center"
+>
+  <div data-project-title>
+    <h2 className="text-[#0D4DA1] text-[20px] md:text-[28px] font-light leading-tight">
+      {project.title}
+    </h2>
+    <p className="text-black text-sm md:text-base tracking-[0.15em] uppercase">
+      {project.location}
+    </p>
+  </div>
+</div>
+        ))}
+
+
+        </div>
+
+        
+        <div className="w-full project-forground h-[250px] md:w-[400px] md:h-[300px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
+{/* ── Small Preview Images ── */}
+        {PROJECTS.map((project, i) => (
+            <div key={i} className="absolute inset-0">
           <div
             key={`preview-${i}`}
             data-small-image={i}
-            className="absolute bottom-8 right-8 w-[180px] h-[240px] md:w-[220px] md:h-[300px] rounded-xl overflow-hidden shadow-2xl"
-            style={{ zIndex: PROJECTS.length + 10 }}
+            className="w-full h-full relative"
+            // style={{ zIndex: PROJECTS.length + 10 }}
+            style={{ zIndex: 10 + i }}
           >
             <Image
               src={getSrc(project)}
@@ -161,47 +506,28 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
               className="object-cover"
             />
           </div>
-        ))}
-
-        {/* ── Text Overlays ── */}
-        {PROJECTS.map((project, i) => (
-          <div
-            key={`text-${i}`}
-            data-project-text={i}
-            className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 pb-16 md:pb-24"
-            style={{ zIndex: PROJECTS.length + 20, pointerEvents: "none" }}
-          >
-            <div data-project-title className="mb-4">
-              <h2 className="text-white text-4xl md:text-6xl lg:text-7xl font-light leading-tight">
-                {project.title}
-              </h2>
-              <p className="text-white/70 text-sm md:text-base tracking-[0.15em] mt-2 uppercase">
-                {project.location}
-              </p>
-            </div>
-
-            <div data-project-desc>
-              <p className="text-white/80 text-sm md:text-base max-w-[500px] leading-relaxed">
-                {project.description}
-              </p>
-              <a
-                href={project.slug}
-                className="inline-block mt-4 text-white text-sm tracking-[0.15em] uppercase border-b border-white/40 pb-1 hover:border-white transition-colors pointer-events-auto"
-              >
-                Discover More
-              </a>
-            </div>
           </div>
         ))}
 
-        {/* ── Counter ── */}
-        <div
-          className="absolute top-8 right-8 md:top-12 md:right-16 text-white text-sm tracking-widest"
-          style={{ zIndex: PROJECTS.length + 30 }}
-        >
-          <span>{String(activeIndex + 1).padStart(2, "0")}</span>
-          <span className="text-white/40 mx-1">/</span>
-          <span className="text-white/40">{String(PROJECTS.length).padStart(2, "0")}</span>
+
+        </div>
+        {/* Description */}
+        <div className="w-full relative h-[100px] overflow-hidden">
+          {PROJECTS.map((project, i) => (
+            <div
+  key={`description-${i}`}
+  data-project-desc-wrap={i}
+  className="absolute inset-0 flex items-center justify-center"
+>
+  <div data-project-desc>
+    <p className="text-black text-sm md:text-base max-w-[500px] leading-relaxed">
+      {project.description}
+    </p>
+  </div>
+</div>
+          ))}
+        </div>
+
         </div>
       </div>
     </section>
@@ -218,69 +544,110 @@ export function createProjectTimeline(
   const section = projectRef.current;
   if (!section) return;
 
-  // ── Query all elements via data attributes ──
+  // ─────────────────────────────────────────────
+  // Query elements
+  // ─────────────────────────────────────────────
   const stripeGroups: HTMLElement[][] = [];
   const smallImages: HTMLElement[] = [];
-  const titles: HTMLElement[] = [];
-  const descs: HTMLElement[] = [];
+  const titleWraps: HTMLElement[] = [];
+  const descWraps: HTMLElement[] = [];
 
   PROJECTS.forEach((_, i) => {
+    // Stripe groups
     const group = section.querySelector(`[data-stripe-group="${i}"]`);
     if (group) {
-      stripeGroups.push(Array.from(group.querySelectorAll("[data-stripe]")) as HTMLElement[]);
+      stripeGroups.push(
+        Array.from(group.querySelectorAll("[data-stripe]")) as HTMLElement[]
+      );
     }
 
-    const img = section.querySelector(`[data-small-image="${i}"]`) as HTMLElement;
+    // Small images
+    const img = section.querySelector(
+      `[data-small-image="${i}"]`
+    ) as HTMLElement | null;
     if (img) smallImages.push(img);
 
-    const textBlock = section.querySelector(`[data-project-text="${i}"]`) as HTMLElement;
-    if (textBlock) {
-      const title = textBlock.querySelector("[data-project-title]") as HTMLElement;
-      const desc = textBlock.querySelector("[data-project-desc]") as HTMLElement;
-      if (title) titles.push(title);
-      if (desc) descs.push(desc);
-    }
+    // Title + description wrappers
+    const titleWrap = section.querySelector(
+      `[data-project-title-wrap="${i}"]`
+    ) as HTMLElement | null;
+
+    const descWrap = section.querySelector(
+      `[data-project-desc-wrap="${i}"]`
+    ) as HTMLElement | null;
+
+    if (titleWrap) titleWraps.push(titleWrap);
+    if (descWrap) descWraps.push(descWrap);
   });
 
-  // ── Compute dimensions ──
+  // ─────────────────────────────────────────────
+  // Layout calculations
+  // ─────────────────────────────────────────────
   const vh = window.innerHeight;
   const isMobile = window.innerWidth < 768;
   const numStrips = isMobile ? 1 : 25;
   const stripeHeight = Math.ceil(vh / numStrips);
   const stripDuration = isMobile ? 1.3 : 0.8;
 
-  // ── Initial states ──
-  // First project: fully visible
-  stripeGroups[0]?.forEach((s) => gsap.set(s, { height: stripeHeight }));
-  // Remaining projects: collapsed
-  stripeGroups.slice(1).forEach((group) => {
-    group.forEach((s) => gsap.set(s, { height: 0 }));
-  });
+  // ─────────────────────────────────────────────
+  // Initial states
+  // ─────────────────────────────────────────────
+  stripeGroups[0]?.forEach((s) =>
+    gsap.set(s, { height: stripeHeight })
+  );
 
-  smallImages.forEach((el, i) => gsap.set(el, { yPercent: i === 0 ? 0 : 100 }));
-  titles.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30 }));
-  descs.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30 }));
+  stripeGroups.slice(1).forEach((group) =>
+    group.forEach((s) => gsap.set(s, { height: 0 }))
+  );
 
-  // ── Timing ──
-  const HOLD = 1.5;
+  smallImages.forEach((el, i) =>
+    gsap.set(el, { yPercent: i === 0 ? 0 : 100 })
+  );
 
-  // ── Build each project transition ──
+  titleWraps.forEach((el, i) =>
+    gsap.set(el, {
+      autoAlpha: i === 0 ? 1 : 0,
+      y: i === 0 ? 0 : 60,
+    })
+  );
+
+  descWraps.forEach((el, i) =>
+    gsap.set(el, {
+      autoAlpha: i === 0 ? 1 : 0,
+      y: i === 0 ? 0 : 60,
+    })
+  );
+
+  // ─────────────────────────────────────────────
+  // Timing
+  // ─────────────────────────────────────────────
+  const HOLD = 2.2;
+
+  // ─────────────────────────────────────────────
+  // Build timeline
+  // ─────────────────────────────────────────────
   PROJECTS.forEach((_, i) => {
-    const label = `proj_${i}`;
+    const label = `project_${i}`;
     scrollTL.addLabel(label);
 
-    // Dispatch active index change
-    scrollTL.call(() => {
-      window.dispatchEvent(new CustomEvent("project-active-change", { detail: i }));
-    }, undefined, label);
+    // Active index event
+    scrollTL.call(
+      () => {
+        window.dispatchEvent(
+          new CustomEvent("project-active-change", { detail: i })
+        );
+      },
+      undefined,
+      label
+    );
 
+    // First project: just hold
     if (i === 0) {
-      // Just hold the first project
       scrollTL.to({}, { duration: HOLD });
       return;
     }
 
-    // Stripe reveal — new project slides in via expanding stripes
+    // ── Stripe reveal
     if (stripeGroups[i]) {
       scrollTL.to(
         stripeGroups[i],
@@ -294,38 +661,48 @@ export function createProjectTimeline(
       );
     }
 
-    // Small image slides up
+    // ── Image slide
     if (smallImages[i]) {
       scrollTL.to(
         smallImages[i],
-        { yPercent: 0, duration: 1.3, ease: "power2.inOut" },
+        {
+          yPercent: 0,
+          duration: 1.3,
+          ease: "power2.inOut",
+        },
         label
       );
     }
 
-    // Previous text fades out
-    if (titles[i - 1] && descs[i - 1]) {
-      scrollTL.to(
-        [titles[i - 1], descs[i - 1]],
-        { autoAlpha: 0, y: -60, duration: 0.4, ease: "power2.in" },
-        label
-      );
-    }
+    // ── Previous text OUT
+    scrollTL.to(
+      [titleWraps[i - 1], descWraps[i - 1]],
+      {
+        autoAlpha: 0,
+        y: -60,
+        duration: 0.6,
+        ease: "power3.in",
+      },
+      label
+    );
 
-    // Current text fades in
-    if (titles[i] && descs[i]) {
-      scrollTL.to(
-        [titles[i], descs[i]],
-        { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" },
-        `${label}+=0.3`
-      );
-    }
+    // ── Current text IN
+    scrollTL.to(
+      [titleWraps[i], descWraps[i]],
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      },
+      `${label}+=0.35`
+    );
 
-    // Hold so user can read
+    // Hold
     scrollTL.to({}, { duration: HOLD });
   });
 
-  // Brief hold on last project then signal completion
-  scrollTL.to({}, { duration: 1.0 });
+  // End buffer
+  scrollTL.to({}, { duration: 1 });
   scrollTL.addLabel("projects_complete");
 }

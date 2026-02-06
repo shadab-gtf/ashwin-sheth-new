@@ -19,6 +19,7 @@ interface CommonSliderProps<T> {
     renderItem: (item: T, index: number) => ReactNode;
     containerClass?: string;
     showProgress?: boolean;
+    speed?: number;
     loop?: boolean;
     breakpoints?: SwiperProps["breakpoints"];
     
@@ -28,6 +29,7 @@ const CommonSlider = <T,>({
     data,
     slidesPerView = 3,
     spaceBetween = 30,
+    speed = 900,
     renderItem,
     containerClass = "",
     showProgress = false,
@@ -70,6 +72,7 @@ const CommonSlider = <T,>({
             <Swiper
                 modules={[Navigation]}
                 loop={loop}
+                speed={speed}
                 slidesPerView={slidesPerView}
                 breakpoints={breakpoints}
                 spaceBetween={spaceBetween}
@@ -86,6 +89,37 @@ const CommonSlider = <T,>({
                     </SwiperSlide>
                 ))}
             </Swiper>
+            <div className="flex justify-center items-center gap-[10px] w-full max-w-[800px] mx-auto">
+            {/* prgress bar */}
+            {showProgress && (
+            <div className="mt-6 flex items-center gap-4 w-full mx-auto">
+                {/* Start count */}
+                {/* <span className="text-sm text-black">
+                   {data.length < 10 && 0}{Math.min(
+                        Math.round(progress * data.length),
+                        data.length
+                    )}
+                </span> */}
+                {/* <span className="text-sm text-black">Total Photos {data.length < 10 && 0}{data.length}</span> */}
+                        <span className="text-[18px] mr-[30px] font-medium uppercase tracking-[1px] text-black">
+                            Total Photos {data.length < 10 && 0}{data.length}
+                        </span>
+
+
+                {/* Bar */}
+                <div className="relative flex-1 h-[2px] bg-black/20 max-w-[400px]">
+                    <div
+                        className="absolute left-0 top-0 h-full bg-black transition-all duration-300"
+                        style={{ width: `${progress * 100}%` }}
+                    />
+                </div>
+
+                {/* End count */}
+                {/* <span className="text-sm text-black">
+                    {data.length < 10 && 0}{data.length}
+                </span> */}
+            </div>
+            )}
 
             {/* Navigation */}
             <div className="flex items-center justify-center gap-[40px] md:mt-[30px]">
@@ -102,6 +136,7 @@ const CommonSlider = <T,>({
                 >
                     <MdKeyboardArrowRight size={36} />
                 </button>
+            </div>
             </div>
 
         </>
