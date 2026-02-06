@@ -7,13 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Pera from "../common/typography/Pera";
 import Heading from "../common/typography/Heading";
 import useIsMobile from "@/hooks/useIsMobile";
-// import useIsMobile from "@/components/utils/hooks/useIsMobile";
-// import ScrollTo from "../common/buttons/ScrollTo";
-// import ViewMore from "../common/buttons/ViewMore";
 
 gsap.registerPlugin(ScrollTrigger);
-
-/* ---------------- TYPES ---------------- */
 
 type Project = {
   title: string;
@@ -24,8 +19,6 @@ type Project = {
   alt: string;
   description: string;
 };
-
-/* ---------------- DATA ---------------- */
 
 const projects: Project[] = [
   {
@@ -70,14 +63,13 @@ const projects: Project[] = [
   },
 ];
 
-/* ---------------- COMPONENT ---------------- */
-
-export default function Projects() {
+export default function ProjectsNew() {
   const containerRef = useRef<HTMLElement | null>(null);
-  const smallImageRefs = useRef<HTMLDivElement[]>([]);
-  const titleRefs = useRef<HTMLDivElement[]>([]);
-  const descRefs = useRef<HTMLDivElement[]>([]);
-  const stripeRefs = useRef<HTMLDivElement[][]>([]);
+  // const smallImageRefs = useRef<HTMLDivElement[]>([]);
+  const smallImageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const descRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const stripeRefs = useRef<(HTMLDivElement | null)[][]>([]);
 
   const [containerHeight, setContainerHeight] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -179,19 +171,10 @@ export default function Projects() {
   const getSrc = (p: Project) => (isMobile ? p.mobile_image : p.image);
 
   /* ---------------- JSX ---------------- */
-
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full h-screen overflow-hidden"
-    >
-      {/* <ScrollTo
-        idTop="news-section"
-        idBottom="timeline-section"
-        className="bottom-[50px] md:bottom-[100px] text-white z-[201]"
-      /> */}
-
-      {/* STRIPES — ORIGINAL LOGIC */}
+    <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
+   
+      {/* STRIPES */}
       {projects.map((p, i) => (
         <div key={i} className="absolute inset-0 w-full h-full">
           {Array.from({ length: numStrips }).map((_, j) => (
@@ -205,21 +188,15 @@ export default function Projects() {
               className="stripe absolute w-full overflow-hidden"
               style={{ top: `${j * stripeHeight}px` }}
             >
-              {/* DESKTOP */}
               <Image
                 src={getSrc(p)}
                 alt={p.alt}
                 width={100}
                 height={containerHeight}
                 className="object-cover w-full hidden md:block"
-                style={{
-                  position: "absolute",
-                  top: `-${j * stripeHeight}px`,
-                }}
+                style={{ position: "absolute", top: `-${j * stripeHeight}px` }}
                 sizes="100vw"
               />
-
-              {/* MOBILE */}
               <Image
                 src={getSrc(p)}
                 alt={p.alt}
@@ -232,6 +209,60 @@ export default function Projects() {
         </div>
       ))}
 
+      {/* FOREGROUND CONTENT */}
+      <div className="absolute bg-white p-5 text-center w-[90%] md:w-[500px] min-h-[60vh] max-h-[70vh] md:max-h-[95vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden z-[10] will-change-transform">
+        <Heading className="!text-[14px] !leading-[20px]">Key Projects</Heading>
+        <div className="flex justify-center gap-[5px]">
+          <Pera>{String(activeIndex + 1).padStart(2, "0")}</Pera>-
+          <Pera className="opacity-60">{String(projects.length).padStart(2, "0")}</Pera>
+        </div>
+
+        {/* Titles */}
+        <div className="w-full relative h-[70px] overflow-hidden">
+          {projects.map((p, i) => (
+            <div key={i} className="absolute inset-0 flex items-center justify-center">
+              <div  ref={(el) => {
+    if (el) {
+      titleRefs.current[i] = el;
+    }
+  }} className="absolute inset-0 flex flex-col items-center justify-center">
+                <Heading className="uppercase">{p.title}</Heading>
+                <Heading className="!text-[14px] !leading-[22px] !text-black">{p.location}</Heading>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Small Foreground Images */}
+        <div className="w-full project-forground h-[250px] md:w-[400px] md:h-[300px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
+          {projects.map((p, i) => (
+            <div key={i} className="absolute inset-0">
+              <div  ref={(el) => {
+    if (el) {
+      smallImageRefs.current[i] = el;
+    }
+  }} className="w-full h-full relative" style={{ zIndex: 10 + i }}>
+                <Image src={p.mobile_image} alt={p.alt} fill className="object-fit rounded-md" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Description */}
+        <div className="w-full relative h-[100px] overflow-hidden">
+          {projects.map((p, i) => (
+            <div key={i}  ref={(el) => {
+    if (el) {
+      descRefs.current[i] = el;
+    }
+  }}   className="absolute inset-0 2xl:px-[40px] flex items-center justify-center">
+              <Pera>{p.description}</Pera>
+            </div>
+          ))}
+        </div>
+
+        {/* Discover More */}
+      </div>
     </section>
   );
 }
