@@ -19,76 +19,26 @@ interface VideoSection3Props {
 export function createVideo3Timeline(
     scrollTL: gsap.core.Timeline,
     prevRefs: any,
-    refs: VideoSection3Props['refs'],
-    earthRef?: React.RefObject<HTMLDivElement | null>
+    refs: VideoSection3Props['refs']
+    // Remove earthRef parameter
 ) {
-    // Initial states (SAFE)
     scrollTL.set(refs.video3.current, { opacity: 0 });
     scrollTL.set(refs.text3.current, { opacity: 0 });
 
-    /* ---------------------------------------
-       EXIT VIDEO 2
-    --------------------------------------- */
+    scrollTL.addLabel('v2_to_v3');
+
+    // Exit Video 2
     scrollTL.to(
-        prevRefs.text2.current,
+        [prevRefs.text2.current, prevRefs.video2.current],
         {
             opacity: 0,
-            duration: 1,
-            ease: 'power4.in',
+            duration: 0.6,
+            ease: 'power2.in',
         },
         'v2_to_v3'
     );
 
-    scrollTL.to(
-        prevRefs.video2.current,
-        {
-            opacity: 0,
-            duration: 1,
-            ease: 'power4.in',
-        },
-        'v2_to_v3'
-    );
-
-    /* ---------------------------------------
-       ENTER VIDEO 3
-    --------------------------------------- */
-    scrollTL.to(
-        refs.video3.current,
-        {
-            opacity: 1,
-            duration: 1,
-            ease: 'power4.out',
-        },
-        'v2_to_v3'
-    );
-
-    /* ---------------------------------------
-       EARTH: FIXED AT BOTTOM (SCROLL-CONTROLLED)
-    --------------------------------------- */
-    if (earthRef?.current) {
-        scrollTL.set(
-            earthRef.current,
-            {
-                y: '75vh',
-                scale: 0.65,
-                opacity: 0,
-                zIndex: 20,
-            },
-            'v2_to_v3'
-        );
-
-        scrollTL.to(
-            earthRef.current,
-            {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'power2.out',
-            },
-            'v2_to_v3+=0.25'
-        );
-    }
-
-    //   circle reveal 
+    // Circle reveal
     createCircleReveal(
         scrollTL,
         refs.circleOrange.current!,
@@ -96,9 +46,18 @@ export function createVideo3Timeline(
         'v2_to_v3+=0.05'
     );
 
-    /* ---------------------------------------
-       TEXT 3
-    --------------------------------------- */
+    // Enter Video 3
+    scrollTL.to(
+        refs.video3.current,
+        {
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+        },
+        'v2_to_v3+=0.3'
+    );
+
+    // Text 3
     scrollTL.to(
         refs.text3.current,
         {
@@ -106,10 +65,11 @@ export function createVideo3Timeline(
             duration: 0.8,
             ease: 'power2.out',
         },
-        'v2_to_v3+=0.6'
+        'v2_to_v3+=0.8'
     );
-}
 
+    scrollTL.to({}, { duration: 1 });
+}
 
 export default function VideoSection3({ refs, activeVideo }: VideoSection3Props) {
     return (

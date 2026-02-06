@@ -79,10 +79,10 @@ export function createBrandTimeline(
    COMPONENT
 ====================================================== */
 const socials = [
-    { Icon: Facebook, label: 'Facebook', href: '#' },
-    { Icon: Instagram, label: 'Instagram', href: '#' },
-    { Icon: Linkedin, label: 'LinkedIn', href: '#' },
-    { Icon: Youtube, label: 'YouTube', href: '#' },
+    { Icon: Facebook, label: 'Facebook', href: 'https://www.facebook.com/ShethGroupLtd' },
+    { Icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/ashwinshethgroupltd/' },
+    { Icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/company/ashwin-sheth-group/' },
+    { Icon: Youtube, label: 'YouTube', href: 'https://www.youtube.com/channel/UCW7PBDljlbTw1c1vB9QuDuQ' },
 ];
 
 export default function BrandUnfoldedSection({

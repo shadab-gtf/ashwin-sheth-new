@@ -173,115 +173,14 @@
 
 'use client';
 
-import gsap from 'gsap';
 import React from 'react';
-import { createCircleReveal } from '@/utils/Circlereveal';
 
 interface EarthSplitSectionProps {
-  refs: {
-    earth: React.RefObject<HTMLDivElement | null>;
-    earthScrollDown?: React.RefObject<HTMLDivElement | null>;
-  };
   gridContentRef: React.RefObject<HTMLDivElement | null>;
   statsRef: React.RefObject<HTMLDivElement | null>;
   circleWhite2Ref: React.RefObject<HTMLDivElement | null>;
 }
 
-/* =========================================================
-   EARTH SPLIT TIMELINE
-   - NO scroll down indicator
-   - NO reveal repetition
-   - Clean cinematic transition
-========================================================= */
-export function createEarthSplitTimeline(
-  scrollTL: gsap.core.Timeline,
-  earthRefs: {
-    earth: React.RefObject<HTMLDivElement | null>;
-    earthScrollDown?: React.RefObject<HTMLDivElement | null>;
-  },
-  splitRefs: {
-    gridContent: React.RefObject<HTMLDivElement | null>;
-    stats: React.RefObject<HTMLDivElement | null>;
-    circleWhite2: React.RefObject<HTMLDivElement | null>;
-  }
-) {
-  /* ---------- HARD KILL SCROLL DOWN (IMPORTANT) ---------- */
-  if (earthRefs.earthScrollDown?.current) {
-    scrollTL.set(earthRefs.earthScrollDown.current, {
-      opacity: 0,
-      visibility: 'hidden',
-      pointerEvents: 'none',
-    }, 'earth_split');
-  }
-
-  /* ---------- INITIAL STATES ---------- */
-  scrollTL.set(splitRefs.gridContent.current, {
-    x: -80,
-    opacity: 0,
-    pointerEvents: 'none',
-  });
-
-  scrollTL.set(splitRefs.stats.current, {
-    opacity: 0,
-    y: 40,
-  });
-
-  /* ---------- SECTION START ---------- */
-  scrollTL.addLabel('earth_split');
-
-  /* ---------- OPTIONAL SOFT BACKGROUND REVEAL ---------- */
-  createCircleReveal(
-    scrollTL,
-    splitRefs.circleWhite2.current!,
-    '#ffffff',
-    'earth_split'
-  );
-
-  /* ---------- EARTH MOVES TO RIGHT ---------- */
-  scrollTL.to(
-    earthRefs.earth.current,
-    {
-      x: '22vw',
-      y: '22vh',
-      scale: 1.25,
-      duration: 1.1,
-      ease: 'power3.inOut',
-    },
-    'earth_split+=0.2'
-  );
-
-  /* ---------- LEFT CONTENT ---------- */
-  scrollTL.to(
-    splitRefs.gridContent.current,
-    {
-      x: 0,
-      opacity: 1,
-      duration: 0.9,
-      ease: 'power3.out',
-      pointerEvents: 'all',
-    },
-    'earth_split+=0.55'
-  );
-
-  /* ---------- STATS ---------- */
-  scrollTL.to(
-    splitRefs.stats.current,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-    },
-    'earth_split+=0.8'
-  );
-
-  /* ---------- BREATH ---------- */
-  scrollTL.to({}, { duration: 0.4 });
-}
-
-/* =========================================================
-   RENDER
-========================================================= */
 export default function EarthSplitSection({
   gridContentRef,
   statsRef,
@@ -292,27 +191,24 @@ export default function EarthSplitSection({
       {/* LEFT CONTENT */}
       <div
         ref={gridContentRef}
-        className="absolute top-0 left-0 w-[50%] pl-16 md:pl-24 lg:pl-32 
-                   max-w-[560px] h-full z-60 
+        className="absolute top-0 left-0 w-[50%] pl-10
+                   max-w-[560px] h-full z-29 
                    flex flex-col justify-center items-start text-left 
                    opacity-0 pointer-events-none"
       >
-        <h2 className="text-2xl leading-[1.3] font-light text-[#F07D00] mb-5 pointer-events-auto">
+        <h2 className="text-2xl leading-[1.3] font-light text-[#F07D00] mb-5">
           Designing The Present With A Vision
           <br />
           Of Tomorrow.
         </h2>
 
-        <p className="text-[18px] leading-[1.7] font-light text-black mb-8 pointer-events-auto">
+        <p className="text-[18px] leading-[1.7] font-light text-black mb-8">
           Our impact is driven by our belief: Great designs solve real problems.
           For nearly 4 decades, Ashwin Sheth has built a legacy with 80+ exceptional
           real estate projects in Mumbai and abroad.
         </p>
 
-        <button
-          className="relative w-fit text-sm font-bold uppercase  
-                     text-[#0E4194] pb-2 hover:opacity-70 transition-opacity cursor-pointer pointer-events-auto"
-        >
+        <button className="relative w-fit text-sm font-bold uppercase text-[#0E4194] pb-2 hover:opacity-70 transition-opacity cursor-pointer">
           Read More
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#0E4194]" />
         </button>
@@ -321,8 +217,7 @@ export default function EarthSplitSection({
       {/* STATS */}
       <div
         ref={statsRef}
-        className="absolute bottom-8 left-0 w-full z-40 
-                   opacity-0 pointer-events-none"
+        className="absolute bottom-8 left-0 w-full z-29 opacity-0 pointer-events-none"
       >
         <div className="w-full mx-auto px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
@@ -345,11 +240,14 @@ export default function EarthSplitSection({
         </div>
       </div>
 
-      {/* WHITE CIRCLE (MASK ONLY) */}
+      {/* BEIGE CIRCLE REVEAL */}
       <div
         ref={circleWhite2Ref}
-        className="fixed inset-0 z-50 pointer-events-none opacity-0"
-        style={{ willChange: 'clip-path' }}
+        className="fixed inset-0 z-28 pointer-events-none opacity-0"
+        style={{
+          clipPath: 'circle(0% at 50% 100%)',
+          willChange: 'clip-path'
+        }}
       />
     </>
   );
