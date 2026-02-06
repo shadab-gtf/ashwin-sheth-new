@@ -60,7 +60,7 @@ const VIDEO_TRANSITIONS = [
   {
     label: "v2", videoIndex: 2, headerMode: "white" as HeaderMode,
     zCircle: 24, zContent: 25,
-     // REMOVED "video2.video2" from fadeOut
+    // REMOVED "video2.video2" from fadeOut
     fadeOut: ["video2.text2"],
     fadeIn: { video: "video3.video3", text: "video3.text3" },
     circle: "video3.video3", prepEarth: true,
@@ -124,7 +124,7 @@ function buildVideoTransitions(tl: gsap.core.Timeline, refs: RefMap, setActiveVi
     tl.addLabel(label).call(() => { setHeader(headerMode); setActiveVideo(videoIndex); }, undefined, label);
 
     fadeOut(tl, outs.map(p => resolve(refs, p)), label);
-    
+
     // CLIP REVEAL: The 'circle' element IS the next video container. 
     // We reveal it by expanding the clip-path. NO separate color overlay.
     // Explicitly set color: undefined to ensure no background color is applied.
@@ -195,9 +195,17 @@ function buildEarthSequence(tl: gsap.core.Timeline, refs: RefMap, setActiveVideo
         { y: 0, opacity: 1, duration: 1.0, ease: E.IN },
         `earth_split+=${T.SPLIT_DELAY + 0.2}`);
   }
-  gap(tl, 2);
 
-  // Before Slider
+  // ── HOLD DURATION AFTER EARTH SPLIT ──
+  // This pause/hold happens right after earth animations complete, before the next reveal
+  // Adjust the value to control the hold duration:
+  // - 0.4s = quick hold
+  // - 0.8s = medium hold
+  // - 1.2s = longer hold
+  const EARTH_SPLIT_HOLD = 0.4;
+  gap(tl, EARTH_SPLIT_HOLD);
+
+  // Before Slider - starts after the hold duration
   tl.addLabel("before_slider");
   createExactCircleReveal(tl, circleWhite2.current, "before_slider", { color: "lab(98 1.43 4.72)", zIndex: 58 });
 
@@ -392,7 +400,7 @@ export default function MasterSequence() {
 
         {/* Circle reveal overlay for project transition */}
         <div
-        id="next-timeline"
+          id="next-timeline"
           ref={refs.project.circleReveal}
           className="fixed inset-0 pointer-events-none opacity-0"
           style={{

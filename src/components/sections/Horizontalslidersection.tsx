@@ -125,16 +125,21 @@ export function createHorizontalSliderTimeline(
   if (earthEls.length) {
     scrollTL.to(
       earthEls,
-      { opacity: 0, duration: 0.8, stagger: 0.15, ease: "power2.inOut" },
+      { opacity: 0, duration: 0, ease: "power2.inOut" },
       "timeline_reveal"
     );
   }
 
-  // ── Show slider ──
+  // ── HOLD on reveal: Add duration here to pause before slider appears ──
+  // Adjust this value to control how long the animation holds before transitioning
+  // Common values: 0.5s (quick), 1.0s (medium), 1.5s (long)
+  const HOLD_DURATION = 0.4;
+
+  // ── Show slider (after hold duration) ──
   scrollTL.to(
     sliderRefs.slider.current,
     { opacity: 1, visibility: "visible", pointerEvents: "all" },
-    "timeline_reveal+=0.7"
+    `timeline_reveal+=${HOLD_DURATION}`
   );
 
   // ── Prepare slides ──
@@ -145,7 +150,7 @@ export function createHorizontalSliderTimeline(
   let previousScrollX = 0;
 
   // ── Horizontal scroll ──
-  scrollTL.addLabel("timeline_scroll_start", "+=1");
+  scrollTL.addLabel("timeline_scroll_start", `+=1`);
 
   scrollTL.to(
     container,
@@ -208,8 +213,11 @@ export function createHorizontalSliderTimeline(
     );
   }
 
-  // ── Hold on last slide so user can read it ──
-  scrollTL.to({}, { duration: HOLD_LAST_SLIDE });
+  // ── REMOVED: Hold on last slide ──
+  // Previously had: scrollTL.to({}, { duration: HOLD_LAST_SLIDE });
+  // Now flows smoothly to the next section without pausing
+  // If you want to add a hold/pause after the slider completes, uncomment and adjust duration:
+  // scrollTL.to({}, { duration: 0.5 }); // Change 0.5 to your desired hold duration
 
   scrollTL.addLabel("timeline_complete");
 
