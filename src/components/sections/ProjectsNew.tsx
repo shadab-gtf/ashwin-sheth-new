@@ -221,11 +221,11 @@ export default function ProjectsNew() {
         <div className="w-full relative h-[70px] overflow-hidden">
           {projects.map((p, i) => (
             <div key={i} className="absolute inset-0 flex items-center justify-center">
-              <div  ref={(el) => {
-    if (el) {
-      titleRefs.current[i] = el;
-    }
-  }} className="absolute inset-0 flex flex-col items-center justify-center">
+              <div ref={(el) => {
+                if (el) {
+                  titleRefs.current[i] = el;
+                }
+              }} className="absolute inset-0 flex flex-col items-center justify-center">
                 <Heading className="uppercase">{p.title}</Heading>
                 <Heading className="!text-[14px] !leading-[22px] !text-black">{p.location}</Heading>
               </div>
@@ -237,11 +237,11 @@ export default function ProjectsNew() {
         <div className="w-full project-forground h-[250px] md:w-[400px] md:h-[300px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
           {projects.map((p, i) => (
             <div key={i} className="absolute inset-0">
-              <div  ref={(el) => {
-    if (el) {
-      smallImageRefs.current[i] = el;
-    }
-  }} className="w-full h-full relative" style={{ zIndex: 10 + i }}>
+              <div ref={(el) => {
+                if (el) {
+                  smallImageRefs.current[i] = el;
+                }
+              }} className="w-full h-full relative" style={{ zIndex: 10 + i }}>
                 <Image src={p.mobile_image} alt={p.alt} fill className="object-fit rounded-md" />
               </div>
             </div>
@@ -251,11 +251,11 @@ export default function ProjectsNew() {
         {/* Description */}
         <div className="w-full relative h-[100px] overflow-hidden">
           {projects.map((p, i) => (
-            <div key={i}  ref={(el) => {
-    if (el) {
-      descRefs.current[i] = el;
-    }
-  }}   className="absolute inset-0 2xl:px-[40px] flex items-center justify-center">
+            <div key={i} ref={(el) => {
+              if (el) {
+                descRefs.current[i] = el;
+              }
+            }} className="absolute inset-0 2xl:px-[40px] flex items-center justify-center">
               <Pera>{p.description}</Pera>
             </div>
           ))}
