@@ -14,7 +14,7 @@ interface HorizontalSliderSectionProps {
 
 const SCROLL_DURATION = 10;
 const CENTER_THRESHOLD = 0.28;
-const HOLD_LAST_SLIDE = 1.5; // brief pause on last slide before next section
+const HOLD_LAST_SLIDE = 0.7;
 
 const EASE = {
   LUXURY: "expo.out",
@@ -130,20 +130,6 @@ export function createHorizontalSliderTimeline(
     );
   }
 
-  // ── Circle reveal ──
-  if (sliderRefs.circleFinal.current) {
-    scrollTL.add(() => {
-      gsap.timeline()
-        .set(sliderRefs.circleFinal.current, { opacity: 1 })
-        .to(sliderRefs.circleFinal.current, {
-          clipPath: "circle(150% at 50% 100%)",
-          duration: 1.2,
-          ease: EASE.REVEAL,
-        })
-        .to(sliderRefs.circleFinal.current, { opacity: 0, duration: 0.4 }, "-=0.3");
-    }, "timeline_reveal+=0.05");
-  }
-
   // ── Show slider ──
   scrollTL.to(
     sliderRefs.slider.current,
@@ -153,6 +139,10 @@ export function createHorizontalSliderTimeline(
 
   // ── Prepare slides ──
   const slideStates = slides.map(prepareSlide);
+
+  // ── Track activation state ──
+  const activationState: boolean[] = new Array(slides.length).fill(false);
+  let previousScrollX = 0;
 
   // ── Horizontal scroll ──
   scrollTL.addLabel("timeline_scroll_start", "+=1");
@@ -165,11 +155,27 @@ export function createHorizontalSliderTimeline(
       ease: "none",
       onUpdate() {
         const viewportCenter = window.innerWidth / 2;
+        const currentScrollX = gsap.getProperty(container, "x") as number;
+        const isScrollingForward = currentScrollX < previousScrollX;
+        previousScrollX = currentScrollX;
+
         slideStates.forEach((state, i) => {
           const rect = slides[i].getBoundingClientRect();
           const slideCenter = rect.left + rect.width / 2;
           const ratio = Math.abs(slideCenter - viewportCenter) / rect.width;
-          const active = ratio < CENTER_THRESHOLD;
+          const isInCenter = ratio < CENTER_THRESHOLD;
+
+          // Activate when slide enters center
+          if (isInCenter && !activationState[i]) {
+            activationState[i] = true;
+          }
+
+          // Deactivate only when scrolling backward AND slide is past center
+          if (!isScrollingForward && slideCenter > viewportCenter && activationState[i]) {
+            activationState[i] = false;
+          }
+
+          const active = activationState[i];
 
           state.quickSet.activeOpacity(active ? 1 : 0);
           state.quickSet.sketchOpacity(active ? 0 : 1);
@@ -205,10 +211,6 @@ export function createHorizontalSliderTimeline(
   // ── Hold on last slide so user can read it ──
   scrollTL.to({}, { duration: HOLD_LAST_SLIDE });
 
-  // ══════════════════════════════════════════════════════════════════════════
-  //  CRITICAL: Mark timeline as done — master timeline hooks into this label
-  //  to begin the next section (project reveal) immediately after.
-  // ══════════════════════════════════════════════════════════════════════════
   scrollTL.addLabel("timeline_complete");
 
   // ── Cleanup circle ──
@@ -219,8 +221,6 @@ export function createHorizontalSliderTimeline(
     });
   }
 }
-
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function HorizontalSliderSection({
   sliderRef,

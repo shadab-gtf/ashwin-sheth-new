@@ -6,12 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
+
 interface FooterProps {
   footerRef: React.RefObject<HTMLDivElement | null>;
 }
 
 /* ======================================================
-   GSAP TIMELINE — FINAL CINEMATIC OUTRO
+   GSAP TIMELINE — FINAL CINEMATIC OUTRO (HOME PAGE ONLY)
 ====================================================== */
 export function createFooterTimeline(
   scrollTL: gsap.core.Timeline,
@@ -87,7 +88,17 @@ export default function Footer({ footerRef }: FooterProps) {
   const accordionIconRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  // GSAP accordion animation - FIXED VERSION
+
+  // Set footer visibility based on page
+  useEffect(() => {
+    if (!footerRef.current || isHome) return;
+
+    // On non-home pages, make footer visible immediately (no GSAP animation)
+    footerRef.current.style.opacity = "1";
+    footerRef.current.style.pointerEvents = "all";
+  }, [isHome, footerRef]);
+
+  // GSAP accordion animation
   useEffect(() => {
     if (!accordionContentRef.current || !accordionIconRef.current) return;
 
@@ -139,23 +150,15 @@ export default function Footer({ footerRef }: FooterProps) {
   return (
     <footer
       ref={footerRef}
-      className="absolute inset-0 z-[100] opacity-0 pointer-events-none bg-[#FEF7F0] text-black"
+      className={`
+        ${isHome ? "absolute inset-0 z-[100]" : "relative w-full"}
+        bg-[#FEF7F0] text-black
+        ${isHome ? "opacity-0 pointer-events-none" : ""}
+      `}
     >
-      <div className="w-full h-full flex flex-col justify-between overflow-y-auto no-scrollbar">
+      <div className={`w-full ${isHome ? "h-full" : ""} flex flex-col justify-between overflow-y-auto no-scrollbar`}>
         {/* ================= HEADER WITH LOGO & NAV ================= */}
         <div className="w-full ">
-          {/* Logo Section */}
-          {/* <div className="flex flex-col items-center pt-6 md:pt-22">
-            <div className="mb-4">
-              <Image
-                src="/blacklogo.png"
-                alt="Ashwin Sheth Group"
-                width={193}
-                height={100}
-                className="w-full"
-              />
-            </div>
-          </div> */}
           <div className="border p-[20px] gap-[110px] flex items-center justify-center md:w-[60%] mx-auto mt-[80px] mb-[100px]">
             <img
               src="/assets/images/micro/logo-1.png"
