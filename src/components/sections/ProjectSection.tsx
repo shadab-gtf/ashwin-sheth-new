@@ -329,46 +329,41 @@ interface Project {
   description: string;
 }
 
-const PROJECTS: Project[] = [
-  {
-    title: "Montana",
-    slug: "/projects/sheth-montana",
-    location: "Mulund West",
-    image: "/assets/images/projects/project-1.webp",
-    mobile_image: "/assets/images/projects/mobile/project-1.webp",
-    alt: "Seth Zuri",
-    description:
-      "Sheth Montana is a tranquil 7-acre haven in Mulund West, where classic elegance and modern design meet amid lush greenery and world-class amenities.",
-  },
-  {
+const PROJECTS: Project[] = [  {
     title: "Avalon",
-    slug: "/projects/sheth-avalon",
-    location: "Thane",
+    slug:"/projects/sheth-avalon",
+    location:"Thane",
     image: "/assets/images/projects/project-2.webp",
     mobile_image: "/assets/images/projects/mobile/project-2.webp",
     alt: "Project 2",
-    description:
-      "Sheth Avalon stands as a luxurious icon on Thane’s Platinum Belt, blending timeless design with modern comfort and elevated living.",
+    description: "Sheth Avalon stands as a luxurious icon on Thane’s Platinum Belt, blending timeless design with modern comfort and elevated living.",
   },
   {
     title: "Edmont",
-    slug: "/projects/sheth-edmont",
-    location: "Kandivali West",
+    slug:"/projects/sheth-edmont",
+    location:"Kandivali West",
     image: "/assets/images/projects/project-3.webp",
     mobile_image: "/assets/images/projects/mobile/project-3.webp",
     alt: "Project 3",
-    description:
-      "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
+    description: "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
   },
   {
-    title: "Vasant Lawns",
-    slug: "/projects/sheth-vasant",
-    location: "Thane West",
+    title: "Fern",
+    slug:"/projects/sheth-vasant",
+    location:"Thane West",
     image: "/assets/images/projects/project-4.webp",
     mobile_image: "/assets/images/projects/mobile/project-4.webp",
     alt: "Project 4",
-    description:
-      "Vasant Lawns by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+    description: "Fern by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+  },
+  {
+    title: "One Marina",
+    slug:"/projects/sheth-vasant",
+    location:"Marine Drive",
+    image: "/assets/images/projects/project-5.webp",
+    mobile_image: "/assets/images/projects/mobile/project-5.webp",
+    alt: "Project 4",
+    description:"Set along Marine Drive, One Marina offers thoughtfully crafted residences with uninterrupted sea views.",
   },
 ];
 
