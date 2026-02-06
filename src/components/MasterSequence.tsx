@@ -51,17 +51,19 @@ type HeaderMode = "white" | "black";
 const VIDEO_TRANSITIONS = [
   {
     label: "v1", videoIndex: 1, headerMode: "white" as HeaderMode,
-    circleColor: "#86efad56", zCircle: 22, zContent: 23,
-    fadeOut: ["intro.text1", "intro.scrollDown", "intro.video1"],
+    zCircle: 22, zContent: 23,
+    // REMOVED "intro.video1" from fadeOut so it stays visible behind the clip
+    fadeOut: ["intro.text1", "intro.scrollDown"],
     fadeIn: { video: "video2.video2", text: "video2.text2" },
-    circle: "video2.circleGreen", prepEarth: false,
+    circle: "video2.video2", prepEarth: false, // Circle is now the VIDEO CONTAINER ITSELF
   },
   {
     label: "v2", videoIndex: 2, headerMode: "white" as HeaderMode,
-    circleColor: "#fed7aa5a", zCircle: 24, zContent: 25,
-    fadeOut: ["video2.text2", "video2.video2"],
+    zCircle: 24, zContent: 25,
+     // REMOVED "video2.video2" from fadeOut
+    fadeOut: ["video2.text2"],
     fadeIn: { video: "video3.video3", text: "video3.text3" },
-    circle: "video3.circleOrange", prepEarth: true,
+    circle: "video3.video3", prepEarth: true,
   },
 ];
 
@@ -101,8 +103,8 @@ const reveal = (
 function useRefMap() {
   return {
     intro: { logo: useRef(null), video1: useRef(null), text1: useRef(null), scrollDown: useRef(null) },
-    video2: { video2: useRef(null), text2: useRef(null), scrollDown: useRef(null), circleGreen: useRef(null) },
-    video3: { video3: useRef(null), text3: useRef(null), circleOrange: useRef(null) },
+    video2: { video2: useRef(null), text2: useRef(null), scrollDown: useRef(null) },
+    video3: { video3: useRef(null), text3: useRef(null) },
     earthIntro: { earth: useRef(null), scrollDown: useRef(null), earthScrollDown: useRef(null), circleWhite1: useRef(null) },
     earthSplit: { gridContent: useRef(null), stats: useRef(null), circleWhite2: useRef(null) },
     slider: { slider: useRef(null), circleFinal: useRef(null) },
@@ -118,12 +120,18 @@ type RefMap = ReturnType<typeof useRefMap>;
 // ─── Timeline Builders ───────────────────────────────────────────────────────
 
 function buildVideoTransitions(tl: gsap.core.Timeline, refs: RefMap, setActiveVideo: (v: number) => void) {
-  VIDEO_TRANSITIONS.forEach(({ label, headerMode, fadeOut: outs, circle, circleColor, zCircle, zContent, videoIndex, fadeIn, prepEarth }) => {
+  VIDEO_TRANSITIONS.forEach(({ label, headerMode, fadeOut: outs, circle, zCircle, zContent, videoIndex, fadeIn, prepEarth }) => {
     tl.addLabel(label).call(() => { setHeader(headerMode); setActiveVideo(videoIndex); }, undefined, label);
 
     fadeOut(tl, outs.map(p => resolve(refs, p)), label);
-    createExactCircleReveal(tl, resolve(refs, circle), label, { color: circleColor, zIndex: zCircle });
-    reveal(tl, resolve(refs, fadeIn.video), label, { zIndex: zContent, delay: T.CONTENT_DELAY });
+    
+    // CLIP REVEAL: The 'circle' element IS the next video container. 
+    // We reveal it by expanding the clip-path. NO separate color overlay.
+    // Explicitly set color: undefined to ensure no background color is applied.
+    createExactCircleReveal(tl, resolve(refs, circle), label, { color: undefined, zIndex: zCircle });
+
+    // REVEAL CONTENT: Text only. The video is already revealed by the circle clip above.
+    // reveal(tl, resolve(refs, fadeIn.video), label, { zIndex: zContent, delay: T.CONTENT_DELAY }); // SKIPPED
     reveal(tl, resolve(refs, fadeIn.text), label, { zIndex: zContent, delay: T.TEXT_DELAY });
 
     if (prepEarth) {
