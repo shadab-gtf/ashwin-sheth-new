@@ -173,7 +173,8 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 
 interface EarthSplitSectionProps {
   gridContentRef: React.RefObject<HTMLDivElement | null>;
@@ -181,11 +182,101 @@ interface EarthSplitSectionProps {
   circleWhite2Ref: React.RefObject<HTMLDivElement | null>;
 }
 
+interface StatItemProps {
+  value: string;
+  label: string;
+  isVisible: boolean;
+}
+
+function StatItem({ value, label, isVisible }: StatItemProps) {
+  const numberRef = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible || !numberRef.current || hasAnimated) return;
+
+    // Parse the value to get number and suffix
+    const match = value.match(/^(\d+\.?\d*)([MK+]*)/);
+    if (!match) return;
+
+    const targetNumber = parseFloat(match[1]);
+    const suffix = match[2];
+
+    const counter = { value: 0 };
+
+    gsap.to(counter, {
+      value: targetNumber,
+      duration: 2.5,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (numberRef.current) {
+          // Format with decimal if original had decimal
+          const formattedValue = value.includes('.')
+            ? counter.value.toFixed(1)
+            : Math.floor(counter.value).toString();
+          numberRef.current.textContent = formattedValue + suffix;
+        }
+      },
+      onComplete: () => {
+        setHasAnimated(true);
+      },
+    });
+
+    return () => {
+      gsap.killTweensOf(counter);
+    };
+  }, [isVisible, value, hasAnimated]);
+
+  return (
+    <div className="text-center">
+      <div
+        ref={numberRef}
+        className="text-2xl font-light text-[#2C2C2C] mb-1 tabular-nums"
+      >
+        {value}
+      </div>
+      <div className="text-xs uppercase tracking-[0.12em] font-medium text-black">
+        {label}
+      </div>
+    </div>
+  );
+}
+
 export default function EarthSplitSection({
   gridContentRef,
   statsRef,
   circleWhite2Ref,
 }: EarthSplitSectionProps) {
+  const [statsVisible, setStatsVisible] = useState(false);
+
+  useEffect(() => {
+    if (!statsRef.current) return;
+
+    // Observe when stats become visible (opacity > 0)
+    const observer = new MutationObserver(() => {
+      if (statsRef.current) {
+        const opacity = window.getComputedStyle(statsRef.current).opacity;
+        if (parseFloat(opacity) > 0.5 && !statsVisible) {
+          setStatsVisible(true);
+        }
+      }
+    });
+
+    observer.observe(statsRef.current, {
+      attributes: true,
+      attributeFilter: ['style', 'class'],
+    });
+
+    return () => observer.disconnect();
+  }, [statsRef, statsVisible]);
+
+  const stats = [
+    { value: '85+', label: 'LANDMARK PROJECTS' },
+    { value: '40M+', label: 'SQ. FT. CONSTRUCTION' },
+    { value: '35K+', label: 'HAPPY FAMILIES' },
+    { value: '21M+', label: 'UNDER DEVELOPMENT' },
+  ];
+
   return (
     <>
       {/* LEFT CONTENT */}
@@ -221,20 +312,13 @@ export default function EarthSplitSection({
       >
         <div className="w-full mx-auto px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            {[
-              ['85+', 'LANDMARK PROJECTS'],
-              ['40M+', 'SQ. FT. CONSTRUCTION'],
-              ['35K+', 'HAPPY FAMILIES'],
-              ['21M+', 'UNDER DEVELOPMENT'],
-            ].map(([value, label]) => (
-              <div key={label} className="text-center">
-                <div className="text-2xl font-light text-[#2C2C2C] mb-1">
-                  {value}
-                </div>
-                <div className="text-xs uppercase tracking-[0.12em] font-medium text-black">
-                  {label}
-                </div>
-              </div>
+            {stats.map((stat) => (
+              <StatItem
+                key={stat.label}
+                value={stat.value}
+                label={stat.label}
+                isVisible={statsVisible}
+              />
             ))}
           </div>
         </div>
@@ -246,7 +330,7 @@ export default function EarthSplitSection({
         className="fixed inset-0 z-28 pointer-events-none opacity-0"
         style={{
           clipPath: 'circle(0% at 50% 100%)',
-          willChange: 'clip-path'
+          willChange: 'clip-path',
         }}
       />
     </>
