@@ -80,7 +80,7 @@ export default function HorizontalTimelineSection() {
       <div className="absolute inset-0 flex items-center ">
         <div
           data-timeline-container
-          className="flex items-center gap-[20px] will-change-transform"
+          className="flex items-center gap-[120px] will-change-transform"
           style={{
             paddingLeft: "25vw",
           }}
@@ -89,7 +89,7 @@ export default function HorizontalTimelineSection() {
             <div
               key={index}
               data-timeline-slide
-              className="flex-shrink-0 w-[780px] h-full flex items-center justify-center relative"
+              className="flex-shrink-0 w-[620px] h-full flex items-center justify-center relative"
             >
               <div className="w-full flex items-center justify-center gap-1 px-16">
                 {/* LEFT TEXT */}
