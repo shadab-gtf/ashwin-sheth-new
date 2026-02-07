@@ -76,7 +76,7 @@ function calculateActivationRatio(
   const distance = Math.abs(slideCenter - viewportCenter);
   const maxDistance = slideWidth * CENTER_THRESHOLD;
   const ratio = Math.max(0, Math.min(1, 1 - distance / maxDistance));
-  
+
   // Apply easing to the ratio for smoother transitions
   return ratio * ratio * (3 - 2 * ratio); // Smoothstep function
 }
@@ -90,28 +90,28 @@ function prepareSlide(slide: HTMLElement): SlideElements {
 
   // Set initial states with will-change for performance
   if (centerActive) {
-    gsap.set(centerActive, { 
-      opacity: 0, 
+    gsap.set(centerActive, {
+      opacity: 0,
       scale: 0.94,
       willChange: "opacity, transform",
     });
   }
   if (centerSketch) {
-    gsap.set(centerSketch, { 
+    gsap.set(centerSketch, {
       opacity: 1,
       willChange: "opacity",
     });
   }
   if (leftText) {
-    gsap.set(leftText, { 
-      opacity: 0, 
+    gsap.set(leftText, {
+      opacity: 0,
       y: 24,
       willChange: "opacity, transform",
     });
   }
   if (bottomText) {
-    gsap.set(bottomText, { 
-      opacity: 0, 
+    gsap.set(bottomText, {
+      opacity: 0,
       y: 24,
       willChange: "opacity, transform",
     });
@@ -124,34 +124,34 @@ function prepareSlide(slide: HTMLElement): SlideElements {
     bottomText,
     quickSet: {
       // INSTANT image transitions - no duration
-      activeOpacity: gsap.quickTo(centerActive!, "opacity", { 
+      activeOpacity: gsap.quickTo(centerActive!, "opacity", {
         duration: 0.001, // Instant
-        ease: "none" 
+        ease: "none"
       }),
-      sketchOpacity: gsap.quickTo(centerSketch!, "opacity", { 
+      sketchOpacity: gsap.quickTo(centerSketch!, "opacity", {
         duration: 0.001, // Instant
-        ease: "none" 
+        ease: "none"
       }),
       activeScale: gsap.quickTo(centerActive!, "scale", {
         duration: 0.001, // Instant
         ease: "none",
       }),
       // Smooth text transitions for buttery feel
-      leftOpacity: gsap.quickTo(leftText!, "opacity", { 
-        duration: PERFORMANCE.TEXT_DURATION, 
-        ease: EASE.SMOOTH 
+      leftOpacity: gsap.quickTo(leftText!, "opacity", {
+        duration: PERFORMANCE.TEXT_DURATION,
+        ease: EASE.SMOOTH
       }),
-      bottomOpacity: gsap.quickTo(bottomText!, "opacity", { 
-        duration: PERFORMANCE.TEXT_DURATION, 
-        ease: EASE.SMOOTH 
+      bottomOpacity: gsap.quickTo(bottomText!, "opacity", {
+        duration: PERFORMANCE.TEXT_DURATION,
+        ease: EASE.SMOOTH
       }),
-      leftY: gsap.quickTo(leftText!, "y", { 
-        duration: PERFORMANCE.TEXT_DURATION, 
-        ease: EASE.LUXURY 
+      leftY: gsap.quickTo(leftText!, "y", {
+        duration: PERFORMANCE.TEXT_DURATION,
+        ease: EASE.LUXURY
       }),
-      bottomY: gsap.quickTo(bottomText!, "y", { 
-        duration: PERFORMANCE.TEXT_DURATION, 
-        ease: EASE.LUXURY 
+      bottomY: gsap.quickTo(bottomText!, "y", {
+        duration: PERFORMANCE.TEXT_DURATION,
+        ease: EASE.LUXURY
       }),
     },
   };
@@ -205,9 +205,9 @@ export function createHorizontalSliderTimeline(
   if (earthEls.length) {
     scrollTL.to(
       earthEls,
-      { 
-        opacity: 0, 
-        duration: 0.6, 
+      {
+        opacity: 0,
+        duration: 0.6,
         ease: EASE.FADE,
         stagger: 0.05,
       },
@@ -218,9 +218,9 @@ export function createHorizontalSliderTimeline(
   // ── Ultra-smooth slider reveal with gentle fade ──
   scrollTL.to(
     sliderRefs.slider.current,
-    { 
-      opacity: 1, 
-      visibility: "visible", 
+    {
+      opacity: 1,
+      visibility: "visible",
       pointerEvents: "all",
       duration: 0.8,
       ease: EASE.REVEAL,
@@ -274,11 +274,11 @@ export function createHorizontalSliderTimeline(
           state.quickSet.activeOpacity(active ? 1 : 0);
           state.quickSet.sketchOpacity(active ? 0 : 1);
           state.quickSet.activeScale(active ? 1 : 0.94);
-          
+
           // Text with smooth interpolation for buttery feel
           const targetTextProgress = active ? 1 : 0;
           textProgress[i] = smoothLerp(textProgress[i], targetTextProgress, 0.18);
-          
+
           state.quickSet.leftOpacity(textProgress[i]);
           state.quickSet.leftY(24 * (1 - textProgress[i]));
           state.quickSet.bottomOpacity(textProgress[i]);
@@ -295,9 +295,9 @@ export function createHorizontalSliderTimeline(
     gsap.set(progressBar, { transformOrigin: "left center", scaleX: 0 });
     scrollTL.to(
       progressBar,
-      { 
-        scaleX: 1, 
-        duration: SCROLL_DURATION, 
+      {
+        scaleX: 1,
+        duration: SCROLL_DURATION,
         ease: "none",
         force3D: true,
       },
@@ -344,7 +344,7 @@ export default function HorizontalSliderSection({
       <div
         ref={sliderRef}
         className="fixed inset-0 z-60 opacity-0 pointer-events-none"
-        style={{ 
+        style={{
           willChange: "opacity",
           backfaceVisibility: "hidden",
           perspective: 1000,

@@ -724,14 +724,7 @@ const TIMELINE_DATA: TimelineSlide[] = [
     activeImage: "/timeline/new-6.webp",
     sketchImage: "/timeline/new-6.svg",
   },
-  {
-    year: "2025-Present",
-    title: "Future Forward",
-    description:
-      "Continuing innovation in premium and luxury segments while shaping how cities live, work, and connect for the future.",
-    activeImage: "/timeline/new-6.webp",
-    sketchImage: "/timeline/new-6.svg",
-  },
+
 ];
 
 export { TIMELINE_DATA };
@@ -750,16 +743,17 @@ export default function HorizontalTimelineSection() {
       <div className="absolute inset-0 flex items-center ">
         <div
           data-timeline-container
-          className="flex items-center gap-[120px] will-change-transform"
+          className="flex items-center gap-[200px] will-change-transform"
           style={{
             paddingLeft: "25vw",
+            paddingRight: "50vw",
           }}
         >
           {TIMELINE_DATA.map((slide, index) => (
             <div
               key={index}
               data-timeline-slide
-              className="flex-shrink-0 w-[698px] h-full flex items-center justify-center relative"
+              className="flex-shrink-0 w-[800px] h-full flex items-center justify-center relative"
             >
               <div className="w-full flex items-center justify-center gap-1 px-16">
                 {/* LEFT TEXT */}
@@ -770,8 +764,7 @@ export default function HorizontalTimelineSection() {
                   <h3 className="text-black text-xl italic font-light">
                     {slide.year}:<br />
                     {slide.title}
-                    <br />
-                    <span className="border border-black  rounded-full inline-block mt-2 px-5 py-1"> ✌️ {index + 1}</span>
+
                   </h3>
                 </div>
 
