@@ -746,14 +746,14 @@ export default function HorizontalTimelineSection() {
           className="flex items-center gap-[200px] will-change-transform"
           style={{
             paddingLeft: "25vw",
-            paddingRight: "50vw",
+            paddingRight: "25vw",
           }}
         >
           {TIMELINE_DATA.map((slide, index) => (
             <div
               key={index}
               data-timeline-slide
-              className="flex-shrink-0 w-[800px] h-full flex items-center justify-center relative"
+              className="flex-shrink-0 w-[628px] h-full flex items-center justify-center relative"
             >
               <div className="w-full flex items-center justify-center gap-1 px-16">
                 {/* LEFT TEXT */}
