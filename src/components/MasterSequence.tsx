@@ -8,6 +8,7 @@ import VideoSection2 from "@/components/sections/Videosection2";
 import VideoSection3 from "@/components/sections/Videosection3";
 import EarthIntroSection from "@/components/sections/Earthintrosection";
 import EarthSplitSection from "@/components/sections/Earthsplitsection";
+import { masterTimelineStore } from "@/utils/masterTimeline";
 import HorizontalSliderSection, {
   createHorizontalSliderTimeline,
 } from "@/components/sections/Horizontalslidersection";
@@ -52,15 +53,13 @@ const VIDEO_TRANSITIONS = [
   {
     label: "v1", videoIndex: 1, headerMode: "white" as HeaderMode,
     zCircle: 22, zContent: 23,
-    // REMOVED "intro.video1" from fadeOut so it stays visible behind the clip
     fadeOut: ["intro.text1", "intro.scrollDown"],
     fadeIn: { video: "video2.video2", text: "video2.text2" },
-    circle: "video2.video2", prepEarth: false, // Circle is now the VIDEO CONTAINER ITSELF
+    circle: "video2.video2", prepEarth: false,
   },
   {
     label: "v2", videoIndex: 2, headerMode: "white" as HeaderMode,
     zCircle: 24, zContent: 25,
-    // REMOVED "video2.video2" from fadeOut
     fadeOut: ["video2.text2"],
     fadeIn: { video: "video3.video3", text: "video3.text3" },
     circle: "video3.video3", prepEarth: true,
@@ -125,13 +124,10 @@ function buildVideoTransitions(tl: gsap.core.Timeline, refs: RefMap, setActiveVi
 
     fadeOut(tl, outs.map(p => resolve(refs, p)), label);
 
-    // CLIP REVEAL: The 'circle' element IS the next video container. 
-    // We reveal it by expanding the clip-path. NO separate color overlay.
-    // Explicitly set color: undefined to ensure no background color is applied.
+    // CLIP REVEAL
     createExactCircleReveal(tl, resolve(refs, circle), label, { color: undefined, zIndex: zCircle });
 
-    // REVEAL CONTENT: Text only. The video is already revealed by the circle clip above.
-    // reveal(tl, resolve(refs, fadeIn.video), label, { zIndex: zContent, delay: T.CONTENT_DELAY }); // SKIPPED
+    // REVEAL CONTENT
     reveal(tl, resolve(refs, fadeIn.text), label, { zIndex: zContent, delay: T.TEXT_DELAY });
 
     if (prepEarth) {
@@ -150,14 +146,15 @@ function buildEarthSequence(tl: gsap.core.Timeline, refs: RefMap, setActiveVideo
   const { earth, earthScrollDown, circleWhite1 } = refs.earthIntro;
   const { gridContent, stats, circleWhite2 } = refs.earthSplit;
 
-  // Earth Intro
-  tl.addLabel("earth_intro").call(() => setHeader("white"), undefined, "earth_intro");
+  // Earth Intro - CHANGE TO BLACK HEADER
+  tl.addLabel("earth_intro").call(() => setHeader("black"), undefined, "earth_intro");
   fadeOut(tl, [refs.video3.text3.current], "earth_intro");
   createExactCircleReveal(tl, circleWhite1.current, "earth_intro", { color: "#FFF8F0", zIndex: 26 });
 
+  // EARTH CENTER
   if (earth.current) {
-    tl.set(earth.current, { y: "70vh", scale: 0.7, opacity: 1, zIndex: 27 }, "earth_intro")
-      .to(earth.current, { y: "32vh", scale: 1.15, duration: T.EARTH_MOVE, ease: E.EARTH }, "earth_intro+=0.2");
+    tl.set(earth.current, { y: "75vh", scale: 0.6, opacity: 1, zIndex: 27 }, "earth_intro")
+      .to(earth.current, { y: "18vh", scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH }, "earth_intro+=0.2");
   }
 
   reveal(tl, earthScrollDown.current, "earth_intro", {
@@ -172,13 +169,17 @@ function buildEarthSequence(tl: gsap.core.Timeline, refs: RefMap, setActiveVideo
   fadeOut(tl, [earthScrollDown.current, refs.video3.video3.current], "earth_center");
   gap(tl, 1.5);
 
-  // Earth Split
   tl.addLabel("earth_split").call(() => setHeader("black"), undefined, "earth_split");
 
   if (earth.current) {
     tl.to(earth.current, {
-      xPercent: 35, yPercent: -15, x: -0.054, y: "30vh", scale: 1.6,
-      duration: T.EARTH_MOVE, ease: E.EARTH,
+      xPercent: 35,
+      yPercent: 15,
+      x: -0.054,
+      y: "15vh",
+      scale: 1.1,
+      duration: T.EARTH_MOVE,
+      ease: E.EARTH,
     }, "earth_split");
   }
 
@@ -196,16 +197,10 @@ function buildEarthSequence(tl: gsap.core.Timeline, refs: RefMap, setActiveVideo
         `earth_split+=${T.SPLIT_DELAY + 0.2}`);
   }
 
-  // ── HOLD DURATION AFTER EARTH SPLIT ──
-  // This pause/hold happens right after earth animations complete, before the next reveal
-  // Adjust the value to control the hold duration:
-  // - 0.4s = quick hold
-  // - 0.8s = medium hold
-  // - 1.2s = longer hold
   const EARTH_SPLIT_HOLD = 0.4;
   gap(tl, EARTH_SPLIT_HOLD);
 
-  // Before Slider - starts after the hold duration
+  // Before Slider
   tl.addLabel("before_slider");
   createExactCircleReveal(tl, circleWhite2.current, "before_slider", { color: "lab(98 1.43 4.72)", zIndex: 58 });
 
@@ -232,8 +227,8 @@ function buildProjectSection(tl: gsap.core.Timeline, refs: RefMap) {
   const projectSection = refs.project.section.current;
   const circleReveal = refs.project.circleReveal.current;
 
-  // ── Transition: slider → projects ──
-  tl.addLabel("project_reveal").call(() => setHeader("white"), undefined, "project_reveal");
+  // Transition: slider → projects - CHANGE TO BLACK HEADER
+  tl.addLabel("project_reveal").call(() => setHeader("black"), undefined, "project_reveal");
 
   // Fade out slider
   if (refs.slider.slider.current) {
@@ -242,10 +237,10 @@ function buildProjectSection(tl: gsap.core.Timeline, refs: RefMap) {
     }, "project_reveal");
   }
 
-  // Circle reveal into dark project background
+  // Circle reveal
   if (circleReveal) {
     createExactCircleReveal(tl, circleReveal, "project_reveal", {
-      color: "#000", zIndex: 61,
+      color: "#ffffffff", zIndex: 61,
     });
   }
 
@@ -258,15 +253,12 @@ function buildProjectSection(tl: gsap.core.Timeline, refs: RefMap) {
       }, "project_reveal+=0.5");
   }
 
-  // ── Internal stripe-stack transitions ──
-  // This appends all 4 project transitions to the master timeline
+  // Internal stripe-stack transitions
   createProjectTimeline(tl, refs.project.section);
-
-  // projects_complete label is set by createProjectTimeline
 }
 
 function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
-  // ── Blog ──
+  // Blog
   tl.addLabel("blog_reveal").call(() => setHeader("black"), undefined, "blog_reveal");
 
   // Fade out projects
@@ -284,7 +276,7 @@ function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
   });
   gap(tl, 2.5);
 
-  // ── Brand ──
+  // Brand
   tl.addLabel("brand_reveal").call(() => setHeader("black"), undefined, "brand_reveal");
   if (refs.blog.blog.current) {
     tl.to(refs.blog.blog.current, {
@@ -299,7 +291,7 @@ function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
   });
   gap(tl, 2.0);
 
-  // ── Footer ──
+  // Footer
   tl.addLabel("footer_reveal").call(() => setHeader("black"), undefined, "footer_reveal");
   fadeOut(tl, [refs.brand.brand.current], "footer_reveal");
   if (refs.footer.footer.current) {
@@ -356,6 +348,7 @@ export default function MasterSequence() {
             },
           },
         });
+        masterTimelineStore.tl = master;
 
         // Compose the full scroll sequence
         buildVideoTransitions(master, refs, setActiveVideo);
@@ -395,7 +388,7 @@ export default function MasterSequence() {
           circleFinalRef={refs.slider.circleFinal}
         />
 
-        {/* Single project section — handles all 4 projects internally */}
+        {/* Single project section */}
         <ProjectSection projectRef={refs.project.section} />
 
         {/* Circle reveal overlay for project transition */}
@@ -405,7 +398,7 @@ export default function MasterSequence() {
           className="fixed inset-0 pointer-events-none opacity-0"
           style={{
             clipPath: "circle(0% at 50% 50%)",
-            backgroundColor: "#000",
+            backgroundColor: "#fff",
             zIndex: 61,
             willChange: "clip-path",
           }}

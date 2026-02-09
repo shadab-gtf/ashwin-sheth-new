@@ -733,7 +733,7 @@ export default function HorizontalTimelineSection() {
   return (
     <div className="w-full h-screen bg-[#FFF8F0] overflow-hidden relative pointer-events-none">
       {/* TITLE */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 z-10 text-center">
+      <div className="absolute top-24 left-1/2 -translate-x-1/2 z-10 text-center">
         <h2 className="text-[#F07D00] text-xl md:text-2xl tracking-[2px] font-light">
           A (Journey) Through Time
         </h2>
@@ -799,7 +799,7 @@ export default function HorizontalTimelineSection() {
               {/* BOTTOM TEXT */}
               <div
                 data-timeline-text-bottom
-                className="absolute -bottom-30   left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center opacity-0"
+                className="absolute -bottom-20   left-1/2 -translate-x-1/2 w-full max-w-[900px] text-center opacity-0"
               >
                 <h4 className="text-black text-xl font-medium mb-2">
                   {slide.year}

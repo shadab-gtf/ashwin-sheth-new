@@ -1,7 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import HorizontalTimelineSection from "@/components/sections/Horizontalslider";
+import SkipButton from "@/components/common/Buttons/SkipButton";
+import { masterTimelineStore } from "@/utils/masterTimeline";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -27,11 +31,11 @@ const EASE = {
 
 // Performance & smoothness settings
 const PERFORMANCE = {
-  QUICKTO_DURATION: 0.75, // Longer for smoother transitions
+  QUICKTO_DURATION: 0.75,
   SCALE_DURATION: 0.8,
   OPACITY_DURATION: 0.7,
   TEXT_DURATION: 0.85,
-  STAGGER: 0.08, // Micro-stagger for text elements
+  STAGGER: 0.08,
 } as const;
 
 // ─── Slide State ─────────────────────────────────────────────────────────────
@@ -339,11 +343,62 @@ export default function HorizontalSliderSection({
   sliderRef,
   circleFinalRef,
 }: HorizontalSliderSectionProps) {
+  const [showSkip, setShowSkip] = useState(false);
+
+  // Function to skip to next section (project_reveal)
+  const skipToNextSection = () => {
+    if (!masterTimelineStore.tl) return;
+
+    const tl = masterTimelineStore.tl;
+    const labelTime = tl.labels["project_reveal"];
+
+    if (labelTime !== undefined) {
+      const totalDuration = tl.duration();
+      const progress = labelTime / totalDuration;
+
+      // Find the ScrollTrigger instance
+      const st = ScrollTrigger.getAll().find(
+        (trigger) => trigger.vars.trigger === tl.scrollTrigger?.trigger
+      );
+
+      if (st) {
+        const scrollStart = st.start;
+        const scrollEnd = st.end;
+        const targetScroll = scrollStart + (scrollEnd - scrollStart) * progress;
+
+        gsap.to(window, {
+          scrollTo: targetScroll,
+          duration: 1.5,
+          ease: "power2.inOut",
+        });
+      }
+    }
+  };
+
+  // Monitor when this section is active based on opacity
+  useEffect(() => {
+    const checkVisibility = () => {
+      if (!sliderRef.current) return;
+
+      const opacity = parseFloat(
+        window.getComputedStyle(sliderRef.current).opacity
+      );
+
+      // Show skip button when section is visible (opacity > 0.5)
+      setShowSkip(opacity > 0.5);
+    };
+
+    // Poll for visibility changes
+    const interval = setInterval(checkVisibility, 100);
+
+    return () => clearInterval(interval);
+  }, [sliderRef]);
+
   return (
     <>
       <div
         ref={sliderRef}
-        className="fixed inset-0 z-60 opacity-0 pointer-events-none"
+        className="fixed inset-0 z-60 opacity-0 "
         style={{
           willChange: "opacity",
           backfaceVisibility: "hidden",
@@ -351,6 +406,16 @@ export default function HorizontalSliderSection({
         }}
       >
         <HorizontalTimelineSection />
+
+        {/* Skip button inside this section */}
+        {showSkip && (
+          <SkipButton
+            targetLabel="project_reveal"
+            text="Skip"
+            className="opacity-100 animate-fadeIn"
+            onClick={skipToNextSection}
+          />
+        )}
       </div>
 
       <div

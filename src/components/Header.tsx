@@ -55,7 +55,7 @@ export default function Header() {
         'fixed top-0 w-full z-[9999999] transition-all duration-500 pointer-events-none',
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
       )}
-    > 
+    >
       <div
         className={clsx(
           'flex items-center  w-full mx-auto justify-between px-8 py-4 transition-colors duration-500',
@@ -67,7 +67,7 @@ export default function Header() {
             src={theme === 'black' ? '/blacklogo.png' : '/headerlogo.png'}
             alt="Logo"
             className={clsx(
-              'h-10 w-auto transition-opacity duration-300 cursor-pointer',
+              'h-15 w-auto transition-opacity duration-300 cursor-pointer',
               visible ? 'pointer-events-auto' : 'pointer-events-none'
             )}
           />
