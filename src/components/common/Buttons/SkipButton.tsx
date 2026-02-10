@@ -71,7 +71,7 @@ export default function SkipButton({
         <button
             onClick={handleClick}
             className={`
-               fixed bottom-6 items-center left-6 z-[999]
+               fixed bottom-14 items-center right-6 z-[999]
                 bg-[#1B4485] rounded-full text-white
                 px-5 py-2 text-xs tracking-[0.2em]
                 uppercase pointer-events-auto

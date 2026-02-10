@@ -2,9 +2,8 @@
 
 import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
-import { createCircleReveal } from '@/utils/Circlereveal';
 
-const VIDEO_3 = "/videos/Video3.mp4";
+const VIDEO_3 = "/videos/3.mp4";
 const TEXT_3 = "Blue hues where water meets design.";
 
 interface VideoSection3Props {

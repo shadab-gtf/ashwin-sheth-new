@@ -4,7 +4,7 @@ import gsap from "gsap";
 import Image from "next/image";
 import VideoStage from "@/components/sections/VideoStage";
 
-const VIDEO_1 = "/videos/Video1.mp4";
+const VIDEO_1 = "/videos/1.mp4";
 const TEXT_1 = "Live amidst nature, in calm green serenity.";
 
 interface IntroSectionProps {
@@ -23,8 +23,6 @@ export function createIntroTimeline(refs: IntroSectionProps["refs"]) {
   gsap.set(refs.text1.current, { opacity: 0 });
   gsap.set(refs.scrollDown.current, { opacity: 0 });
 
-  // 1. Initial Video State: Small circular mask (not 0%, centered)
-  // gsap.set(refs.video1.current, { clipPath: "circle(12% at 50% 50%)" });
 
   const timeline = gsap.timeline({ paused: true });
 
