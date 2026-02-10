@@ -193,7 +193,7 @@ function GlobeMarkers({
 // earth with dynamic day/night
 function Earth() {
   const dayTexture = useLoader(THREE.TextureLoader, "/texture/day.jpg");
-  const nightTexture = useLoader(THREE.TextureLoader, "/texture/night.jpg");
+  // const nightTexture = useLoader(THREE.TextureLoader, "/texture/night.jpg");
 
   const [sunPosition, setSunPosition] = useState(getSunLongitude());
 
@@ -211,7 +211,7 @@ function Earth() {
     return new THREE.ShaderMaterial({
       uniforms: {
         dayTexture: { value: dayTexture },
-        nightTexture: { value: nightTexture },
+        // nightTexture: { value: nightTexture },
         sunDirection: { value: new THREE.Vector3() },
       },
       vertexShader: `
@@ -252,7 +252,7 @@ function Earth() {
         }
       `,
     });
-  }, [dayTexture, nightTexture]);
+  }, [dayTexture]);
 
   // Update sun direction based on time
   useFrame(() => {
@@ -314,7 +314,8 @@ function Scene({
         enableRotate={enableControls}
         enablePan={enableControls}
         autoRotate={autoRotate}
-        autoRotateSpeed={0.5}
+        // autoRotateSpeed={0.15}
+        autoRotateSpeed={0.08}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 1.8}
       />

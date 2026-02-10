@@ -244,3 +244,42 @@ select,
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in forwards;
 }
+
+
+
+#footer-section {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+
+  animation: footerShow 0s linear forwards;
+  animation-delay: 10s; /* ⏱ 10 seconds */
+}
+
+@keyframes footerShow {
+  to {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* .arrow-bottom-btn {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 100px);
+
+  animation: arrowReveal 0.8s ease-out forwards;
+  animation-delay: 6s; 
+}
+
+@keyframes arrowReveal {
+  to {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+
+    transform: translate(-50%, 0);
+  }
+} */

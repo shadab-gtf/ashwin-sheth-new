@@ -6,9 +6,10 @@ import Loader from "@/components/Loader";
 import EnquiryForm from "@/components/common/form/EnquiryForm";
 import { TransitionProvider } from "@/context/TransitionContext";
 import SpotlightOverlay from "@/components/common/transition/SpotlightOverlay";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/common/footer/Footer";
 
 export default function WebsiteLayout({
   children,
@@ -39,7 +40,8 @@ export default function WebsiteLayout({
         <EnquiryForm open={open} onClose={() => setOpen(false)} />
 
         <main>{children}</main>
-        {!isHome && <Footer footerRef={footerRef} />}
+        {/* {!isHome && <Footer footerRef={footerRef} />} */}
+        <Footer  footerRef={footerRef}/>
       </TransitionProvider>
     </SmoothScroll>
   );
