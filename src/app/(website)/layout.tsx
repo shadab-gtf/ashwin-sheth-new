@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import SmoothScroll from "@/components/SmoothScroll";
 import Loader from "@/components/Loader";
 import EnquiryForm from "@/components/common/form/EnquiryForm";
@@ -22,6 +22,7 @@ export default function WebsiteLayout({
 
   const isHome = pathname === "/";
 
+
   return (
     <SmoothScroll>
       <TransitionProvider>
@@ -41,7 +42,7 @@ export default function WebsiteLayout({
 
         <main>{children}</main>
         {/* {!isHome && <Footer footerRef={footerRef} />} */}
-        <Footer  footerRef={footerRef}/>
+        <Footer footerRef={footerRef} />
       </TransitionProvider>
     </SmoothScroll>
   );

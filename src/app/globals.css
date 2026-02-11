@@ -247,13 +247,13 @@ select,
 
 
 
-#footer-section {
+/* #footer-section {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
 
   animation: footerShow 0s linear forwards;
-  animation-delay: 10s; /* ⏱ 10 seconds */
+  animation-delay: 10s; 
 }
 
 @keyframes footerShow {
@@ -262,7 +262,7 @@ select,
     opacity: 1;
     pointer-events: auto;
   }
-}
+} */
 
 /* .arrow-bottom-btn {
   visibility: hidden;

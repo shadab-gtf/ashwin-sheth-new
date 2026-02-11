@@ -34,23 +34,32 @@
 //   return <>{children}</>;
 // }
 
+"use client";
 
-'use client';
-
-import { useEffect } from 'react';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import Lenis from "lenis";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const lenisRef = useRef<Lenis | null>(null);
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    } // new effect to prevent scroll restoration on refresh
     const lenis = new Lenis({
       smoothWheel: true,
       duration: 1.2,
     });
-
+    lenisRef.current = lenis;  // new
+    lenis.scrollTo(0, { immediate: true });  // new 
+    lenis.on("scroll", ScrollTrigger.update);
     function raf(time: number) {
       lenis.raf(time);
       ScrollTrigger.update();

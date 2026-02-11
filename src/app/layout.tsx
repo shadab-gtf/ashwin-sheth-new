@@ -6,6 +6,7 @@ import { Montserrat } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
+import ScrollReset from "@/components/ScrollReset";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -106,6 +107,7 @@ export default function RootLayout({
         {/* <SmoothScroll>
           <Loader />
           <Header /> */}
+           <ScrollReset />
           <main>{children}</main>
         {/* </SmoothScroll> */}
       </body>

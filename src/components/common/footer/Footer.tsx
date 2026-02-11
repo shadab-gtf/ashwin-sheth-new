@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import TopFooter from "./TopFooter";
 import BottomFooter from "./BottomFooter";
 import Image from "next/image";
 import gsap from "gsap";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 interface FooterProps {
   footerRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -91,11 +92,19 @@ export default function Footer({ footerRef }: FooterProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
   const [showArrow, setShowArrow] = useState(false);
+  const [ShowFooterSection, setShowFooterSection] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowArrow(true);
-    }, 6000);
+    }, 15000);
+
+    return () => clearTimeout(timer);
+  }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFooterSection(true);
+    }, 15000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -136,7 +145,7 @@ export default function Footer({ footerRef }: FooterProps) {
     if (el && tl.current) {
       if (willOpen) {
         // OPEN FLOW
-        el.style.height = "0px"; // reset clean
+        el.style.height = "0px";
         tl.current.play();
 
         // Scroll to bottom when opened
@@ -148,14 +157,21 @@ export default function Footer({ footerRef }: FooterProps) {
         }, 200);
       } else {
         // CLOSE FLOW — this is the IMPORTANT FIX
-        el.style.height = `${el.scrollHeight}px`; // freeze height
-        tl.current.reverse(); // now it animates smoothly from fixed height → 0
+        el.style.height = `${el.scrollHeight}px`;
+        tl.current.reverse();
       }
     }
   };
 
   return (
-    <section id="footer-section" className="relative px-8   bg-[#0a1e35] ">
+    <section
+      id="footer-section"
+      // className="relative px-8 footer-section z-[100]  bg-[#0a1e35] "
+      className="relative px-8 footer-section h-full   bg-[#0a1e35] "
+      style={{
+        opacity: ShowFooterSection ? 1 : 0,
+      }}
+    >
       {/* Toggle Button */}
       <button
         onClick={toggleFooter}

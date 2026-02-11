@@ -230,7 +230,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
             ))}
           </div>
 
-          <div className="w-full project-forground h-[250px] md:w-[300px] 2xl:w-[370px] md:h-[230px] 2xl:h-[300px] relative my-[10px] 2xl:my-[30px] mx-auto overflow-hidden">
+          <div className="w-full project-forground h-[320px]  w-[480px]   relative my-[20px] mx-auto overflow-hidden">
             {/* ── Small Preview Images ── */}
             {PROJECTS.map((project, i) => (
               <div key={i} className="absolute inset-0">
