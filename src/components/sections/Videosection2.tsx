@@ -31,6 +31,7 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
         <>
             {/* VIDEO 2 */}
             <div
+                id='video-section-2'
                 ref={refs.video2}
                 className="absolute inset-0 z-20 opacity-0 pointer-events-none!"
                 style={{

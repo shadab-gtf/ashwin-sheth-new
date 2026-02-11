@@ -17,6 +17,7 @@
 }
 
 @layer base {
+
   html,
   body {
     scrollbar-width: none;
@@ -35,6 +36,7 @@
       sans-serif;
   }
 }
+
 .no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -45,10 +47,10 @@
   height: 0px;
   display: none;
 }
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari */
 }
 
 /* Lenis Support */
@@ -160,7 +162,7 @@ select,
   display: none !important;
 } */
 
-.canvas-container > div > div {
+.canvas-container>div>div {
   overflow: visible !important;
   pointer-events: none !important;
   touch-action: auto !important;
@@ -236,6 +238,7 @@ select,
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

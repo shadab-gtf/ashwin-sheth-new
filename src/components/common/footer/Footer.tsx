@@ -7,6 +7,8 @@ import gsap from "gsap";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 interface FooterProps {
   footerRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -93,27 +95,39 @@ export default function Footer({ footerRef }: FooterProps) {
   const tl = useRef<gsap.core.Timeline | null>(null);
   const [showArrow, setShowArrow] = useState(false);
   const [ShowFooterSection, setShowFooterSection] = useState(false);
-
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowArrow(true);
-    }, 15000);
-
-    return () => clearTimeout(timer);
-  }, []);
-  useEffect(() => {
-    const timer = setTimeout(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.style.height = "0px";
+    }
+    if (!isHomePage) {
       setShowFooterSection(true);
-    }, 15000);
-
-    return () => clearTimeout(timer);
-  }, []);
-  useEffect(() => {
-    if (footerRef.current) {
-      footerRef.current.style.height = "0px";
+      setShowArrow(true);
+      return;
     }
 
+    const trigger = ScrollTrigger.create({
+      trigger: "#video-section-2",
+      start: "bottom top",
+      once: true,
+      onEnter: () => {
+        setShowFooterSection(true);
+        setShowArrow(true);
+      },
+    });
+
+    return () => trigger.kill();
+  }, [isHomePage]);
+
+
+  useEffect(() => {
     const el = wrapperRef.current;
+
+    if (el) {
+      el.style.height = "0px";
+      el.style.opacity = "0";
+    }
 
     tl.current = gsap.timeline({
       paused: true,
@@ -147,8 +161,6 @@ export default function Footer({ footerRef }: FooterProps) {
         // OPEN FLOW
         el.style.height = "0px";
         tl.current.play();
-
-        // Scroll to bottom when opened
         setTimeout(() => {
           window.scrollTo({
             top: document.body.scrollHeight,
@@ -156,21 +168,21 @@ export default function Footer({ footerRef }: FooterProps) {
           });
         }, 200);
       } else {
-        // CLOSE FLOW — this is the IMPORTANT FIX
-        el.style.height = `${el.scrollHeight}px`;
         tl.current.reverse();
+        el.style.height = `${el.scrollHeight}px`;
       }
     }
   };
-
+  if (isHomePage && !ShowFooterSection) {
+    return null;
+  }
   return (
     <section
+      ref={footerRef}
       id="footer-section"
       // className="relative px-8 footer-section z-[100]  bg-[#0a1e35] "
       className="relative px-8 footer-section h-full   bg-[#0a1e35] "
-      style={{
-        display: ShowFooterSection ? "block" : "none",
-      }}
+
     >
       {/* Toggle Button */}
       <button
