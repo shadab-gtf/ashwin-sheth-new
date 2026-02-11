@@ -30,7 +30,7 @@ const Hero = () => {
             </div>
 
             {/* Info Bar Overlay (Image 2 content) */}
-            <div data-direction="top" className="h-[150px] py-[10px] flex items-center justify-center reveal-text bg-[#FEF7F0] relative z-20 w-full  dark:bg-zinc-950 border-b border-black dark:border-zinc-800">
+            <div data-direction="top" className="h-[150px] py-[10px] flex items-center justify-center reveal-text bg-[#FEF7F0] relative z-20 w-full   border-b border-black ">
                 <div className="container mx-auto px-[50px]">
                     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
 

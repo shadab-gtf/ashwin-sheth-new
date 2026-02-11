@@ -31,10 +31,10 @@ export function createIntroTimeline(refs: IntroSectionProps["refs"]) {
     refs.video1.current,
     {
       clipPath: "circle(150% at 50% 50%)",
-      duration: 3,
+      duration: 2,
       ease: "power2.inOut",
     },
-    5,
+    3,
   );
 
   // 3. Logo Reveal (Starts at 3.0s to follow circle)
@@ -46,7 +46,7 @@ export function createIntroTimeline(refs: IntroSectionProps["refs"]) {
       duration: 1,
       ease: "power3.out",
     },
-    "+=0.5",
+    "+=0.3",
   );
 
   // 4. Logo Hold (0.5s)
@@ -57,7 +57,7 @@ export function createIntroTimeline(refs: IntroSectionProps["refs"]) {
     refs.logo.current,
     {
       opacity: 0,
-      duration: 1,
+      duration: 0.5,
       ease: "power2.in",
     },
     "logo_hide",

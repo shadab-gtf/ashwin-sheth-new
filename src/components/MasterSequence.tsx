@@ -795,7 +795,7 @@ const reveal = (
   );
 };
 
-// ─── Ref Factory ─────────────────────────────────────────────────────────────
+// ─── Ref Factory ────────────────────
 
 function useRefMap() {
   return {
@@ -975,7 +975,7 @@ function buildEarthSequence(
     ).fromTo(
       gridContent.current,
       { x: -60, opacity: 0 },
-      { x: 0, opacity: 1, pointerEvents: "all", duration: 1.2, ease: E.IN },
+      { x: 0, opacity: 1, pointerEvents: "all", duration: 1, ease: E.IN },
       `earth_split+=${T.SPLIT_DELAY}`,
     );
   }
@@ -994,10 +994,10 @@ function buildEarthSequence(
 
   // Before Slider
   tl.addLabel("before_slider");
-  createExactCircleReveal(tl, circleWhite2.current, "before_slider", {
-    color: "lab(98 1.43 4.72)",
-    zIndex: 58,
-  });
+  // createExactCircleReveal(tl, circleWhite2.current, "before_slider", {
+  //   color: "lab(98 1.43 4.72)",
+  //   zIndex: 58,
+  // });
 
   const exits: [HTMLElement | null, gsap.TweenVars][] = [
     [gridContent.current, { opacity: 0, x: -30 }],
@@ -1006,9 +1006,9 @@ function buildEarthSequence(
   ];
   exits.forEach(([el, props]) => {
     if (el)
-      tl.to(el, { ...props, duration: 0.8, ease: E.OUT }, "before_slider");
+      tl.to(el, { ...props, duration: 0.2, ease: E.OUT }, "before_slider");
   });
-  gap(tl, 0.6);
+  gap(tl, 0.2);
 }
 
 function buildSlider(tl: gsap.core.Timeline, refs: RefMap) {
@@ -1158,8 +1158,8 @@ function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
       {
         y: "0%",
         scale: 1,
-        duration: T.REVEAL * 1.2,
-        ease: E.IN,
+        // duration: T.REVEAL * 1.2,
+        // ease: E.IN,
         onComplete: () => {
           gsap.set(refs.footer.footer.current, { pointerEvents: "all" });
         },

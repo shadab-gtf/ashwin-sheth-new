@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export default function ScrollReset() {
   useEffect(() => {
-    // Disable browser scroll restoration
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }

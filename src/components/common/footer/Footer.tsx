@@ -169,7 +169,7 @@ export default function Footer({ footerRef }: FooterProps) {
       // className="relative px-8 footer-section z-[100]  bg-[#0a1e35] "
       className="relative px-8 footer-section h-full   bg-[#0a1e35] "
       style={{
-        opacity: ShowFooterSection ? 1 : 0,
+        display: ShowFooterSection ? "block" : "none",
       }}
     >
       {/* Toggle Button */}
