@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TopFooter from "./TopFooter";
 import BottomFooter from "./BottomFooter";
 import Image from "next/image";
@@ -8,10 +8,13 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ScrollTrigger from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+import ScrollToPlugin from "gsap/ScrollToPlugin";
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
 interface FooterProps {
   footerRef: React.RefObject<HTMLDivElement | null>;
 }
+
 const links = [
   {
     label: "Our Profile",
@@ -83,8 +86,8 @@ const PropertyLinks = [
   {
     label: "New Launch",
     items: [
-      { label: "New Flates in Mulund", slug: "flates-in-mulund" },
-      { label: "New Flates in Mulund", slug: "flates-in-mulund" },
+      { label: "New Flats in Mulund", slug: "flats-in-mulund" },
+      { label: "New Flats in Mulund", slug: "flats-in-mulund" },
     ],
   },
 ];
@@ -97,97 +100,107 @@ export default function Footer({ footerRef }: FooterProps) {
   const [ShowFooterSection, setShowFooterSection] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
   useEffect(() => {
-    if (wrapperRef.current) {
-      wrapperRef.current.style.height = "0px";
-    }
     if (!isHomePage) {
       setShowFooterSection(true);
       setShowArrow(true);
+      // Reset toggle state when navigating away from homepage
+      setIsOpen(false);
       return;
     }
 
-    const trigger = ScrollTrigger.create({
-      trigger: "#video-section-2",
-      start: "bottom top",
-      once: true,
-      onEnter: () => {
-        setShowFooterSection(true);
-        setShowArrow(true);
-      },
+    // Reset footer visibility when returning to homepage
+    setShowFooterSection(false);
+    setShowArrow(false);
+    // Reset toggle state when returning to homepage
+    setIsOpen(false);
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: "#video-section-2",
+        start: "bottom top",
+        once: true,
+        onEnter: () => {
+          setShowFooterSection(true);
+          setShowArrow(true);
+        },
+      });
     });
 
-    return () => trigger.kill();
+    return () => ctx.revert();
   }, [isHomePage]);
 
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const el = wrapperRef.current!;
+
+      gsap.set(el, { height: 0, autoAlpha: 0 });
+
+      tl.current = gsap.timeline({
+        paused: true,
+        defaults: { ease: "power2.inOut", duration: 0.6 },
+        onComplete: () => {
+          const el = wrapperRef.current;
+          if (!el) return;
+
+          gsap.to(window, {
+            duration: 0.6,
+            scrollTo: {
+              y: el,
+              offsetY: 180
+            },
+            ease: "power2.out"
+          });
+        }
+      });
+
+      tl.current.to(el, {
+        height: "auto",
+        autoAlpha: 1,
+      });
+    }, wrapperRef);
+
+    return () => ctx.revert();
+  }, [ShowFooterSection]);
 
   useEffect(() => {
-    const el = wrapperRef.current;
-
-    if (el) {
-      el.style.height = "0px";
-      el.style.opacity = "0";
+    if (!isOpen && tl.current) {
+      tl.current.reverse();
     }
-
-    tl.current = gsap.timeline({
-      paused: true,
-      defaults: { ease: "power2.inOut", duration: 0.6 },
-    });
-
-    if (el && tl.current) {
-      tl.current
-        .fromTo(
-          el,
-          { height: 0, opacity: 0 },
-          {
-            height: () => el.scrollHeight,
-            opacity: 1,
-            onComplete: () => {
-              el.style.height = "auto";
-            },
-          },
-        )
-        .reverse();
-    }
-  }, []);
+  }, [isOpen]);
 
   const toggleFooter = () => {
-    const el = wrapperRef.current;
     const willOpen = !isOpen;
     setIsOpen(willOpen);
-
-    if (el && tl.current) {
+    if (tl.current) {
       if (willOpen) {
-        // OPEN FLOW
-        el.style.height = "0px";
         tl.current.play();
-        setTimeout(() => {
-          window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 200);
       } else {
         tl.current.reverse();
-        el.style.height = `${el.scrollHeight}px`;
       }
     }
   };
+
   if (isHomePage && !ShowFooterSection) {
     return null;
   }
+
   return (
     <section
       ref={footerRef}
       id="footer-section"
-      // className="relative px-8 footer-section z-[100]  bg-[#0a1e35] "
-      className="relative px-8 footer-section h-full   bg-[#0a1e35] "
-
+      className="relative px-8 footer-section h-full bg-[#0a1e35]"
     >
       {/* Toggle Button */}
       <button
         onClick={toggleFooter}
-        className="absolute -top-8.5 md:-top-9.75 left-1/2 -translate-x-1/2"
+        aria-expanded={isOpen}
+        aria-controls="footer-content"
+        aria-label={isOpen ? "Close footer" : "Open footer"}
+        className="absolute -top-8.5 md:-top-9.75 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
         style={{
           opacity: showArrow ? 1 : 0,
           pointerEvents: showArrow ? "auto" : "none",
@@ -201,7 +214,7 @@ export default function Footer({ footerRef }: FooterProps) {
           {/* Background Image */}
           <Image
             src="/icon-bg.svg"
-            alt="Dropdown icon"
+            alt="" // Decorative image
             fill
             className={`transition-transform duration-500`}
             style={{ objectFit: "contain" }}
@@ -212,8 +225,6 @@ export default function Footer({ footerRef }: FooterProps) {
             className={`absolute top-1/2 left-1/2 text-3xl text-white transition-transform duration-500 ease-in-out`}
             style={{
               transform: `translate(-50%, -50%) rotateX(${isOpen ? 180 : 0}deg)`,
-              transformStyle: "preserve-3d",
-              perspective: "500px",
             }}
           />
         </div>
@@ -224,9 +235,10 @@ export default function Footer({ footerRef }: FooterProps) {
       {/* Collapsible Footer Links */}
       <div
         ref={wrapperRef}
-        className={`overflow-x-hidden bg-(--secondary) text-white ${isOpen ? "pb-7.5" : ""} `}
+        id="footer-content"
+        className={`overflow-hidden bg-(--secondary) text-white`}
       >
-        <div className="wrapper ">
+        <div className={`wrapper ${isOpen ? "pb-7.5" : ""}`}>
           {/* Main Links */}
           <div className="flex justify-between flex-wrap sm:flex-nowrap gap-8 py-10">
             {links.map((group, index) => (
@@ -251,7 +263,7 @@ export default function Footer({ footerRef }: FooterProps) {
           </div>
 
           {/* Property Links */}
-          <div className=" ">
+          <div className="">
             {PropertyLinks.map((group, index) => (
               <div key={index} className="border-t border-[#ffffff36] py-6">
                 <h3 className="font-louize text-[20px] leading-6.25 tracking-[2px] capitalize mb-3">

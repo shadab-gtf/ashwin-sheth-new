@@ -29,30 +29,30 @@ export default function Header() {
   }, [isHome]);
 
   useEffect(() => {
-  const white = () => {
-    setTheme("white");
-    setVisible(true);
-  };
+    const white = () => {
+      setTheme("white");
+      setVisible(true);
+    };
 
-  const black = () => {
-    setTheme("black");
-    setVisible(true);
-  };
+    const black = () => {
+      setTheme("black");
+      setVisible(true);
+    };
 
-  const hidden = () => {
-    setVisible(false);
-  };
+    const hidden = () => {
+      setVisible(false);
+    };
 
-  window.addEventListener("header-white", white);
-  window.addEventListener("header-black", black);
-  window.addEventListener("header-hidden", hidden);
+    window.addEventListener("header-white", white);
+    window.addEventListener("header-black", black);
+    window.addEventListener("header-hidden", hidden);
 
-  return () => {
-    window.removeEventListener("header-white", white);
-    window.removeEventListener("header-black", black);
-    window.removeEventListener("header-hidden", hidden);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("header-white", white);
+      window.removeEventListener("header-black", black);
+      window.removeEventListener("header-hidden", hidden);
+    };
+  }, []);
 
   // Reset visibility when navigating back to home
   useEffect(() => {
