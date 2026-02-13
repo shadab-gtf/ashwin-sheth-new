@@ -166,7 +166,7 @@ const SpotlightPageTransition = () => {
     const start = () => {
       hole.current.size = 60; // fully covered
       updateBG();
-     gsap.set(logoRef.current, { opacity: 1 });
+      gsap.set(logoRef.current, { opacity: 1 });
       // immediately allow route change
       window.dispatchEvent(new Event("transition-in-complete"));
     };
@@ -176,45 +176,45 @@ const SpotlightPageTransition = () => {
   }, [finalSize]);
 
   // EXIT — reveal animation (AFTER route change)
-useEffect(() => {
-  if (isFirstLoad.current) {
-    isFirstLoad.current = false;
-    return;
-  }
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
 
-const tl = gsap.timeline();
+    const tl = gsap.timeline();
 
-tl.to(logoRef.current, {
-  opacity: 0,
-  duration: 2.5,
-  delay:.5,
-  ease: "power2.out",
-}, 0) // 👈 start at time 0
+    tl.to(logoRef.current, {
+      opacity: 0,
+      duration: 2.5,
+      delay: .5,
+      ease: "power2.out",
+    }, 0) // 👈 start at time 0
 
-.to(hole.current, {
-  size: finalSize,
-  duration: 2.1,
-  ease: "power4.in",
-  onUpdate: updateBG,
-  onComplete: () => {
-    window.dispatchEvent(new Event("transition-exit-complete"));
-  },
-}, 0);
-}, [pathname, finalSize]);
+      .to(hole.current, {
+        size: finalSize,
+        duration: 2.1,
+        ease: "power4.in",
+        onUpdate: updateBG,
+        onComplete: () => {
+          window.dispatchEvent(new Event("transition-exit-complete"));
+        },
+      }, 0);
+  }, [pathname, finalSize]);
 
 
   return (
-     <div
-    ref={overlayRef}
-    className="pointer-events-none fixed inset-0 z-[99999] flex items-center justify-center"
-  >
-    <img
-      ref={logoRef}
-      src="/loaderlogo.png"
-      alt="logo"
-      className="w-[150px] h-[150px] object-contain"
-    />
-  </div>
+    <div
+      ref={overlayRef}
+      className="pointer-events-none fixed inset-0 z-[99999] flex items-center justify-center"
+    >
+      <img
+        ref={logoRef}
+        src="/loaderlogo.png"
+        alt="logo"
+        className="w-[150px] h-[150px] object-contain"
+      />
+    </div>
   );
 };
 
