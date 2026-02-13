@@ -1198,7 +1198,6 @@ export default function MasterSequence() {
       function buildMasterTimeline() {
         ScrollTrigger.refresh();
 
-        // Track the last header mode so we only dispatch when it actually changes
         let lastHeaderMode: HeaderMode | null = null;
 
         const master = gsap.timeline({
@@ -1211,17 +1210,13 @@ export default function MasterSequence() {
             anticipatePin: 1,
             invalidateOnRefresh: true,
 
-            // ──── FIX: Bidirectional header color ────
-            // This runs on EVERY scroll tick (up AND down).
-            // It checks the current timeline progress against the label positions
-            // and sets the correct header color for that zone.
+          
             onUpdate: (self) => {
               const progress = self.progress;
               const totalDuration = master.duration();
               const currentTime = progress * totalDuration;
 
-              // Walk the zones in reverse to find the latest label we've passed
-              let activeMode: HeaderMode = "white"; // default before any label
+              let activeMode: HeaderMode = "white"; 
               for (let i = HEADER_COLOR_ZONES.length - 1; i >= 0; i--) {
                 const [label, mode] = HEADER_COLOR_ZONES[i];
                 const labelTime = master.labels[label];
@@ -1231,7 +1226,7 @@ export default function MasterSequence() {
                 }
               }
 
-              // Only dispatch if the mode actually changed (performance optimization)
+       
               if (activeMode !== lastHeaderMode) {
                 if (activeMode === "hidden") {
                   window.dispatchEvent(new Event("header-hidden"));
