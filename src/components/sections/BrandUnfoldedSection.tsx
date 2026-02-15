@@ -93,13 +93,7 @@ export default function BrandUnfoldedSection({
 
     return (
         <>
-            {/* BLACK CIRCLE OVERLAY */}
-            <div
-                ref={circleBrandRef}
-                className="absolute inset-0 z-[90] pointer-events-none"
-                style={{ clipPath: 'circle(0% at 50% 100%)', backgroundColor: '#000' }}
-            />
-
+         
             {/* MAIN SECTION */}
             <section
                 ref={brandRef}

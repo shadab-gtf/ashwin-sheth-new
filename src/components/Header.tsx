@@ -20,11 +20,13 @@ export default function Header() {
   const NAV_CLASSES =
     "text-[16px] pointer-events-auto font-normal tracking-[0.15em] transition-colors cursor-pointer hidden md:block";
 
-  // Auto-show on non-home pages
+  // Auto-show on non-home pages, hide on home (initially)
   useEffect(() => {
     if (!isHome) {
       setVisible(true);
       setTheme("black");
+    } else {
+      setVisible(false);
     }
   }, [isHome]);
 
@@ -53,13 +55,6 @@ export default function Header() {
       window.removeEventListener("header-hidden", hidden);
     };
   }, []);
-
-  // Reset visibility when navigating back to home
-  useEffect(() => {
-    if (!isHome) {
-      setVisible(true);
-    }
-  }, [isHome]);
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
