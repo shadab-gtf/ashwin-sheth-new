@@ -200,7 +200,8 @@ export default function Footer({ footerRef }: FooterProps) {
         aria-expanded={isOpen}
         aria-controls="footer-content"
         aria-label={isOpen ? "Close footer" : "Open footer"}
-        className="absolute -top-8.5 md:-top-9.75 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
+        // className="absolute -top-8.5 md:-top-9.75 left-1/2 -translate-x-1/2 z-10 cursor-pointer"
+        className="absolute -top-8.5 md:-top-9.75 left-1/2 -translate-x-1/2  cursor-pointer"
         style={{
           opacity: showArrow ? 1 : 0,
           pointerEvents: showArrow ? "auto" : "none",

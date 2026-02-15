@@ -165,7 +165,7 @@ export default function BrandUnfoldedSection({
                         </div>
 
                     </div>
-                </div> 
+                </div>
             </section>
         </>
     );

@@ -226,10 +226,10 @@ export function createHorizontalSliderTimeline(
       opacity: 1,
       visibility: "visible",
       pointerEvents: "all",
-      duration: 0.8,
+      duration: 0.1, // Instant class reveal
       ease: EASE.REVEAL,
     },
-    "timeline_reveal+=0.3" // Slight delay for premium feel
+    "timeline_reveal" // Removed +=0.3 delay
   );
 
   // ── Prepare slides ──
@@ -354,7 +354,8 @@ export default function HorizontalSliderSection({
 
     if (labelTime !== undefined) {
       const totalDuration = tl.duration();
-      const progress = labelTime / totalDuration;
+      const targetTime = labelTime + 1; // Add offset to play reveal
+      const progress = targetTime / totalDuration;
 
       // Find the ScrollTrigger instance
       const st = ScrollTrigger.getAll().find(

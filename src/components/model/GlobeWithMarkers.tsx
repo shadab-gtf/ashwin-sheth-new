@@ -315,7 +315,7 @@ function Scene({
         enablePan={enableControls}
         autoRotate={autoRotate}
         // autoRotateSpeed={0.15}
-        autoRotateSpeed={0.08}
+        autoRotateSpeed={0.10}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 1.8}
       />

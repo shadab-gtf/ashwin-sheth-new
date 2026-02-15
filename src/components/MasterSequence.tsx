@@ -559,20 +559,20 @@
 //         ScrollTrigger.refresh();
 
 //         const master = gsap.timeline({
-//           scrollTrigger: {
-//             trigger: containerRef.current,
-//             start: "top top",
-//             end: "+=3000%",
-//             pin: true,
-//             scrub: 1,
+// scrollTrigger: {
+//   trigger: containerRef.current,
+//     start: "top top",
+//       end: "+=2000%", // Reduced from 3000%
+//         pin: true,
+//           scrub: 2, // Increased from 1 for smoothness
 //             anticipatePin: 1,
-//             invalidateOnRefresh: true,
-//             onRefresh: () => {
-//               const pinned = containerRef.current;
-//               if (pinned?.parentElement)
-//                 pinned.parentElement.style.pointerEvents = "none";
-//               if (pinned) pinned.style.pointerEvents = "auto";
-//             },
+//               invalidateOnRefresh: true,
+//                 onRefresh: () => {
+//                   const pinned = containerRef.current;
+//                   if (pinned?.parentElement)
+//                     pinned.parentElement.style.pointerEvents = "none";
+//                   if (pinned) pinned.style.pointerEvents = "auto";
+//                 },
 //           },
 //         });
 //         masterTimelineStore.tl = master;
@@ -684,7 +684,7 @@ const T = {
   CONTENT_DELAY: 0.6,
   TEXT_DELAY: 0.8,
   HOLD: 1.2,
-  GAP: 1,
+  GAP: 0.2, // Reduced from 1 for tighter details
   EARTH_MOVE: 1.6,
   SPLIT_DELAY: 0.3,
 } as const;
@@ -917,11 +917,11 @@ function buildEarthSequence(
   if (earth.current) {
     tl.set(
       earth.current,
-      { y: "75vh", scale: 0.6, opacity: 1, zIndex: 27 },
+      { y: "75vh", scale: 0.6, opacity: 1, zIndex: 27, rotation: 0 },
       "earth_intro",
     ).to(
       earth.current,
-      { y: "18vh", scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH },
+      { y: "18vh", rotation: 360, scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH },
       "earth_intro+=0.2",
     );
   }
@@ -932,11 +932,12 @@ function buildEarthSequence(
     from: { opacity: 0, y: 10, visibility: "hidden" },
     to: { opacity: 1, y: 0, visibility: "visible", duration: 0.5, ease: E.IN },
   });
-  gap(tl, 1.2);
+  gap(tl, 0.1); // Reduced from 1.2 to remove delay
 
   // Earth Center
   tl.addLabel("earth_center").call(
     () => {
+      setHeader("black");
       setActiveVideo(-1);
     },
     undefined,
@@ -947,9 +948,13 @@ function buildEarthSequence(
     [earthScrollDown.current, refs.video3.video3.current],
     "earth_center",
   );
-  gap(tl, 1.5);
+  gap(tl, 0.1); // Reduced from 1.5 to remove delay
 
-  tl.addLabel("earth_split");
+  tl.addLabel("earth_split").call(
+    () => setHeader("black"),
+    undefined,
+    "earth_split",
+  );
 
   if (earth.current) {
     tl.to(
@@ -959,6 +964,7 @@ function buildEarthSequence(
         yPercent: 15,
         x: -0.054,
         y: "15vh",
+        rotation: 0, // Continue rotation
         scale: 1.1,
         duration: T.EARTH_MOVE,
         ease: E.EARTH,
@@ -975,8 +981,8 @@ function buildEarthSequence(
     ).fromTo(
       gridContent.current,
       { x: -60, opacity: 0 },
-      { x: 0, opacity: 1, pointerEvents: "all", duration: 1, ease: E.IN },
-      `earth_split+=${T.SPLIT_DELAY}`,
+      { x: 0, opacity: 1, pointerEvents: "all", duration: 1.2, ease: E.IN },
+      "earth_split",
     );
   }
 
@@ -985,7 +991,7 @@ function buildEarthSequence(
       stats.current,
       { y: 30, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.0, ease: E.IN },
-      `earth_split+=${T.SPLIT_DELAY + 0.2}`,
+      "earth_split",
     );
   }
 
@@ -994,10 +1000,11 @@ function buildEarthSequence(
 
   // Before Slider
   tl.addLabel("before_slider");
-  // createExactCircleReveal(tl, circleWhite2.current, "before_slider", {
-  //   color: "lab(98 1.43 4.72)",
-  //   zIndex: 58,
-  // });
+  createExactCircleReveal(tl, circleWhite2.current, "before_slider", {
+    color: "#FFFFFF",
+    zIndex: 58,
+    duration: 0.2,
+  });
 
   const exits: [HTMLElement | null, gsap.TweenVars][] = [
     [gridContent.current, { opacity: 0, x: -30 }],
@@ -1008,7 +1015,7 @@ function buildEarthSequence(
     if (el)
       tl.to(el, { ...props, duration: 0.2, ease: E.OUT }, "before_slider");
   });
-  gap(tl, 0.2);
+  // gap(tl, 0.2); // Removed for instant transition
 }
 
 function buildSlider(tl: gsap.core.Timeline, refs: RefMap) {
@@ -1109,18 +1116,23 @@ function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
       ease: E.IN,
     },
   });
-  gap(tl, 2.5);
+  gap(tl, 0.5); // Reduced from 2.5
 
   // Brand (header color handled by onUpdate)
-  tl.addLabel("brand_reveal");
+  tl.addLabel("brand_reveal").call(
+    () => setHeader("black"),
+    undefined,
+    "brand_reveal",
+  );
 
+  // Fade/Slide out Blog slightly
   if (refs.blog.blog.current) {
     tl.to(
       refs.blog.blog.current,
       {
         opacity: 0,
-        scale: 0.92,
-        y: 0,
+        scale: 0.95, // Subtle scale down
+        y: "-20vh", // Slide up slightly
         pointerEvents: "none",
         duration: 1.0,
         ease: E.OUT,
@@ -1128,29 +1140,28 @@ function buildBlogBrandFooter(tl: gsap.core.Timeline, refs: RefMap) {
       "brand_reveal",
     );
   }
-  createExactCircleReveal(tl, refs.brand.circleBrand.current, "brand_reveal", {
-    color: "#FFF8F0",
-    zIndex: 72,
-  });
+
+  // Brand Slide Up (No Circle)
   reveal(tl, refs.brand.brand.current, "brand_reveal", {
     zIndex: 73,
-    delay: 0.4,
-    from: { opacity: 0, y: 0, scale: 1 },
+    delay: 0,
+    from: { opacity: 1, y: "100vh", scale: 1 }, // Start below screen
     to: {
       opacity: 1,
-      y: 0,
+      y: "0vh",
       scale: 1,
       pointerEvents: "all",
       duration: 1.2,
-      ease: E.IN,
+      ease: "power3.out", // Smooth slide
     },
   });
-  gap(tl, 0.5);
+
+  gap(tl, 0.1);
 
   // Footer (header color handled by onUpdate)
   tl.addLabel("footer_reveal");
 
-  fadeOut(tl, [refs.brand.brand.current], "footer_reveal");
+  // fadeOut(tl, [refs.brand.brand.current], "footer_reveal");
   if (refs.footer.footer.current) {
     tl.set(refs.footer.footer.current, { zIndex: 80 }, "footer_reveal").fromTo(
       refs.footer.footer.current,

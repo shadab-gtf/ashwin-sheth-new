@@ -18,6 +18,7 @@ export function createExactCircleReveal(
         color?: string; // Optional override
         origin?: string; // default: '50% 100%' (bottom center)
         zIndex?: number; // Explicit Z-Index
+        duration?: number; // Optional duration override
     } = {}
 ) {
     if (!circleEl) return;
@@ -25,22 +26,23 @@ export function createExactCircleReveal(
     const {
         color,
         origin = '50% 100%',
-        zIndex = 10
+        zIndex = 10,
+        duration = REVEAL_DURATION
     } = options;
 
     tl.set(circleEl, {
         clipPath: `circle(0% at ${origin})`,
-        backgroundColor: color || undefined, 
-        opacity: 1, 
-        zIndex: zIndex, 
+        backgroundColor: color || undefined,
+        opacity: 1,
+        zIndex: zIndex,
         willChange: 'clip-path'
     }, label);
 
     // The Reveal Tween
     tl.to(circleEl, {
         clipPath: `circle(150% at ${origin})`,
-        duration: REVEAL_DURATION,
-        ease: 'none', 
+        duration: duration,
+        ease: 'none',
     }, label);
 }
 

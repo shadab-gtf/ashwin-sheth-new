@@ -123,7 +123,8 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
 
     if (labelTime !== undefined) {
       const totalDuration = tl.duration();
-      const progress = labelTime / totalDuration;
+      const targetTime = labelTime + 1; // Add offset to play reveal
+      const progress = targetTime / totalDuration;
 
       // Find the ScrollTrigger instance
       const st = ScrollTrigger.getAll().find(
@@ -328,7 +329,7 @@ export function createProjectTimeline(
   const isMobile = window.innerWidth < 768;
   const numStrips = isMobile ? 1 : 25;
   const stripeHeight = Math.ceil(vh / numStrips);
-  const stripDuration = isMobile ? 1.3 : 0.8;
+  const stripDuration = isMobile ? 1.3 : 0.6;
 
   // ─────────────────────────────────────────────
   // Initial states
@@ -362,7 +363,7 @@ export function createProjectTimeline(
   // ─────────────────────────────────────────────
   // Timing
   // ─────────────────────────────────────────────
-  const HOLD = 2.2;
+  const HOLD = 0.3;
 
   // ─────────────────────────────────────────────
   // Build timeline
@@ -408,7 +409,7 @@ export function createProjectTimeline(
         smallImages[i],
         {
           yPercent: 0,
-          duration: 1.3,
+          duration: 1.0,
           ease: "power2.inOut",
         },
         label
@@ -421,7 +422,7 @@ export function createProjectTimeline(
       {
         autoAlpha: 0,
         y: -60,
-        duration: 0.6,
+        duration: 0.5,
         ease: "power3.in",
       },
       label
@@ -433,10 +434,12 @@ export function createProjectTimeline(
       {
         autoAlpha: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.7,
         ease: "power3.out",
       },
-      `${label}+=0.35`
+      // `${label}+=0.35`/
+      `${label}+=0.2`
+
     );
 
     // Hold
