@@ -684,7 +684,7 @@ const T = {
   CONTENT_DELAY: 0.6,
   TEXT_DELAY: 0.8,
   HOLD: 1.2,
-  GAP: 0.2, // Reduced from 1 for tighter details
+  GAP: 0.2,
   EARTH_MOVE: 1.6,
   SPLIT_DELAY: 0.3,
 } as const;
@@ -921,7 +921,8 @@ function buildEarthSequence(
       "earth_intro",
     ).to(
       earth.current,
-      { y: "18vh", rotation: 360, scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH },
+      // { y: "18vh", rotation: 360, scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH },
+      { y: "18vh",  scale: 1.0, duration: T.EARTH_MOVE, ease: E.EARTH },
       "earth_intro+=0.2",
     );
   }
@@ -964,7 +965,7 @@ function buildEarthSequence(
         yPercent: 15,
         x: -0.054,
         y: "15vh",
-        rotation: 0, // Continue rotation
+        // rotation: 0,
         scale: 1.1,
         duration: T.EARTH_MOVE,
         ease: E.EARTH,
@@ -1003,7 +1004,7 @@ function buildEarthSequence(
   createExactCircleReveal(tl, circleWhite2.current, "before_slider", {
     color: "#FFFFFF",
     zIndex: 58,
-    duration: 0.2,
+    duration: 0.5,
   });
 
   const exits: [HTMLElement | null, gsap.TweenVars][] = [
