@@ -22,42 +22,47 @@ interface Project {
   description: string;
 }
 
-const PROJECTS: Project[] = [{
-  title: "Avalon",
-  slug: "/projects/sheth-avalon",
-  location: "Thane",
-  image: "/assets/images/projects/project-2.webp",
-  mobile_image: "/assets/images/projects/mobile/project-2.webp",
-  alt: "Project 2",
-  description: "Sheth Avalon stands as a luxurious icon on Thane's Platinum Belt, blending timeless design with modern comfort and elevated living.",
-},
-{
-  title: "Edmont",
-  slug: "/projects/sheth-edmont",
-  location: "Kandivali West",
-  image: "/assets/images/projects/project-3.webp",
-  mobile_image: "/assets/images/projects/mobile/project-3.webp",
-  alt: "Project 3",
-  description: "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
-},
-{
-  title: "Fern",
-  slug: "/projects/sheth-vasant",
-  location: "Thane West",
-  image: "/assets/images/projects/project-4.webp",
-  mobile_image: "/assets/images/projects/mobile/project-4.webp",
-  alt: "Project 4",
-  description: "Fern by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
-},
-{
-  title: "One Marina",
-  slug: "/projects/sheth-vasant",
-  location: "Marine Drive",
-  image: "/assets/images/projects/project-5.webp",
-  mobile_image: "/assets/images/projects/mobile/project-5.webp",
-  alt: "Project 4",
-  description: "Set along Marine Drive, One Marina offers thoughtfully crafted residences with uninterrupted sea views.",
-},
+const PROJECTS: Project[] = [
+  {
+    title: "Avalon",
+    slug: "/projects/sheth-avalon",
+    location: "Thane",
+    image: "/assets/images/projects/project-2.webp",
+    mobile_image: "/assets/images/projects/mobile/project-2.webp",
+    alt: "Project 2",
+    description:
+      "Sheth Avalon stands as a luxurious icon on Thane's Platinum Belt, blending timeless design with modern comfort and elevated living.",
+  },
+  {
+    title: "Edmont",
+    slug: "/projects/sheth-edmont",
+    location: "Kandivali West",
+    image: "/assets/images/projects/project-3.webp",
+    mobile_image: "/assets/images/projects/mobile/project-3.webp",
+    alt: "Project 3",
+    description:
+      "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
+  },
+  {
+    title: "Fern",
+    slug: "/projects/sheth-vasant",
+    location: "Thane West",
+    image: "/assets/images/projects/project-4.webp",
+    mobile_image: "/assets/images/projects/mobile/project-4.webp",
+    alt: "Project 4",
+    description:
+      "Fern by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+  },
+  {
+    title: "One Marina",
+    slug: "/projects/sheth-vasant",
+    location: "Marine Drive",
+    image: "/assets/images/projects/project-5.webp",
+    mobile_image: "/assets/images/projects/mobile/project-5.webp",
+    alt: "Project 4",
+    description:
+      "Set along Marine Drive, One Marina offers thoughtfully crafted residences with uninterrupted sea views.",
+  },
 ];
 
 export { PROJECTS };
@@ -101,7 +106,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
       if (!projectRef.current) return;
 
       const opacity = parseFloat(
-        window.getComputedStyle(projectRef.current).opacity
+        window.getComputedStyle(projectRef.current).opacity,
       );
 
       // Show skip button when section is visible (opacity > 0.5)
@@ -128,7 +133,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
 
       // Find the ScrollTrigger instance
       const st = ScrollTrigger.getAll().find(
-        (trigger) => trigger.vars.trigger === tl.scrollTrigger?.trigger
+        (trigger) => trigger.vars.trigger === tl.scrollTrigger?.trigger,
       );
 
       if (st) {
@@ -158,8 +163,9 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
       style={{ zIndex: 62 }}
     >
       <div data-project-inner className="relative w-full h-full">
-
-        <Pera className="absolute hidden md:block bottom-[50px] right-[50px] text-white md:text-[20px] z-11">( Keep Scrolling )</Pera>
+        <Pera className="absolute hidden md:block bottom-[50px] left-1/2 -translate-x-1/2 text-white md:text-[20px] z-10">
+          ( Keep Scrolling )
+        </Pera>
 
         {/* ── Striped Background Layers ── */}
         {PROJECTS.map((project, i) => (
@@ -268,8 +274,11 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
               </div>
             ))}
           </div>
-          <ViewMore link={PROJECTS[activeIndex].slug} text="Discover More" className="mx-auto 2xl:mt-[10px] text-[14px] md:!text-[16px]" />
-
+          <ViewMore
+            link={PROJECTS[activeIndex].slug}
+            text="Discover More"
+            className="mx-auto 2xl:mt-[10px] text-[14px] md:!text-[16px]"
+          />
         </div>
       </div>
     </section>
@@ -281,7 +290,7 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
 
 export function createProjectTimeline(
   scrollTL: gsap.core.Timeline,
-  projectRef: React.RefObject<HTMLElement | null>
+  projectRef: React.RefObject<HTMLElement | null>,
 ) {
   const section = projectRef.current;
   if (!section) return;
@@ -299,23 +308,23 @@ export function createProjectTimeline(
     const group = section.querySelector(`[data-stripe-group="${i}"]`);
     if (group) {
       stripeGroups.push(
-        Array.from(group.querySelectorAll("[data-stripe]")) as HTMLElement[]
+        Array.from(group.querySelectorAll("[data-stripe]")) as HTMLElement[],
       );
     }
 
     // Small images
     const img = section.querySelector(
-      `[data-small-image="${i}"]`
+      `[data-small-image="${i}"]`,
     ) as HTMLElement | null;
     if (img) smallImages.push(img);
 
     // Title + description wrappers
     const titleWrap = section.querySelector(
-      `[data-project-title-wrap="${i}"]`
+      `[data-project-title-wrap="${i}"]`,
     ) as HTMLElement | null;
 
     const descWrap = section.querySelector(
-      `[data-project-desc-wrap="${i}"]`
+      `[data-project-desc-wrap="${i}"]`,
     ) as HTMLElement | null;
 
     if (titleWrap) titleWraps.push(titleWrap);
@@ -334,30 +343,26 @@ export function createProjectTimeline(
   // ─────────────────────────────────────────────
   // Initial states
   // ─────────────────────────────────────────────
-  stripeGroups[0]?.forEach((s) =>
-    gsap.set(s, { height: stripeHeight })
-  );
+  stripeGroups[0]?.forEach((s) => gsap.set(s, { height: stripeHeight }));
 
-  stripeGroups.slice(1).forEach((group) =>
-    group.forEach((s) => gsap.set(s, { height: 0 }))
-  );
+  stripeGroups
+    .slice(1)
+    .forEach((group) => group.forEach((s) => gsap.set(s, { height: 0 })));
 
-  smallImages.forEach((el, i) =>
-    gsap.set(el, { yPercent: i === 0 ? 0 : 100 })
-  );
+  smallImages.forEach((el, i) => gsap.set(el, { yPercent: i === 0 ? 0 : 100 }));
 
   titleWraps.forEach((el, i) =>
     gsap.set(el, {
       autoAlpha: i === 0 ? 1 : 0,
       y: i === 0 ? 0 : 60,
-    })
+    }),
   );
 
   descWraps.forEach((el, i) =>
     gsap.set(el, {
       autoAlpha: i === 0 ? 1 : 0,
       y: i === 0 ? 0 : 60,
-    })
+    }),
   );
 
   // ─────────────────────────────────────────────
@@ -376,11 +381,11 @@ export function createProjectTimeline(
     scrollTL.call(
       () => {
         window.dispatchEvent(
-          new CustomEvent("project-active-change", { detail: i })
+          new CustomEvent("project-active-change", { detail: i }),
         );
       },
       undefined,
-      label
+      label,
     );
 
     // First project: just hold
@@ -399,7 +404,7 @@ export function createProjectTimeline(
           ease: "power2.out",
           duration: stripDuration,
         },
-        label
+        label,
       );
     }
 
@@ -412,7 +417,7 @@ export function createProjectTimeline(
           duration: 1.0,
           ease: "power2.inOut",
         },
-        label
+        label,
       );
     }
 
@@ -425,7 +430,7 @@ export function createProjectTimeline(
         duration: 0.5,
         ease: "power3.in",
       },
-      label
+      label,
     );
 
     // ── Current text IN
@@ -438,8 +443,7 @@ export function createProjectTimeline(
         ease: "power3.out",
       },
       // `${label}+=0.35`/
-      `${label}+=0.2`
-
+      `${label}+=0.2`,
     );
 
     // Hold
