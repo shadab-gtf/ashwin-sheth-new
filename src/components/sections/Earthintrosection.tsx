@@ -3,6 +3,7 @@
 import gsap from 'gsap';
 import React from 'react';
 import { createCircleReveal } from '@/utils/Circlereveal';
+import GlobeWithMarkers from '../model/GlobeWithMarkers';
 
 interface EarthIntroSectionProps {
   refs: {
@@ -24,16 +25,16 @@ export default function EarthIntroSection({ refs }: EarthIntroSectionProps) {
             opacity: 0,
           }}
         >
-          <img
+          {/* <img
             src="/assets/earth.png"
             alt="Earth"
             className="w-full h-full object-contain drop-shadow-2xl"
             style={{ willChange: 'transform, opacity' }}
+          /> */}
+          <GlobeWithMarkers
+            enableControls={true}
+            autoRotate={true}
           />
-            {/* <GlobeWithMarkers 
-              enableControls={false} 
-              autoRotate={false} 
-            /> */}
         </div>
       </div>
 

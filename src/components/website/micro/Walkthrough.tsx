@@ -1,28 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useLayoutEffect } from "react";
 import { Play, X } from 'lucide-react';
+import gsap from 'gsap';
+import ScrollTrigger from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const videos = [
     {
         id: 'WALKTHROUGH',
         label: 'WALKTHROUGH',
-        thumbnail: '/assets/images/micro/youtube-thumbnail.webp', // Luxury interior placeholder
-        videoId: 'zQ6SYXDmvmA' // Placeholder ID - Rick Roll (classic placeholder) or generic real estate
+        thumbnail: '/assets/images/micro/youtube-thumbnail.webp',
+        videoId: 'zQ6SYXDmvmA'
     },
     {
         id: 'LIFESTYLE',
         label: 'LIFESTYLE VIDEO',
-        thumbnail: '', // Lifestyle placeholder
-        videoId: '' // 4K Nature placeholder
+        thumbnail: '',
+        videoId: ''
     },
     {
         id: 'LOCATION',
         label: 'LOCATION VIDEO',
-        thumbnail: '', // City placeholder
-        videoId: '' // NYC placeholder
+        thumbnail: '',
+        videoId: ''
     },
 ];
+
 type Video = {
     id: string;
     label: string;
@@ -34,13 +39,39 @@ export default function Walkthrough() {
     const [activeTab, setActiveTab] = useState('WALKTHROUGH');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-
-
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const videoContainerRef = useRef<HTMLDivElement | null>(null);
 
     // Get current active video data
     const currentVideo = videos.find(v => v.id === activeTab) || videos[0];
     const isComingSoon = !currentVideo.videoId || !currentVideo.thumbnail;
 
+    // Handle video thumbnail area - trigger white header on scroll
+    useLayoutEffect(() => {
+        if (!videoContainerRef.current) return;
+
+        const trigger = ScrollTrigger.create({
+            trigger: videoContainerRef.current,
+            start: "top center",
+            end: "bottom top",
+            onEnter: () => {
+                window.dispatchEvent(new Event("header-white"));
+            },
+            onEnterBack: () => {
+                window.dispatchEvent(new Event("header-white"));
+            },
+            onLeave: () => {
+                window.dispatchEvent(new Event("header-black"));
+            },
+            onLeaveBack: () => {
+                window.dispatchEvent(new Event("header-black"));
+            },
+        });
+
+        return () => {
+            trigger.kill();
+        };
+    }, []);
 
     return (
         <section id="video-gallery" className="pb-[100px] bg-[#FEF7F0]">
@@ -66,6 +97,7 @@ export default function Walkthrough() {
 
             {/* Video Thumbnail / Presentation Area */}
             <div
+                ref={videoContainerRef}
                 data-direction="bottom"
                 className={`reveal-text relative h-[90vh] w-full mx-auto aspect-video md:aspect-[21/9] overflow-hidden shadow-2xl group ${isComingSoon ? 'bg-[#1B4485]/10 cursor-not-allowed' : 'bg-black cursor-pointer'
                     }`}

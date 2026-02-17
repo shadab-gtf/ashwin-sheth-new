@@ -2,16 +2,14 @@
 
 import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
-import { createCircleReveal } from '@/utils/Circlereveal';
 
-const VIDEO_2 = "/videos/Video2.mp4";
+const VIDEO_2 = "/videos/2.mp4";
 const TEXT_2 = "Warm tones filled with light and comfort.";
 
 interface VideoSection2Props {
     refs: {
         video2: React.RefObject<HTMLDivElement | null>;
         text2: React.RefObject<HTMLHeadingElement | null>;
-        circleGreen: React.RefObject<HTMLDivElement | null>;
     };
     activeVideo: number;
 }
@@ -25,37 +23,7 @@ export function createVideo2Timeline(
     gsap.set(refs.video2.current, { opacity: 0 });
     gsap.set(refs.text2.current, { opacity: 0 });
 
-    // SECTION 1 → 2: VIDEO 1 → VIDEO 2
-    scrollTL.to([prevRefs.text1.current, prevRefs.scrollDown.current], {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.in'
-    }, 'v1_to_v2');
-
-    scrollTL.to(prevRefs.video1.current, {
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.in'
-    }, 'v1_to_v2');
-
-    scrollTL.to(refs.video2.current, {
-        opacity: 1,
-        duration: 1,
-        ease: 'power4.out'
-    }, 'v1_to_v2');
-
-        createCircleReveal(
-            scrollTL,
-            refs.circleGreen.current!,
-            '#86efad56',
-            'v1_to_v2'
-        );
-
-    scrollTL.to(refs.text2.current, {
-        opacity: 1,
-        duration: 1,
-        ease: 'power4.out'
-    }, 'v1_to_v2+=0.4');
+    // Timeline removed as it is now handled by MasterSequence
 }
 
 export default function VideoSection2({ refs, activeVideo }: VideoSection2Props) {
@@ -63,11 +31,17 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
         <>
             {/* VIDEO 2 */}
             <div
+                id='video-section-2'
                 ref={refs.video2}
                 className="absolute inset-0 z-20 opacity-0 pointer-events-none!"
+                style={{
+                    clipPath: 'circle(0% at 50% 100%)', // Start closed
+                    willChange: 'clip-path'
+                }}
             >
                 <VideoStage src={VIDEO_2} isActive={activeVideo === 1} />
-                <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+                {/* Removed bg-black/50 overlay to ensure clear video reveal */}
+                <div className="absolute inset-0 pointer-events-none" />
             </div>
 
             {/* TEXT 2 */}
@@ -79,17 +53,6 @@ export default function VideoSection2({ refs, activeVideo }: VideoSection2Props)
                     {TEXT_2}
                 </h2>
             </div>
-
-            {/* CIRCLE REVEAL GREEN */}
-            <div
-                ref={refs.circleGreen}
-                className="absolute inset-0 z-50 pointer-events-none!"
-                style={{
-                    opacity: 0,
-                    clipPath: 'circle(0% at 50% 100%)',
-                    willChange: 'clip-path'
-                }}
-            />
         </>
     );
 }

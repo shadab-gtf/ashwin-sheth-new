@@ -2,16 +2,14 @@
 
 import gsap from 'gsap';
 import VideoStage from '@/components/sections/VideoStage';
-import { createCircleReveal } from '@/utils/Circlereveal';
 
-const VIDEO_3 = "/videos/Video3.mp4";
+const VIDEO_3 = "/videos/3.mp4";
 const TEXT_3 = "Blue hues where water meets design.";
 
 interface VideoSection3Props {
     refs: {
         video3: React.RefObject<HTMLDivElement | null>;
         text3: React.RefObject<HTMLHeadingElement | null>;
-        circleOrange: React.RefObject<HTMLDivElement | null>;
     };
     activeVideo: number;
 }
@@ -20,55 +18,11 @@ export function createVideo3Timeline(
     scrollTL: gsap.core.Timeline,
     prevRefs: any,
     refs: VideoSection3Props['refs']
-    // Remove earthRef parameter
 ) {
     scrollTL.set(refs.video3.current, { opacity: 0 });
     scrollTL.set(refs.text3.current, { opacity: 0 });
 
-    scrollTL.addLabel('v2_to_v3');
-
-    // Exit Video 2
-    scrollTL.to(
-        [prevRefs.text2.current, prevRefs.video2.current],
-        {
-            opacity: 0,
-            duration: 0.6,
-            ease: 'power2.in',
-        },
-        'v2_to_v3'
-    );
-
-    // Circle reveal
-    createCircleReveal(
-        scrollTL,
-        refs.circleOrange.current!,
-        '#fed7aa5a',
-        'v2_to_v3+=0.05'
-    );
-
-    // Enter Video 3
-    scrollTL.to(
-        refs.video3.current,
-        {
-            opacity: 1,
-            duration: 1.2,
-            ease: 'power3.out',
-        },
-        'v2_to_v3+=0.3'
-    );
-
-    // Text 3
-    scrollTL.to(
-        refs.text3.current,
-        {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-        },
-        'v2_to_v3+=0.8'
-    );
-
-    scrollTL.to({}, { duration: 1 });
+    // Timeline logic moved to MasterSequence
 }
 
 export default function VideoSection3({ refs, activeVideo }: VideoSection3Props) {
@@ -79,6 +33,10 @@ export default function VideoSection3({ refs, activeVideo }: VideoSection3Props)
                 ref={refs.video3}
                 data-video="3"
                 className="absolute inset-0 z-30 opacity-0 pointer-events-none!"
+                style={{
+                    clipPath: 'circle(0% at 50% 100%)', // Start closed
+                    willChange: 'clip-path'
+                }}
             >
                 <VideoStage src={VIDEO_3} isActive={activeVideo === 2} />
                 <div className="absolute inset-0 bg-black/50" />
@@ -93,16 +51,6 @@ export default function VideoSection3({ refs, activeVideo }: VideoSection3Props)
                     {TEXT_3}
                 </h2>
             </div>
-
-            {/* CIRCLE REVEAL ORANGE */}
-            <div
-                ref={refs.circleOrange}
-                className="fixed inset-0 z-50 pointer-events-none opacity-0"
-                style={{
-                    clipPath: 'circle(0% at 50% 100%)',
-                    willChange: 'clip-path'
-                }}
-            />
         </>
     );
 }

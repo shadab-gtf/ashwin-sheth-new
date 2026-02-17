@@ -263,10 +263,9 @@ export default function BlogSection({
                 className={`
                   text-sm md:text-base uppercase tracking-[3px]
                   pb-0.5 transition-all duration-300 font-normal
-                  ${
-                    activeTab === tab
-                      ? "text-[#1E40AF] border-b-2 border-[#1E40AF]"
-                      : "text-black/40 hover:text-black/70"
+                  ${activeTab === tab
+                    ? "text-[#1E40AF] border-b-2 border-[#1E40AF]"
+                    : "text-black/40 hover:text-black/70"
                   }
                 `}
               >
@@ -375,7 +374,7 @@ export default function BlogSection({
                   ) : (
                     // BLOGS CARD - New Design with Image Overlay
 
-                    <div className="relative w-full aspect-[4/5] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-[375px]">
+                    <div className="group relative w-full aspect-[4/5] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-[375px] pointer-events-none">
                       {/* Background Image with Overlay */}
                       <div className="absolute inset-0">
                         <Image
@@ -403,10 +402,10 @@ export default function BlogSection({
                         {/* Link Arrow (visible on hover) */}
                         <Link
                           href={post.link || "#"}
-                          className={`block group ${!post.link && "pointer-events-none"}`}
+                          className={`block ${!post.link && "pointer-events-auto"}`}
                         >
                           {post.link && (
-                            <div className="absolute top-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute top-6 right-6 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center  transition-opacity duration-300">
                               <svg
                                 className="w-6 h-6 text-black"
                                 fill="none"
