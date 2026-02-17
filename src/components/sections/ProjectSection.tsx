@@ -163,9 +163,14 @@ export default function ProjectSection({ projectRef }: ProjectSectionProps) {
       style={{ zIndex: 62 }}
     >
       <div data-project-inner className="relative w-full h-full">
-        <Pera className="absolute hidden md:block bottom-[50px] left-1/2 -translate-x-1/2 text-white md:text-[20px] z-10">
-          ( Keep Scrolling )
-        </Pera>
+        <p
+          className="absolute  hidden md:block  bottom-[20px] left-1/2 -translate-x-1/2 
+bg-black/50 backdrop-blur-sm 
+px-2 py-1.5 rounded-md text-[10px] tracking-widest uppercase
+text-white  z-10"
+        >
+          KEEP SCROLLING
+        </p>
 
         {/* ── Striped Background Layers ── */}
         {PROJECTS.map((project, i) => (
