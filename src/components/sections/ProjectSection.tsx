@@ -31,7 +31,7 @@ const PROJECTS: Project[] = [
     mobile_image: "/assets/images/projects/mobile/project-2.webp",
     alt: "Project 2",
     description:
-      "Sheth Avalon stands as a luxurious icon on Thane's Platinum Belt, blending timeless design with modern comfort and elevated living.",
+      " A luxurious icon on Thane’s Platinum Belt, blending timeless design with modern comfort for elevated living.",
   },
   {
     title: "Edmont",
@@ -41,7 +41,7 @@ const PROJECTS: Project[] = [
     mobile_image: "/assets/images/projects/mobile/project-3.webp",
     alt: "Project 3",
     description:
-      "Edmont by Ashwin Sheth Group is a 51-storey luxury icon in Kandivali West, featuring elite 2 & 3 BHK residences and 25+ lifestyle indulgences.",
+      "A 51-storey luxury icon in Kandivali West with elite 2 & 3 BHK homes and 25+ lifestyle indulgences.",
   },
   {
     title: "Fern",
@@ -51,7 +51,7 @@ const PROJECTS: Project[] = [
     mobile_image: "/assets/images/projects/mobile/project-4.webp",
     alt: "Project 4",
     description:
-      "Fern by Ashwin Sheth Group is a 7-acre green oasis in Thane West, offering spacious homes, 40% open spaces, and 40+ amenities.",
+      "A 7-acre green oasis in Thane West offering spacious homes, 40% open spaces, and 40+ amenities.",
   },
   {
     title: "One Marina",
